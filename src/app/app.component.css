@@ -1,0 +1,7 @@
+.container{
+   color: gray;
+   overflow: hidden;
+}
+/* :host ::ng-deep element.style {
+    
+} */

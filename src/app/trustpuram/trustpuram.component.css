@@ -1,0 +1,97 @@
+:host ::ng-deep.p-datatable .p-datatable-thead > tr > th {
+    color: #ffffff;
+    background: goldenrod;
+    
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+:host ::ng-deep.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+    border-width: 1px;
+    font-family: ui-sans-serif;
+    font-style: initial;
+    font-weight: 300;
+    font-size: medium;
+}
+
+:host ::ng-deep.p-inputtext, body .p-inputtext {
+    
+    height: 30px;
+    font-size: 12px;
+    width: 12rem;
+}
+.accountSection{
+    display : grid;
+grid-template-rows: 0.4fr 2.5fr;
+gap: 28px;
+grid-gap: 28px;
+}
+.columntwo{
+    display : grid;
+grid-template-columns: 1fr 1fr 1fr;
+/* gap: 16px;
+grid-gap: 16px; */
+}
+.oneRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 32px;
+}
+.after-calender{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    gap: 28px;
+grid-gap: 28px;
+}
+
+.second-step{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+
+}
+.btn-con{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.taj-attendence{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.noor-attendence{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.column{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    gap: 32px
+}
+.row{
+    display: grid;
+    grid-template-rows : 1fr 1fr;
+    gap: 16px;
+}
+.column2{
+    display: grid;
+    grid-template-columns : 1fr 1fr;
+    /* gap: 16px; */
+}
+
+.print-main{
+    display:grid;
+    grid-template-rows: 0.1fr 0.3fr 0.3fr 0.3fr 1fr;
+}
+.reading-oldstay{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+
+}
+.a4-oldgone{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.binding-todaystay{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}

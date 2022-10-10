@@ -1,0 +1,199 @@
+<div style="margin-bottom: 30%;" *ngIf="showData" class="picklist-class">
+    <div class="main-class">
+        <!-- (onMoveToSource)="targetToSource($event)" -->
+        <p-pickList (onMoveToTarget)="selectToTarget($event)" (onMoveToSource)="targetToSource($event)"   (onSourceSelect)="editClicked($event)" styleClass="{ height: 'calc(100vh - 327px)' }"  [source]="sourceProducts" [target]="targetProducts" sourceHeader="" targetHeader=''
+        [responsive]="true" [dragdrop]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="name"
+        sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" >
+        <ng-template let-product pTemplate="item">
+            <div (onClick)="editClicked(product.name)" class="product-item">
+                <div class="image-container">
+                        <img src="assets/showcase/{{product.image}}.png" [alt]="product.name" class="product-image"   width="200" 
+                        height="200" />
+                </div>
+                <div class="product-list-detail">
+                    <h3 style="font-style:italic;" class="mb-2">{{product.name}}</h3>
+                    <!-- <i class="pi pi-tag product-category-icon" (onClick)="editClicked(product.name)" ></i> -->
+                    <!-- <span class="product-category">{{product.category}}</span> -->
+                </div>
+                <div class="product-list-action">
+                    &nbsp;
+                    <h4 class="mb-2">${{product.price}}</h4>
+                    <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                </div>
+            </div>
+        </ng-template>
+
+ 
+    </p-pickList>
+    </div>
+    <div style="display: grid; position :fixed ; left : 70% ; bottom : 84%">
+<!-- <p>button</p> -->
+<p-button (click)="resetAll()" label="Reset" icon="pi pi-desktop" styleClass="p-button-success"></p-button>
+    </div>
+    <div style="display: grid; position :fixed ; left : 50% ; bottom : 84%" >
+       <h4 style="color: white;">TOTAL: &nbsp; $ {{totalValue}}</h4>
+
+    </div>
+
+</div>
+<p-dialog header='title' [(visible)]="displayEditDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+[draggable]="false" [resizable]="false">
+<!-- <ng-template pTemplate="body"> -->
+    <ng-template pTemplate="header">
+        {{title}} 
+        <div *ngIf="isBlackXerox">
+            <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label" optionValue="value"></p-selectButton>
+
+        </div>
+        <!-- <div *ngIf="isBlackPrintout">
+            <p-selectButton [options]="stateOptions" [(ngModel)]="value2" optionLabel="label" optionValue="value"></p-selectButton>
+
+        </div> -->
+        
+        </ng-template>
+<div *ngIf="isBlackXerox">
+    <!-- <p>jahujdhujd</p> -->
+    <div *ngIf="value1=='off'">
+        <div class="field col-12 md:col-3">
+            <label for="minmax-buttons">Copies: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="blackCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+        </div>
+        <br>
+        <div class="field-radiobutton">
+            <p-radioButton name="copy" (click)="copySelected=true" value="Single-Side" [(ngModel)]="copy" inputId="city1"></p-radioButton>
+            <label for="city1">Single-Side</label>
+        </div>
+        <br>
+        <div class="field-radiobutton">
+            <p-radioButton name="copy" (click)="copySelected=true" value="Front-&-Back" [(ngModel)]="copy" inputId="city2"></p-radioButton>
+            <label for="city2">Front-&-Back</label>
+        </div>
+
+    </div>
+    <div *ngIf="value1=='on'">
+        <div class="field col-12 md:col-3">
+            <label for="minmax-buttons">Single Copies: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="singleCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+        </div>
+        <br>
+        <div class="field col-12 md:col-3">
+            <label for="minmax-buttons">Front/Back Copies: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="b2bCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+        </div>
+    </div>
+  
+</div>
+<div *ngIf="isBlackPrintout">
+    <div *ngIf="value2=='off'">
+        <div class="field col-12 md:col-3">
+            <label for="minmax-buttons">Copies: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="blackPrintCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+        </div>
+        <br>
+        <div class="field-radiobutton">
+            <p-radioButton name="copy2" (click)="copySelected=true" value="Single-Side" [(ngModel)]="copy2" inputId="city1"></p-radioButton>
+            <label for="city1">Single-Side</label>
+        </div>
+        <br>
+        <div class="field-radiobutton">
+            <p-radioButton name="copy2" (click)="copySelected=true" value="Front-&-Back" [(ngModel)]="copy2" inputId="city2"></p-radioButton>
+            <label for="city2">Front-&-Back</label>
+        </div>
+        <br>
+<div style="display: grid; grid-template-columns: 1fr 1fr">
+    <div class="field-checkbox">
+        <p-checkbox [(ngModel)]="isNetCharge" [binary]="true" inputId="binary2"></p-checkbox>
+        <label (click)="isNetCharge=!isNetCharge" for="binary2">Net Charge</label>
+    </div>
+    <div class="field-checkbox">
+        <p-checkbox [(ngModel)]="isFreshCustomer" [binary]="true" inputId="binary"></p-checkbox>
+        <label (click)="isFreshCustomer=!isFreshCustomer" for="binary">10-copies-2rupees</label>
+    </div>
+</div>
+    </div>
+    <!-- <div *ngIf="value2=='on'">
+        <div class="field col-12 md:col-3">
+            <label for="minmax-buttons">Single Copies: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="blacksinglePrint" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+        </div>
+        <br>
+        <div class="field col-12 md:col-3">
+            <label for="minmax-buttons">Front/Back Copies: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="blackB2bPrint" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+        </div>
+        <br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr">
+            <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="isNetCharge" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Net Charge</label>
+            </div>
+            <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="isFreshCustomer" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">10-copies-2rupees</label>
+            </div>
+        </div>
+    </div> -->
+</div>
+<div *ngIf="isColourXerox">
+    <div class="field col-12 md:col-3">
+        <label for="minmax-buttons">Copies: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="colourCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+    </div>
+</div>
+<div *ngIf="isColourPrintout">
+    <div class="field col-12 md:col-3">
+        <label for="minmax-buttons">Copies: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="colourPrintCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+    </div>
+<br>
+    <div style="display: grid; grid-template-columns: 1fr 1fr">
+        <div class="field-checkbox">
+            <p-checkbox [(ngModel)]="isNetCharge" [binary]="true" inputId="binary2"></p-checkbox>
+            <label (click)="isNetCharge=!isNetCharge" for="binary2">Net Charge</label>
+        </div>
+        <!-- <div class="field-checkbox">
+            <p-checkbox [(ngModel)]="isFreshCustomer" [binary]="true" inputId="binary"></p-checkbox>
+            <label (click)="isFreshCustomer=!isFreshCustomer" for="binary">10-copies-2rupees</label>
+        </div> -->
+    </div>
+</div>
+
+<div *ngIf="isScanning">
+    <div class="field col-12 md:col-3">
+        <label for="minmax-buttons">Scanned Copies: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="scanCopies" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+    </div>
+</div>
+<div *ngIf="isLamination">
+    <div class="field col-12 md:col-3">
+        <label for="minmax-buttons">Lamination Rate: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="laminationRate" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+    </div>
+</div>
+<div *ngIf="isBinding">
+    <div class="field col-12 md:col-3">
+        <label for="minmax-buttons">Binding Rate: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="bindingRate" mode="decimal"  inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+    </div>
+</div>
+<!-- </ng-template> -->
+    <ng-template pTemplate="footer">
+    <!-- <p-button (click)="displayEditDialog=false" icon="pi pi-times" label="Cancel" styleClass="p-button-text"></p-button> -->
+    <!-- <p-button (click)="saveEdit()" icon="pi pi-check" label="Add" styleClass="p-button-text"></p-button> -->
+   <div style="margin-right:40% ;">
+    <button  pButton pRipple type="button"  (click)="saveEdit()" label="Success" class="p-button-raised p-button-success"></button>
+
+   </div>
+</ng-template>
+</p-dialog>

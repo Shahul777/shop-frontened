@@ -1,0 +1,123 @@
+:host ::ng-deep.p-datatable .p-datatable-thead > tr > th {
+    color: #ffffff;
+    background: goldenrod;
+    
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+:host ::ng-deep.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+    border-width: 1px;
+    font-family: ui-sans-serif;
+    font-style: initial;
+    font-weight: 300;
+    font-size: medium;
+}
+
+
+.print-main{
+    display:grid;
+    grid-template-rows: 0.1fr 0.3fr 0.3fr 0.3fr 1fr;
+}
+.reading-oldstay{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+
+}
+.a4-oldgone{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.binding-todaystay{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+.loading-indicator {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .loading-indicator:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.53);
+  }
+
+
+:host ::ng-deep.p-inputtext, body .p-inputtext {
+    
+    height: 30px;
+    font-size: 12px;
+    width: 12rem;
+}
+.accountSection{
+    display : grid;
+grid-template-rows: 0.4fr 2.5fr;
+gap: 28px;
+grid-gap: 28px;
+}
+.columntwo{
+    display : grid;
+grid-template-columns: 1fr 1fr 1fr;
+/* gap: 16px;
+grid-gap: 16px; */
+}
+.oneRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 32px;
+}
+.after-calender{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    gap: 28px;
+grid-gap: 28px;
+}
+
+.second-step{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+
+}
+.btn-con{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.taj-attendence{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.noor-attendence{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.column{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    gap: 32px
+}
+.row{
+    display: grid;
+    grid-template-rows : 1fr 1fr;
+    gap: 16px;
+}
+.column2{
+    display: grid;
+    grid-template-columns : 1fr 1fr;
+    /* gap: 16px; */
+}

@@ -1,0 +1,7 @@
+:host ::ng-deep.p-panel .p-panel-header {
+    border: 1px solid grey;
+    color: black;
+    background-color: whitesmoke;
+    height: 5px;
+}
+

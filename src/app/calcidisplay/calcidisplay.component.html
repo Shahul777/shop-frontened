@@ -1,0 +1,111 @@
+<div class="container-fluid">
+ <p-card>
+    <div class="jumbotron col-sm-4 p-2 m-0 bg-inverse">
+   
+      <!-- <h4 style="font-size:15px;" class="text-center">Calculator</h4> -->
+   
+
+      <!-- <div class="input-group input-group-sm col-sm-12 m-0 p-0">
+        <div class="col-sm-12 form-control text-lg-right" type="text">{{input}}</div>
+      </div> -->
+      <div class="field col-12 md:col-4">
+        <span class="p-float-label">
+            <input type="text" id="inputtext" pInputText > 
+            <label for="inputtext"><h3>{{input}}</h3></label>
+        </span>
+    </div>
+   
+    <br>
+      <div class="field col-12 md:col-4">
+        <span class="p-float-label">
+            <input type="text" id="inputtext" pInputText > 
+            <label for="inputtext"><h3>{{result}}</h3></label>
+        </span>
+    </div>
+    <br>
+      <div class="col-sm-12 p-1 m-0">
+        <!-- <p-card> -->
+            
+            <button pButton pRipple type="button" (click)="allClear()" class="p-button-rounded p-button-success">C</button>
+            &nbsp;
+            <button pButton pRipple type="button" icon="pi pi-trash" (click)="clear()" class="p-button-rounded p-button-success"></button>
+            &nbsp;
+            <button pButton pRipple type="button" (click)="pressOperator('/')" class="p-button-rounded p-button-success">/</button>
+        <!-- </p-card> -->
+        
+     
+      </div>
+      <br>
+      <div class="col-sm-12 p-1 m-0">
+        <button pButton pRipple type="button" (click)="pressNum('7')" class="p-button-rounded p-button-warning">7</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('8')" class="p-button-rounded p-button-warning">8</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('9')" class="p-button-rounded p-button-warning">9</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressOperator('*')" class="p-button-rounded p-button-danger">X</button>
+
+
+        <!-- <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('7')">7</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('8')">8</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('9')">9</button>
+        <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('*')">X</button> -->
+      </div>
+      <br>
+      <div class="col-sm-12 p-1 m-0">
+
+        <button pButton pRipple type="button" (click)="pressNum('4')" class="p-button-rounded p-button-warning">4</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('5')" class="p-button-rounded p-button-warning">5</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('6')" class="p-button-rounded p-button-warning">6</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressOperator('-')" class="p-button-rounded p-button-danger">-</button>
+
+
+        <!-- <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('4')">4</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('5')">5</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('6')">6</button>
+        <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('-')">-</button> -->
+      </div>
+      <br>
+      <div class="col-sm-12 p-1 m-0">
+
+        <button pButton pRipple type="button" (click)="pressNum('1')" class="p-button-rounded p-button-warning">1</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('2')" class="p-button-rounded p-button-warning">2</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('3')" class="p-button-rounded p-button-warning">3</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressOperator('+')" class="p-button-rounded p-button-danger">+</button>
+
+
+
+
+
+
+        <!-- <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('1')">1</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('2')">2</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('3')">3</button>
+        <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('+')">+</button> -->
+      </div>
+      <br>
+      <div class="col-sm-12 p-1 m-0">
+
+        <button pButton pRipple type="button" (click)="pressNum('.')" class="p-button-rounded p-button-help">.</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="pressNum('0')" class="p-button-rounded p-button-warning">0</button>
+        &nbsp;
+        <button pButton pRipple type="button" (click)="getAnswer()" class="p-button-rounded p-button-help">=</button>
+
+
+
+
+        <!-- <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('.')">.</button>
+        <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('0')">0</button>
+        <button class="btn btn-lg btn-success col-sm-6 p-1" type="button" (click)="getAnswer()">=</button> -->
+      </div>
+   
+    </div>
+</p-card>
+   </div>
