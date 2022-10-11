@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -93,12 +94,7 @@ currentBillTpm : any;
       this.service.getRateSheet().subscribe((rate: any)=>{
         this.rentSheet=rate[0]
       
-        // this.tajExpense= this.rentSheet.bata1
-        // this.noorExpense= this.rentSheet.bata1+ this.rentSheet.food
-        // this.assanExpense=this.rentSheet.bata1+ this.rentSheet.food
-        // this.rasheedExpense=this.rentSheet.bata2
-        // this.maniExpense=this.rentSheet.bata2
-      
+
       
       
        
@@ -112,7 +108,6 @@ currentBillTpm : any;
       let val4 : number =+ this.rentSheet.tajSalary
       this.tajSalary=val4
       
-      console.log(this.tajSalary)
       let val5 : number =+ this.rentSheet.noorSalary
       this.noorSalary=val5
       let val6 : number =+ this.rentSheet.assanSalary
@@ -144,8 +139,6 @@ currentBillTpm : any;
       this.currentBillTpm=val12
       
       let val : number = + this.rentSheet.tajSalary
-        console.log("🚀 ~ file: kodambakkam.component.ts ~ line 159 ~ KodambakkamComponent ~ this.service.getRateSheet ~ val", val)
-        console.log(this.rentSheet)
       })
 
 
@@ -166,9 +159,7 @@ currentBillTpm : any;
   }
   editClicked(event : any){
    let item: any
-   console.log(event)
   item =event.items[0].name
-    console.log(item)
     if(item==='Black-Xerox'){
       this.isBlackXerox=true
       this.isBlackPrintout  =false;
@@ -302,7 +293,7 @@ this.sourceProducts.forEach((prod: any)=>{
        
             }
            
-            // rate = Math.ceil(this.blackPrintCopies * 1.25)
+         
           }
           else{
             if(this.isFreshCustomer){
@@ -321,7 +312,7 @@ this.sourceProducts.forEach((prod: any)=>{
               rate +=Math.ceil(this.blackPrintCopies * this.singleRate)
             }
           }
-          // rate = Math.ceil(this.blackPrintCopies * 1.25)
+   
         }
         else if(this.copy2==="Front-&-Back"){
           if(this.isNetCharge){
@@ -346,7 +337,7 @@ this.sourceProducts.forEach((prod: any)=>{
        
             }
            
-            // rate = Math.ceil(this.blackPrintCopies * 1.25)
+
           }
           else{
             if(this.isFreshCustomer){
@@ -379,27 +370,7 @@ this.sourceProducts.forEach((prod: any)=>{
         })
       }
      else{
-//       let rate1 =0
-//       let rate2=0
-//       if(this.isNetCharge){
-//         if(this.isFreshCustomer){
-//           rate+=10
-//           if(this.blackB2bPrint+ this.blackPrintCopies<=10){
-//             rate1+=Math.ceil((this.blackB2bPrint+ this.blackPrintCopies)*2)
-//           }
-//           else{
-         
-//           }
-//         }
-//       }
-// rate1 = Math.ceil(this.blacksinglePrint * 1.25)
-// rate2 = Math.ceil(this.blackB2bPrint * 1)
-// rate= rate1+rate2
-// this.sourceProducts.forEach((prod: any)=>{
-//   if(prod.name==="Black-Printout"){
-//     prod.price=rate
-//   }
-//  })
+
      }
 this.isNetCharge=true
 this.isFreshCustomer=true
@@ -425,20 +396,7 @@ rate +=Math.ceil(copies * 10)
       let rate =0
       if(this.isNetCharge){
         rate+=10
-    //     if(this.isFreshCustomer){
-    //       rate+=10
-    //       if(this.colourPrintCopies===1){
-    //         rate+=15
-    
-    //       }
-    //       else if(this.colourPrintCopies>1){
-    //         let copies =this.colourPrintCopies-1
-    // rate+=15
-    // rate +=Math.ceil(copies * 10)
-    //       }
 
-    //     }
-       
           if(this.colourPrintCopies===1){
             rate+=15
     
@@ -497,30 +455,26 @@ this.isFreshCustomer=true
        })
     }
     this.displayEditDialog=false
+
+
+
+this.totalValue=0
+this.sourceProducts.forEach((source: any)=>{
+
+  this.totalValue+= source.price
+})
+
   }
   selectToTarget(event : any){
     if(this.targetProducts.length){
       this.targetProducts== JSON.parse(JSON.stringify(this.targetProducts)) as typeof this.targetProducts;
       let movedModel = event.items[0].name
       
-      console.log("🚀 ~ file: calculator.ceet ~ this.tempSourceProduct", this.tempSourceProduct)
-      // this.sourceProducts== JSON.parse(JSON.stringify(this.sourceProducts)) as typeof this.sourceProducts;
       let changes =JSON.parse(JSON.stringify(event.items[0])) as typeof event.items[0];
       
 changes.price=0
           this.sourceProducts.push(changes)
-      // this.tempSourceProduct.forEach((source: any)=>{
-      //   if(source.name===movedModel){
-      //     let tempModel : any
-      //      tempModel=source
-       
 
-      //     this.sourceProducts.push(tempModel)
-      
-        
-      //   }
-      // })
-      console.log("moved",event)
 let check : boolean =false
 let index : any
       this.targetProducts.forEach((model: any)=>{
@@ -553,6 +507,9 @@ let index : any
   resetAll(){
     this.totalValue=0
     this.targetProducts=[]
+    this.sourceProducts.forEach((source: any)=>{
+      source.price=0
+    })
   }
   targetToSource(event:any){
     

@@ -1,88 +1,75 @@
 <div class="container-main">
-    <div class="card-component">
-        <p-card>
-            <div class="title-class"><h1>S T U D E N T S    &nbsp;&nbsp; P A R K  &nbsp;&nbsp;   X E R O X</h1></div>
-            <p-toolbar>
-                <div class="p-toolbar-group-left">
-                    <div>            <p-button label="Kodambakkam" (click)="showkodambakkamFunc('labour')" icon="pi pi-print" class="mr-2"></p-button>
-                    </div>
-                    <div>            <p-button label="Trustpuram" (click)="showTrustpuramFunc('labour')" icon="pi pi-desktop" styleClass="p-button-success"></p-button>
-                    </div>
-                    <div>            <p-splitButton label="Admin" (onClick)="adminfunc('info')" icon="pi pi-cog" [model]="items" styleClass="p-button-warning"></p-splitButton>
-                    </div>
-                        
-                    <!-- <i class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></i> -->
-                    
-                </div>
-                
-                <div class="p-toolbar-group-right">
-                   
-                    <p-button icon="pi pi-percentage" (click)="showCalculatorFunc()" styleClass="p-button-success"></p-button>
-                </div>
-            </p-toolbar>
-        </p-card>
-    </div>
-    
-    <div class="child-component">
-            <p-sidebar 
-    [(visible)]="showkodambakkam"
-    position="right"
-    [baseZIndex]="10000"
-    position="right"
-    [style]="{ width: '40em' }"
-  > 
-    <app-kodambakkam [adminAccess]="adminKodambakkam" (saveClicked)="kodambakkamSaved()" *ngIf="showkodambakkam"></app-kodambakkam>
-      </p-sidebar> 
-      <p-sidebar 
-      [(visible)]="showTrustpuram"
+  <div class="card-component">
+    <p-card>
+      <div class="title-class"><h1>S T U D E N T S    &nbsp;&nbsp; P A R K  &nbsp;&nbsp;</h1></div>
+      <p-toolbar>
+        <div class="p-toolbar-group-left">
+  
+          <div>
+            <p-splitButton label="Entry" (onClick)="adminfunc('info')" icon="pi pi-cog" [model]="items" styleClass="p-button-warning"></p-splitButton>
+          </div>
+
+          <!-- <i class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></i> -->
+
+        </div>
+
+        <div class="p-toolbar-group-right">
+
+          <p-button icon="pi pi-percentage" (click)="showCalculatorFunc()" styleClass="p-button-success"></p-button>
+        </div>
+      </p-toolbar>
+    </p-card>
+  </div>
+
+  <div class="child-component">
+    <p-sidebar [(visible)]="showkodambakkam"
+               position="right"
+               [baseZIndex]="10000"
+               position="right"
+               [style]="{ width: '40em' }">
+      <app-kodambakkam [adminAccess]="adminKodambakkam" (saveClicked)="kodambakkamSaved()" *ngIf="showkodambakkam"></app-kodambakkam>
+    </p-sidebar>
+    <p-sidebar [(visible)]="showTrustpuram"
+               position="right"
+               [baseZIndex]="10000"
+               position="right"
+               [style]="{ width: '40em' }">
+      <app-trustpuram [adminAccess]="adminTrustpuram" (saveClicked)="trustpuramSaved()" *ngIf="showTrustpuram"></app-trustpuram>
+    </p-sidebar>
+    <p-sidebar [(visible)]="showAdmin"
+               position="right"
+               [baseZIndex]="10000"
+               position="right"
+               [style]="{ width: '40em' }">
+      <app-admin *ngIf="showAdmin"></app-admin>
+    </p-sidebar>
+    <p-sidebar [(visible)]="showHouseSpends"
+               position="right"
+               [baseZIndex]="10000"
+               position="right"
+               [style]="{ width: '40em' }">
+      <app-housespends *ngIf="showHouseSpends"></app-housespends>
+    </p-sidebar>
+    <p-sidebar [(visible)]="showNetCalculation"
+               position="right"
+               [baseZIndex]="10000"
+               position="right"
+               [style]="{ width: '40em' }">
+      <app-netcalculate *ngIf="showNetCalculation"></app-netcalculate>
+    </p-sidebar>
+    <!-- <p-sidebar
+      [(visible)]="showCalculator"
       position="right"
       [baseZIndex]="10000"
       position="right"
-      [style]="{ width: '40em' }"
-    > 
-    <app-trustpuram  [adminAccess]="adminTrustpuram" (saveClicked)="trustpuramSaved()" *ngIf="showTrustpuram"></app-trustpuram>
-</p-sidebar> 
-<p-sidebar 
-[(visible)]="showAdmin"
-position="right"
-[baseZIndex]="10000"
-position="right"
-[style]="{ width: '40em' }"
-> 
-    <app-admin *ngIf="showAdmin"></app-admin>
-  </p-sidebar>
-    <p-sidebar 
-    [(visible)]="showHouseSpends"
-    position="right"
-    [baseZIndex]="10000"
-    position="right"
-    [style]="{ width: '40em' }"
-  > 
-    <app-housespends *ngIf="showHouseSpends"></app-housespends>
-    </p-sidebar>
-    <p-sidebar 
-    [(visible)]="showNetCalculation"
-    position="right"
-    [baseZIndex]="10000"
-    position="right"
-    [style]="{ width: '40em' }"
-  > 
-    <app-netcalculate *ngIf="showNetCalculation"></app-netcalculate>
-</p-sidebar>
-    <!-- <p-sidebar
-    [(visible)]="showCalculator"
-    position="right"
-    [baseZIndex]="10000"
-    position="right"
-    [style]="{ width: '80em' }"
-  > -->
-  <app-calculator  ></app-calculator>
-  <!-- </p-sidebar> -->
+      [style]="{ width: '80em' }"
+    > -->
+    <app-calculator></app-calculator>
+    <!-- </p-sidebar> -->
 
-    </div>
+  </div>
 
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
-
 
 

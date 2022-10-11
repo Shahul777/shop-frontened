@@ -1,731 +1,824 @@
 <div class="loading-indicator" *ngIf="showProgress">
-    <p-progressSpinner ></p-progressSpinner>
+  <p-progressSpinner></p-progressSpinner>
 </div>
 
-<div  *ngIf="!loginDetail && mainDetail">
-    <p-table #dt1 [value]="customers" dataKey="id"
-    [rows]="8"
-    [(selection)]="selectedAccounts" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" [loading]="loading" styleClass="p-datatable-gridlines"
-    [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [globalFilterFields]="['name','country.name','representative.name','status']">
+<div *ngIf="!loginDetail && mainDetail">
+  <p-table #dt1 [value]="customers" dataKey="id"
+           [rows]="8"
+           [(selection)]="selectedAccounts" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" [loading]="loading" styleClass="p-datatable-gridlines"
+           [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [globalFilterFields]="['name','country.name','representative.name','status']">
     <ng-template pTemplate="caption">
-        <div class="flex" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;">
-            <div>
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+      <div class="flex" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;">
+        <div>
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
 
-            </div>
-            <div class="title-class"><h3>TRUSTPURAM ACCOUNTS  SECTION</h3></div>
-            <!-- <span class="p-input-icon-left ml-auto">
-                <i class="pi pi-search"></i>
-                 <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-            </span> -->
-            <div style="margin-left: 50%" *ngIf="wholeDeleteShow">
-                <button (click)="deleteAllEntry()" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
-
-            </div>
-            <div style="margin-left: 30%" *ngIf="wholeInfoShow && adminAccess">
-                <button (click)="showAllStatics()" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-warning"></button>
-
-            </div>
-            <div style="margin-left: 20%">
-                <button pButton pRipple type="button" (click)="addAccounts()" icon="pi pi-plus" class="p-button-rounded p-button-success"></button>
-            </div>
-            <div *ngIf="adminAccess" style="margin-left: 30%">
-                <button pButton pRipple type="button" label="labour" (click)="labourTable()" icon="pi pi-cog" class="p-button-rounded p-button-success"></button>
-            </div>
         </div>
+        <div class="title-class"><h3>TRUSTPURAM ACCOUNTS  SECTION</h3></div>
+        <!-- <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+             <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+        </span> -->
+        <div style="margin-left: 50%" *ngIf="wholeDeleteShow">
+          <button (click)="deleteAllEntry()" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+
+        </div>
+        <div style="margin-left: 30%" *ngIf="wholeInfoShow && adminAccess">
+          <button (click)="showAllStatics()" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-warning"></button>
+
+        </div>
+        <div style="margin-left: 20%">
+          <button pButton pRipple type="button" (click)="addAccounts()" icon="pi pi-plus" class="p-button-rounded p-button-success"></button>
+        </div>
+        <div *ngIf="adminAccess" style="margin-left: 30%">
+          <button pButton pRipple type="button" label="labour" (click)="labourTable()" icon="pi pi-cog" class="p-button-rounded p-button-success"></button>
+        </div>
+      </div>
     </ng-template>
     <ng-template pTemplate="header">
-        <tr>
-            <th *ngIf="adminAccess" style="width: 3rem">
-                <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                   Date
-                   <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Day
-                    <!-- <p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter> -->
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Black Machine 1
-                
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Black Machine 2
-                
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Colour Machine 1
-                
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Colour Machine 2
-                
-                </div>
-            </th>
-            <!-- <th>
-                <div class="flex justify-content-center align-items-center">
-                   Old Staying Money
-                
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                   Today Staying Copies
-                </div>
-            </th> -->
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                   Paper Sold
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Black Copies
-                
-                </div>
-            </th>
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                   Colour Copies
-                    
-                </div>
-            </th>
-        
-      
-            <th>
-                <div class="flex justify-content-center align-items-center">
-                    Income
-            
-                </div>
-            </th>
-            <!-- <th>
-                <div class="flex justify-content-center align-items-center">
-                    Activity
-              
-                </div>
-            </th> -->
-            <th style="width: 8rem">
-                <div class="flex justify-content-center align-items-center">
-                   Actions
-                   
-                </div>
-            </th>
-        </tr>
+      <tr>
+        <!-- <th *ngIf="adminAccess" style="width: 3rem">
+            <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+               Date
+               <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Day
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Black Machine 1
+
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Black Machine 2
+
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Colour Machine 1
+
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Colour Machine 2
+
+            </div>
+        </th>
+
+        <th>
+            <div class="flex justify-content-center align-items-center">
+               Paper Sold
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Black Copies
+
+            </div>
+        </th>
+        <th>
+            <div class="flex justify-content-center align-items-center">
+               Colour Copies
+
+            </div>
+        </th>
+
+
+        <th>
+            <div class="flex justify-content-center align-items-center">
+                Income
+
+            </div>
+        </th>
+
+        <th style="width: 8rem">
+            <div class="flex justify-content-center align-items-center">
+               Actions
+
+            </div>
+        </th> -->
+
+
+        <th *ngIf="adminAccess" style="width: 3rem">
+          <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Date
+            <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Day
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Black Machine 1
+
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Day
+          </div>
+        </th>
+
+        <th *ngIf="adminAccess" style="width: 3rem">
+          <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
+        </th>
+        <th *ngIf="!adminAccess" style="width: 3rem">
+          Colour Copies
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Paper Sold
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Date
+            <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Print Data
+
+          </div>
+        </th>
+
+
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Income
+
+          </div>
+        </th>
+
+        <th style="width: 8rem">
+          <div class="flex justify-content-center align-items-center">
+            Delete
+
+          </div>
+        </th>
+
+
+      </tr>
     </ng-template>
     <ng-template pTemplate="body" let-customer>
-        <tr>
-            <td *ngIf="adminAccess" >
-                <!-- <p-tableCheckbox (click)="checkBoxx()" [value]="tableCheckBox"></p-tableCheckbox> -->
-                <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
-            </td>
-            <td>
-                {{customer.Date | date: 'dd/MM/yyyy'}}
-            </td>
-            <td>
-                {{customer.Day}}
-            </td>
-            <td>
-                <span class="image-text">{{customer.BlackMachineReading1}}</span>
-            </td>
-            <td>
-                <span class="image-text">{{customer.BlackMachineReading2}}</span>
-            </td>
-            <td>
-                <span class="image-text">{{customer.ColourMachineReading1}}</span>
-            </td>
-            <td>
-                <span class="image-text">{{customer.ColourMachineReading2}}</span>
-            </td>
-            <!-- <td>
-                <span class="image-text">{{customer.OldStayingMoney}}</span>
-            </td>
-            <td>
-                {{customer.TodayStayingCopies }}
-            </td> -->
-            <td>
-                {{customer.PaperSoldToday }}
-            </td>
-            <td>
-                <span class="image-text">{{customer.BlackCopies}}</span>
-            </td>
-            <td>
-                <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" /> -->
-                <span class="image-text">{{customer.ColourCopies}}</span>
-            </td>
-          
-            <td>
-                {{customer.TotalIncome }}
-            </td>
-         
-            <!-- <td>
-                <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-            </td> -->
-            <td class="text-center">
-                <div style="display: grid; grid-template-columns: 1fr 1fr;">
-                    <button pButton pRipple (click)="editAccount2(customer.id)" type="button" icon="pi pi-print" class="p-button-rounded p-button-info"></button>
-                    <button pButton pRipple (click)="deleteAccount(customer.id,customer.GetTime)" type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
-                </div>
-              
-            </td>
-        </tr>
+      <tr>
+        <!-- <td *ngIf="adminAccess" >
+            <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
+        </td>
+        <td>
+            {{customer.Date | date: 'dd/MM/yyyy'}}
+        </td>
+        <td>
+            {{customer.Day}}
+        </td>
+        <td>
+            <span class="image-text">{{customer.BlackMachineReading1}}</span>
+        </td>
+        <td>
+            <span class="image-text">{{customer.BlackMachineReading2}}</span>
+        </td>
+        <td>
+            <span class="image-text">{{customer.ColourMachineReading1}}</span>
+        </td>
+        <td>
+            <span class="image-text">{{customer.ColourMachineReading2}}</span>
+        </td>
+
+        <td>
+            {{customer.PaperSoldToday }}
+        </td>
+        <td>
+            <span class="image-text">{{customer.BlackCopies}}</span>
+        </td>
+        <td>
+            <span class="image-text">{{customer.ColourCopies}}</span>
+        </td>
+
+        <td>
+            {{customer.TotalIncome }}
+        </td>
+
+
+        <td class="text-center">
+            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <button pButton pRipple (click)="editAccount2(customer.id)" type="button" icon="pi pi-print" class="p-button-rounded p-button-info"></button>
+                <button pButton pRipple (click)="deleteAccount(customer.id,customer.GetTime)" type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+            </div>
+
+        </td> -->
+
+        <td *ngIf="adminAccess">
+          <!-- <p-tableCheckbox (click)="checkBoxx()" [value]="tableCheckBox"></p-tableCheckbox> -->
+          <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
+        </td>
+        <td>
+          {{customer.Date | date: 'dd/MM/yyyy'}}
+        </td>
+        <td>
+          {{customer.Day}}
+        </td>
+        <td>
+          <span class="image-text">{{customer.BlackMachineReading1}}</span>
+        </td>
+        <td>
+          {{customer.Day}}
+        </td>
+
+        <td *ngIf="adminAccess">
+          <!-- <p-tableCheckbox (click)="checkBoxx()" [value]="tableCheckBox"></p-tableCheckbox> -->
+          <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
+        </td>
+        <td *ngIf="!adminAccess">
+
+          {{customer.ColourCopies}}
+        </td>
+
+        <td>
+          {{customer.PaperSoldToday }}
+        </td>
+
+        <td>
+          {{customer.Date | date: 'dd/MM/yyyy'}}
+        </td>
+        <td>
+          <button pButton pRipple (click)="editAccount2(customer.id)" type="button" icon="pi pi-print" class="p-button-rounded p-button-info"></button>
+        </td>
+        <td>
+          {{customer.TotalIncome }}
+        </td>
+
+        <!-- <td>
+            <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
+        </td> -->
+        <td class="text-center">
+          <div style="display: grid; grid-template-columns: 1fr 1fr;">
+            <button pButton pRipple (click)="deleteAccount(customer.id,customer.GetTime)" type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+          </div>
+
+        </td>
+
+
+
+
+      </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="7">No Records found.</td>
-        </tr>
+      <tr>
+        <td colspan="7">No Records found.</td>
+      </tr>
     </ng-template>
-</p-table>
+  </p-table>
 
-<p-dialog header="Account Details" [closable]="false" [(visible)]="isViewAccountDetail" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
+  <p-dialog header="Account Details" [closable]="false" [(visible)]="isViewAccountDetail" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+            [draggable]="true" [resizable]="true">
 
-<div  class="main-edit" style="display: grid; grid-template-columns: 0.5fr 0.8fr;">
+    <div class="main-edit" style="display: grid; grid-template-columns: 0.5fr 0.8fr;">
 
-<div>
-    <p-chart type="doughnut" [data]="dataIncome" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
- <div style="color: blue;" class="column2">Total Income : {{kdmAccountDetail.TotalIncome}}</div>
-<!-- <br> -->
-<div style="color: red;" class="column2">Expenses  : {{kdmAccountDetail.Expenses}}</div>
-<!-- <br> -->
-<div style="color: green;" class="column2">NetProfit  : {{kdmAccountDetail.NetProfit}}</div>
+      <div>
+        <p-chart type="doughnut" [data]="dataIncome" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
+        <div style="color: blue;" class="column2">Total Income : {{kdmAccountDetail.TotalIncome}}</div>
+        <!-- <br> -->
+        <div style="color: red;" class="column2">Expenses  : {{kdmAccountDetail.Expenses}}</div>
+        <!-- <br> -->
+        <div style="color: green;" class="column2">NetProfit  : {{kdmAccountDetail.NetProfit}}</div>
 
-<div class="column2">Excess Criteria  : {{excessReach1}}</div>
+        <div class="column2">Excess Criteria  : {{excessReach1}}</div>
 
-<div class="column2">Paper Sheets : {{kdmAccountDetail.PaperSoldToday}}</div>
+        <div class="column2">Paper Sheets : {{kdmAccountDetail.PaperSoldToday}}</div>
 
-<div class="column2">Single Copies : {{singleSideCopies1}}</div>
+        <div class="column2">Single Copies : {{singleSideCopies1}}</div>
 
-<div class="column2">B2B Copies : {{kdmAccountDetail.B2bCopies}}</div>
+        <div class="column2">B2B Copies : {{kdmAccountDetail.B2bCopies}}</div>
 
-<div class="column2">Colour Copies : {{kdmAccountDetail.ColourCopies}}</div>
+        <div class="column2">Colour Copies : {{kdmAccountDetail.ColourCopies}}</div>
 
-<div class="column2">Bindings : {{kdmAccountDetail.Bindings}}</div>
-</div>
-<div>
+        <div class="column2">Bindings : {{kdmAccountDetail.Bindings}}</div>
+      </div>
+      <div>
 
-    <p-chart type="pie" [data]="dataCopies" [options]="chartOptions"  [style]="{'width': '10px'}"></p-chart>
+        <p-chart type="pie" [data]="dataCopies" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
 
-</div>
-
-
-</div>
+      </div>
 
 
-
-    </p-dialog>
-
-    <p-dialog header=" Monthly Account Details" [closable]="false" [(visible)]="showAllStaticDetail" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-
-    <p-steps
-    [model]="items"
-    [(activeIndex)]="allDetailIndex"
-    [readonly]="true"
-  ></p-steps>
+    </div>
 
 
 
-<div *ngIf="allDetailIndex===0"  class="main-edit" style="display: grid; grid-template-columns: 0.5fr 0.8fr;">
+  </p-dialog>
 
-<div>
-    <p-chart type="doughnut" [data]="finalIncome" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
- <div style="color: blue;" class="column2">Total Income : {{allAccountDetail.TotalIncome}}</div>
-<!-- <br> -->
-<div style="color: red;" class="column2">Expenses  : {{allAccountDetail.Expenses}}</div>
-<!-- <br> -->
-<div style="color: green;" class="column2">NetProfit  : {{allAccountDetail.NetProfit}}</div>
+  <p-dialog header=" Monthly Account Details" [closable]="false" [(visible)]="showAllStaticDetail" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+            [draggable]="true" [resizable]="true">
 
-<div class="column2">Excess Criteria  : {{excessreach2}}</div>
-
-<div class="column2">Paper Packets : {{wholePaperCount}}</div>
-
-<div class="column2">Total Black Copies : {{allAccountDetail.BlackCopies}}</div>
-
-<div class="column2">Single Copies : {{singleSideCopies1}}</div>
-
-<div class="column2">B2B Copies : {{allAccountDetail.B2bCopies}}</div>
-
-<div class="column2">Colour Copies : {{allAccountDetail.ColourCopies}}</div>
-
-<div class="column2">Bindings : {{allAccountDetail.Bindings}}</div>
-</div>
-<div>
-
-    <p-chart type="pie" [data]="finalCopy" [options]="chartOptions"  [style]="{'width': '10px'}"></p-chart>
-
-</div>
+    <p-steps [model]="items"
+             [(activeIndex)]="allDetailIndex"
+             [readonly]="true"></p-steps>
 
 
-</div>
 
-<div *ngIf="allDetailIndex===1" style="display: grid; grid-template-columns: 0.5fr 0.8fr;">
-    <div>
+    <div *ngIf="allDetailIndex===0" class="main-edit" style="display: grid; grid-template-columns: 0.5fr 0.8fr;">
+
+      <div>
+        <p-chart type="doughnut" [data]="finalIncome" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
+        <div style="color: blue;" class="column2">Total Income : {{allAccountDetail.TotalIncome}}</div>
+        <!-- <br> -->
+        <div style="color: red;" class="column2">Expenses  : {{allAccountDetail.Expenses}}</div>
+        <!-- <br> -->
+        <div style="color: green;" class="column2">NetProfit  : {{allAccountDetail.NetProfit}}</div>
+
+        <div class="column2">Excess Criteria  : {{excessreach2}}</div>
+
+        <div class="column2">Paper Packets : {{wholePaperCount}}</div>
+
+        <div class="column2">Total Black Copies : {{allAccountDetail.BlackCopies}}</div>
+
+        <div class="column2">Single Copies : {{singleSideCopies1}}</div>
+
+        <div class="column2">B2B Copies : {{allAccountDetail.B2bCopies}}</div>
+
+        <div class="column2">Colour Copies : {{allAccountDetail.ColourCopies}}</div>
+
+        <div class="column2">Bindings : {{allAccountDetail.Bindings}}</div>
+      </div>
+      <div>
+
+        <p-chart type="pie" [data]="finalCopy" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
+
+      </div>
+
+
+    </div>
+
+    <div *ngIf="allDetailIndex===1" style="display: grid; grid-template-columns: 0.5fr 0.8fr;">
+      <div>
         <p-chart type="doughnut" [data]="salaryChart" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
         <div style="color: blue;" class="column2">Assan Present : {{allLabourDetail.AssanPresent}}</div>
-       <!-- <br> -->
-       <div style="color: red;" class="column2">Rasheed Present : {{allLabourDetail.RasheedPresent}}</div>
-       <div style="color: green;" class="column2">Mani Present  : {{allLabourDetail.ManiPresent}}</div>
-
-    </div>
-</div>
-<div *ngIf="allDetailIndex===2" style="display: grid; grid-template-columns: 0.5fr 0.8fr; " >
-    <!-- <div style="display : grid; grid-template-rows: 1fr 1fr 1fr 1fr 1fr;"> -->
-        <div>
-            <br>
-            CASH INCOME : {{this.allAccountDetail.TonerQuantityCame}}
-            <hr>
-        </div>
-        <div>
-        <br>
-            PAYTM INCOME : {{this.allAccountDetail.TonerQuantitySent}}
-        
-            <hr>
-        </div>
-        <div>
-            <br>
-            PAPER CAME DATE : {{this.paperCameDate}}
-            <hr>
-        </div>
-        <div>
-            <br>
-            TONER CAME DATE : {{this.tonerCameDate}}
-            <hr>
-        </div>
-        <div>
-            <br>
-            ITEMS STOCKS INFO : {{this.totalItemCameDetail}}
-            <hr>
-        </div>
-
-        <div style="color: blue;" ><br>TOTAL INCOME : {{allAccountDetail.TotalIncome}}<hr></div>
         <!-- <br> -->
-        <div style="color: red;" > <br> EXPENSES  : {{allAccountDetail.Expenses}}<hr></div>
-        <!-- <br> -->
-        <div style="color: green;" > <br>NETPROFIT  : {{allAccountDetail.NetProfit}}<hr></div>
-        
-        <div > <br>EXCESS CRITERIA  : {{excessreach2}}<hr></div>
-        
-        <div > <br>PAPER PACKETS: {{wholePaperCount}}<hr></div>
-        <div > <br>PAPER SHEETS : {{wholePaperCount * 500}}<hr></div>
-        <div > <br>TOTAL BLACK COPIES : {{allAccountDetail.BlackCopies}}<hr></div>
-        
-        <div > <br>SINGLE COPIES : {{singleSideCopies1}}<hr></div>
-        
-        <div ><br>B2B COPIES : {{allAccountDetail.B2bCopies}}<hr></div>
-        
-        <div ><br>Colour COPIES : {{allAccountDetail.ColourCopies}}<hr></div>
-        
-        <div ><br>BINDINGS : {{allAccountDetail.Bindings}}<hr></div>
+        <div style="color: red;" class="column2">Rasheed Present : {{allLabourDetail.RasheedPresent}}</div>
+        <div style="color: green;" class="column2">Mani Present  : {{allLabourDetail.ManiPresent}}</div>
 
-
-        <!-- </div> -->
-</div>
-
-<ng-template pTemplate="footer">
-
-
-
-
-    <div  *ngIf="allDetailIndex==0">
-                
-        <button  (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
-        </div>
-        <div  *ngIf="allDetailIndex==1" style="display: grid; grid-template-columns:1fr 1fr;">
-             <div> 
-            <button  (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
-        </div>  
-
-        <div> 
-            <button  (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
-        </div>  
-
-
-        </div>
-        <div  *ngIf="allDetailIndex==2" >
-            <div> 
-           <button  (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
-       </div>  
-
-
-
-       </div>
-</ng-template>
-    </p-dialog>
-
-
-
-    <p-dialog header="Data Print" [closable]="false" [(visible)]="showDataPrint" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-
- <ng-template pTemplate="body">
-
-    <div class="print-main">
-<div class="date" style="text-align: center;">
-
-    {{kdmAccountDetail.Date | date: 'dd/MM/yyyy'}}
-
-</div>
-
-
-<div class="reading-oldstay">
-
-    <div >
-<p>1. Black Reading1 &nbsp;- &nbsp; {{kdmAccountDetail.BlackMachineReading1}} &nbsp;  </p>
-<!-- <br> -->
-<p>2. Black Reading2 &nbsp;- &nbsp; {{kdmAccountDetail.BlackMachineReading2}} &nbsp;  </p>
-<!-- <br> -->
-
-<p>Total Black Copies = {{kdmAccountDetail.BlackCopies}}</p>
-
-<p>3. Colour Reading1 &nbsp;- &nbsp;  {{kdmAccountDetail.ColourMachineReading1}} &nbsp;  </p>
-<p>3. Colour Reading2 &nbsp;- &nbsp;  {{kdmAccountDetail.ColourMachineReading2}} &nbsp;  </p>
-<!-- <br> -->
-
-<!-- <br> -->
-
-<p> Total Colour Copies = {{kdmAccountDetail.ColourCopies}}</p>
-
+      </div>
     </div>
-<div style="text-align: right;" >
-    பழசு இருப்பு :
-<br>
-    {{kdmAccountDetail.PastStayDetail}}
-
-<br>
-<hr>
-
-பழசு போனது :
-
-<br>
-{{kdmAccountDetail.PastSoldDetail}}
-
-<br>
-<hr>
-இன்று இருப்பு :
-<br>
-{{kdmAccountDetail.TodayStayDetail}}
-
-<br>
-<hr>
-{{kdmAccountDetail.NotesToday}}
-
-<br>
-<hr>
-<div *ngIf="kdmAccountDetail.isItemsCame">
-Items Came :
-<br>
-{{kdmAccountDetail.ItemsInfo}}
-<hr>
-</div>
-</div>
-
-
-    
-</div>
-<div class ="a4-oldgone">
-
-    <div>
-A4 PAPER PACKET &nbsp;- &nbsp; {{kdmAccountDetail.PaperPresentToday}}&nbsp; + &nbsp; {{kdmAccountDetail.PaperSheet}} sheets
-<div *ngIf="kdmAccountDetail.isPaperCame">
-PAPER PACKET CAME TODAY &nbsp;- &nbsp; {{kdmAccountDetail.PaperQuantityCame}}
-</div>
-<div *ngIf="kdmAccountDetail.isPaperSent">
-    PAPER PACKET SENT &nbsp;- &nbsp; {{kdmAccountDetail.PaperQuantitySent}}
-    </div>
-    </div>
-<div>
-    <!-- பழசு போனது
-
-    <br>
-    {{kdmAccountDetail.PastSoldDetail}}
-
-<br> -->
-
-</div>
-
-
-</div>
-<div class="binding-todaystay">
-    <div>
-BINDINGS &nbsp;- &nbsp; {{kdmAccountDetail.Bindings}}
-<br>
-    EXPENSE: 
-    <br>
-    Others - {{kdmAccountDetail.TonerSpent}}
-    <div *ngIf="kdmLabourDetail.RasheedPresent">
-       Rasheed - {{bata2}}
-
-    </div>
-    <div *ngIf="kdmLabourDetail.AssanPresent">
-       Assan - {{bata1 + 150}}
-
-    </div>
-    <div *ngIf="kdmLabourDetail.ManiPresent">
-        Mani - {{bata2 }}
- 
-     </div>
-    <!-- <div *ngIf="kdmLabourDetail.ManiPresent
-        Mani - {{bata2}}
-</div> -->
-   
-    </div>
-    <div style="text-align: center;" >
-
-      <p> T.A = {{kdmAccountDetail.TonerQuantityCame}} + {{kdmAccountDetail.TonerQuantitySent}} = {{kdmAccountDetail.TotalIncome}}</p> 
-      
-      <p> O.P= {{kdmAccountDetail.OpeningBalance}} </p> 
-
-
-    </div>
-
-
-</div>
-
-<div class="expense-total">
-    <div>
-        <!-- EXPENSE: 
+    <div *ngIf="allDetailIndex===2" style="display: grid; grid-template-columns: 0.5fr 0.8fr; ">
+      <!-- <div style="display : grid; grid-template-rows: 1fr 1fr 1fr 1fr 1fr;"> -->
+      <div>
         <br>
-        Others - {{kdmAccountDetail.Expenses}}
-        <div *ngIf="kdmLabourDetail.TajPresent">
-           Taj - {{bata1}}
+        CASH INCOME : {{this.allAccountDetail.TonerQuantityCame}}
+        <hr>
+      </div>
+      <div>
+        <br>
+        PAYTM INCOME : {{this.allAccountDetail.TonerQuantitySent}}
+
+        <hr>
+      </div>
+      <div>
+        <br>
+        PAPER CAME DATE : {{this.paperCameDate}}
+        <hr>
+      </div>
+      <div>
+        <br>
+        TONER CAME DATE : {{this.tonerCameDate}}
+        <hr>
+      </div>
+      <div>
+        <br>
+        ITEMS STOCKS INFO : {{this.totalItemCameDetail}}
+        <hr>
+      </div>
+
+      <div style="color: blue;"><br>TOTAL INCOME : {{allAccountDetail.TotalIncome}}<hr></div>
+      <!-- <br> -->
+      <div style="color: red;"> <br> EXPENSES  : {{allAccountDetail.Expenses}}<hr></div>
+      <!-- <br> -->
+      <div style="color: green;"> <br>NETPROFIT  : {{allAccountDetail.NetProfit}}<hr></div>
+
+      <div> <br>EXCESS CRITERIA  : {{excessreach2}}<hr></div>
+
+      <div> <br>PAPER PACKETS: {{wholePaperCount}}<hr></div>
+      <div> <br>PAPER SHEETS : {{wholePaperCount * 500}}<hr></div>
+      <div> <br>TOTAL BLACK COPIES : {{allAccountDetail.BlackCopies}}<hr></div>
+
+      <div> <br>SINGLE COPIES : {{singleSideCopies1}}<hr></div>
+
+      <div><br>B2B COPIES : {{allAccountDetail.B2bCopies}}<hr></div>
+
+      <div><br>Colour COPIES : {{allAccountDetail.ColourCopies}}<hr></div>
+
+      <div><br>BINDINGS : {{allAccountDetail.Bindings}}<hr></div>
+
+
+      <!-- </div> -->
+    </div>
+
+    <ng-template pTemplate="footer">
+
+
+
+
+      <div *ngIf="allDetailIndex==0">
+
+        <button (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+      </div>
+      <div *ngIf="allDetailIndex==1" style="display: grid; grid-template-columns:1fr 1fr;">
+        <div>
+          <button (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+        </div>
+
+        <div>
+          <button (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+        </div>
+
+
+      </div>
+      <div *ngIf="allDetailIndex==2">
+        <div>
+          <button (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+        </div>
+
+
+
+      </div>
+    </ng-template>
+  </p-dialog>
+
+
+
+  <p-dialog header="Data Print" [closable]="false" [(visible)]="showDataPrint" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+            [draggable]="true" [resizable]="true">
+
+    <ng-template pTemplate="body">
+
+      <div class="print-main">
+        <div class="date" style="text-align: center;">
+
+          {{kdmAccountDetail.Date | date: 'dd/MM/yyyy'}}
 
         </div>
-        <div *ngIf="kdmLabourDetail.NoorPresent">
-           Noor - {{bata1 + 150}}
 
-        </div> -->
+
+        <div class="reading-oldstay">
+
+          <div>
+            <p>1. Black Reading1 &nbsp;- &nbsp; {{kdmAccountDetail.BlackMachineReading1}} &nbsp;  </p>
+            <!-- <br> -->
+            <p>2. Black Reading2 &nbsp;- &nbsp; {{kdmAccountDetail.BlackMachineReading2}} &nbsp;  </p>
+            <!-- <br> -->
+
+            <p>Total Black Copies = {{kdmAccountDetail.BlackCopies}}</p>
+
+            <p>3. Colour Reading1 &nbsp;- &nbsp;  {{kdmAccountDetail.ColourMachineReading1}} &nbsp;  </p>
+            <p>3. Colour Reading2 &nbsp;- &nbsp;  {{kdmAccountDetail.ColourMachineReading2}} &nbsp;  </p>
+            <!-- <br> -->
+            <!-- <br> -->
+
+            <p> Total Colour Copies = {{kdmAccountDetail.ColourCopies}}</p>
+
+          </div>
+          <div style="text-align: right;">
+            பழசு இருப்பு :
+            <br>
+            {{kdmAccountDetail.PastStayDetail}}
+
+            <br>
+            <hr>
+
+            பழசு போனது :
+
+            <br>
+            {{kdmAccountDetail.PastSoldDetail}}
+
+            <br>
+            <hr>
+            இன்று இருப்பு :
+            <br>
+            {{kdmAccountDetail.TodayStayDetail}}
+
+            <br>
+            <hr>
+            {{kdmAccountDetail.NotesToday}}
+
+            <br>
+            <hr>
+            <div *ngIf="kdmAccountDetail.isItemsCame">
+              Items Came :
+              <br>
+              {{kdmAccountDetail.ItemsInfo}}
+              <hr>
             </div>
-            <div >
-                <!-- இன்று இருப்பு
+          </div>
+
+
+
+        </div>
+        <div class="a4-oldgone">
+
+          <div>
+            A4 PAPER PACKET &nbsp;- &nbsp; {{kdmAccountDetail.PaperPresentToday}}&nbsp; + &nbsp; {{kdmAccountDetail.PaperSheet}} sheets
+            <div *ngIf="kdmAccountDetail.isPaperCame">
+              PAPER PACKET CAME TODAY &nbsp;- &nbsp; {{kdmAccountDetail.PaperQuantityCame}}
+            </div>
+            <div *ngIf="kdmAccountDetail.isPaperSent">
+              PAPER PACKET SENT &nbsp;- &nbsp; {{kdmAccountDetail.PaperQuantitySent}}
+            </div>
+          </div>
+          <div>
+            <!-- பழசு போனது
+
                 <br>
-        {{kdmAccountDetail.TodayStayDetail}}
-        
-        <br> -->
-            </div>
-        
+                {{kdmAccountDetail.PastSoldDetail}}
+
+            <br> -->
+
+          </div>
 
 
-
-
-
-</div>
-
-
-    </div>
-
-
-
- </ng-template>
- 
-
-
-
-<ng-template pTemplate="footer">
-
-
-    <!-- <div  *ngIf="allDetailIndex==0">
-                
-        <button  (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
         </div>
-        <div  *ngIf="allDetailIndex==1">
-                
-            <button  (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+        <div class="binding-todaystay">
+          <div>
+            BINDINGS &nbsp;- &nbsp; {{kdmAccountDetail.Bindings}}
+            <br>
+            EXPENSE:
+            <br>
+            Others - {{kdmAccountDetail.TonerSpent}}
+            <div *ngIf="kdmLabourDetail.RasheedPresent">
+              Rasheed - {{bata2}}
+
+            </div>
+            <div *ngIf="kdmLabourDetail.AssanPresent">
+              Assan - {{bata1 + 150}}
+
+            </div>
+            <div *ngIf="kdmLabourDetail.ManiPresent">
+              Mani - {{bata2 }}
+
+            </div>
+            <!-- <div *ngIf="kdmLabourDetail.ManiPresent
+                    Mani - {{bata2}}
             </div> -->
-</ng-template>
-    </p-dialog>
+
+          </div>
+          <div style="text-align: center;">
+
+            <p> T.A = {{kdmAccountDetail.TonerQuantityCame}} + {{kdmAccountDetail.TonerQuantitySent}} = {{kdmAccountDetail.TotalIncome}}</p>
+
+            <p> O.P= {{kdmAccountDetail.OpeningBalance}} </p>
+
+
+          </div>
+
+
+        </div>
+
+        <div class="expense-total">
+          <div>
+            <!-- EXPENSE:
+            <br>
+            Others - {{kdmAccountDetail.Expenses}}
+            <div *ngIf="kdmLabourDetail.TajPresent">
+               Taj - {{bata1}}
+
+            </div>
+            <div *ngIf="kdmLabourDetail.NoorPresent">
+               Noor - {{bata1 + 150}}
+
+            </div> -->
+          </div>
+          <div>
+            <!-- இன்று இருப்பு
+                    <br>
+            {{kdmAccountDetail.TodayStayDetail}}
+
+            <br> -->
+          </div>
 
 
 
 
 
-<p-dialog header="Trustpuram Entry" [closable]="false" [(visible)]="isAddAccounts" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-   <ng-template pTemplate="body">
 
-    <div class="field col-12 md:col-4">
-        <p-steps
-        [model]="items"
-        [(activeIndex)]="activeIndex2"
-        [readonly]="true"
-      ></p-steps>
-      <div *ngIf="activeIndex2==0">
-        <div class="accountSection">
+        </div>
+
+
+      </div>
+
+
+
+    </ng-template>
+
+
+
+
+    <ng-template pTemplate="footer">
+
+
+      <!-- <div  *ngIf="allDetailIndex==0">
+
+          <button  (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+          </div>
+          <div  *ngIf="allDetailIndex==1">
+
+              <button  (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+              </div> -->
+    </ng-template>
+  </p-dialog>
+
+
+
+
+
+  <p-dialog header="Trustpuram Entry" [closable]="false" [(visible)]="isAddAccounts" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+            [draggable]="true" [resizable]="true">
+    <ng-template pTemplate="body">
+
+      <div class="field col-12 md:col-4">
+        <p-steps [model]="items"
+                 [(activeIndex)]="activeIndex2"
+                 [readonly]="true"></p-steps>
+        <div *ngIf="activeIndex2==0">
+          <div class="accountSection">
             <p-card>
-            <p-toolbar>
+              <p-toolbar>
 
                 <div class="oneRow">
-                    <span *ngIf="adminAccess" class="p-float-label">
-                        <p-calendar (click)="calenderSelected()" inputId="calendar" [(ngModel)]="date"></p-calendar>
-                        <label style="color: red; font-size: 15px;"  for="calendar">Date</label>
-                    </span>
-                    <span *ngIf="!adminAccess" class="p-float-label">
-                        <p-calendar (click)="calenderSelected2()" inputId="calendar" [(ngModel)]="date"></p-calendar>
-                        <label style="color: red; font-size: 15px;"  for="calendar">Date</label>
-                    </span>
-                  
-                  
-                    <div *ngIf="showEntryInput || isEditAccount" >
-                        <p-checkbox name="groupname" (click)="holidayClicked()" value="val1" inputId="binary" [(ngModel)]="isHolidayCheck"></p-checkbox>
-                        <label style="color: white;" for="binary">Holiday</label>
-                    </div>
-<div *ngIf="showEntryInput || isEditAccount">
-    <p-checkbox name="groupname" (click)="itemsCame()" value="val2" inputId="binary" [(ngModel)]="itemsCheckBool"></p-checkbox>
-    <label style="color: white;" for="binary">Items Came</label>
+                  <span *ngIf="adminAccess" class="p-float-label">
+                    <p-calendar (click)="calenderSelected()" inputId="calendar" [(ngModel)]="date"></p-calendar>
+                    <label style="color: red; font-size: 15px;" for="calendar">Date</label>
+                  </span>
+                  <span *ngIf="!adminAccess" class="p-float-label">
+                    <p-calendar (click)="calenderSelected2()" inputId="calendar" [(ngModel)]="date"></p-calendar>
+                    <label style="color: red; font-size: 15px;" for="calendar">Date</label>
+                  </span>
 
 
-</div>
-<p-dialog header="Stock  Details" [(visible)]="itemsCheckBool2" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-[resizable]="true">
-
-<div>
-   <div>
-       <!-- <i (click)="action3.toggle($event)" class="pi pi-info"></i> -->
-
-   </div>
-   <div>  <app-copy-money [isItemDetail]="itemDetail" (saveClicked)="itemsGot($event)" ></app-copy-money></div>
-</div>
+                  <div *ngIf="showEntryInput || isEditAccount">
+                    <p-checkbox name="groupname" (click)="holidayClicked()" value="val1" inputId="binary" [(ngModel)]="isHolidayCheck"></p-checkbox>
+                    <label style="color: white;" for="binary">Holiday</label>
+                  </div>
+                  <div *ngIf="showEntryInput || isEditAccount">
+                    <p-checkbox name="groupname" (click)="itemsCame()" value="val2" inputId="binary" [(ngModel)]="itemsCheckBool"></p-checkbox>
+                    <label style="color: white;" for="binary">Items Came</label>
 
 
-
-</p-dialog>
-
+                  </div>
+                  <p-dialog header="Stock  Details" [(visible)]="itemsCheckBool2" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+                            [resizable]="true">
 
                     <div>
-                        <button pButton pRipple type="button" (click)="op.toggle($event)" icon="pi pi-percentage" class="p-button-rounded"></button>
-                        <p-overlayPanel #op [showCloseIcon]="true" >
-                            <ng-template pTemplate="body">
-                              <app-calcidisplay></app-calcidisplay>
-                            </ng-template>
-                        </p-overlayPanel>
+                      <div>
+                        <!-- <i (click)="action3.toggle($event)" class="pi pi-info"></i> -->
+
+                      </div>
+                      <div>  <app-copy-money [isItemDetail]="itemDetail" (saveClicked)="itemsGot($event)"></app-copy-money></div>
                     </div>
-                </div>
-            </p-toolbar>
-       <!-- &nbsp; -->
-       <br>
-          <div class="after-calender" *ngIf="showEntryInput || isEditAccount">
- 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 10px;" >
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" (onInput)="machineblack1($event)" autocomplete="off" [(ngModel)]="blackMachineReading1"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;" for="inputnumber"> 
-                            Black Machine 1</label>
-                    </span>
-                </div>
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" (onInput)="machineblack2($event)" autocomplete="off" [(ngModel)]="blackMachineReading2"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Black Machine 2</label>
-                    </span>
-                </div>
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" (onInput)="machinecolour1($event)" autocomplete="off" [(ngModel)]="colourMachineReading1"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Colour Machine 1</label>
-                    </span>
-                </div>
-
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber  inputId="inputnumber" (onInput)="machinecolour2($event)" autocomplete="off" [(ngModel)]="colourMachineReading2"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Colour Machine 2</label>
-                    </span>
-                </div>
-                <!-- <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" (input)="machinecolour1()" autocomplete="off" [(ngModel)]="colourMachineReading1"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Colour Machine 1</label>
-                    </span>
-                </div> -->
-            </div>
-           
-            <div class="columntwo" >
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber"  autocomplete="off" [(ngModel)]="b2bCopies"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">B2B Copies</label>
-                    </span>
-                </div>
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber"  [readonly]="true" [disabled]="true" [(ngModel)]="blackCopies"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Total Black Copies</label>
-                    </span>
-                </div>
-
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" [readonly]="true" [disabled]="true" [(ngModel)]="colourCopies"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Total Colour Copies</label>
-                    </span>
-                </div>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 10px;">
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="bindings"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">பைண்டிங்</label>
-                    </span>
-                </div>
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="expenses"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">செலவு</label>
-                    </span>
-                </div>
-
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="paperCheck($event)" [(ngModel)]="paperPresentToday"></p-inputNumber>
-                        <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Paper Packets</label>
-                    </span>
-                </div>
-
-                <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-inputNumber [disabled]="waitingForPacketEntry" inputId="inputnumber" (onInput)="sheetCheck($event)" [(ngModel)]="paperSheet"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Paper Sheets</label>
-                    </span>
-                </div>
 
 
-                <p-dialog [closable]="true" header="How Many Paper Recieved ?" [(visible)]="paperRecieved" [style]="{width: '100vw'}">
+
+                  </p-dialog>
+
+
+                  <div>
+                    <button pButton pRipple type="button" (click)="op.toggle($event)" icon="pi pi-percentage" class="p-button-rounded"></button>
+                    <p-overlayPanel #op [showCloseIcon]="true">
+                      <ng-template pTemplate="body">
+                        <app-calcidisplay></app-calcidisplay>
+                      </ng-template>
+                    </p-overlayPanel>
+                  </div>
+                </div>
+              </p-toolbar>
+              <!-- &nbsp; -->
+              <br>
+              <div class="after-calender" *ngIf="showEntryInput || isEditAccount">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 10px;">
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" (onInput)="machineblack1($event)" autocomplete="off" [(ngModel)]="blackMachineReading1"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">
+                        Black Machine 1
+                      </label>
+                    </span>
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" (onInput)="machineblack2($event)" autocomplete="off" [(ngModel)]="blackMachineReading2"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Black Machine 2</label>
+                    </span>
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" (onInput)="machinecolour1($event)" autocomplete="off" [(ngModel)]="colourMachineReading1"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Colour Machine 1</label>
+                    </span>
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" (onInput)="machinecolour2($event)" autocomplete="off" [(ngModel)]="colourMachineReading2"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Colour Machine 2</label>
+                    </span>
+                  </div>
+                  <!-- <div class="field col-12 md:col-4">
+                      <span class="p-float-label">
+                          <p-inputNumber inputId="inputnumber" (input)="machinecolour1()" autocomplete="off" [(ngModel)]="colourMachineReading1"></p-inputNumber>
+                          <label style="color: red; font-size: 15px;"  for="inputnumber">Colour Machine 1</label>
+                      </span>
+                  </div> -->
+                </div>
+
+                <div class="columntwo">
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="b2bCopies"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">B2B Copies</label>
+                    </span>
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" [readonly]="true" [disabled]="true" [(ngModel)]="blackCopies"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Total Black Copies</label>
+                    </span>
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" [readonly]="true" [disabled]="true" [(ngModel)]="colourCopies"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Total Colour Copies</label>
+                    </span>
+                  </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 10px;">
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="bindings"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">பைண்டிங்</label>
+                    </span>
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="expenses"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">செலவு</label>
+                    </span>
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="paperCheck($event)" [(ngModel)]="paperPresentToday"></p-inputNumber>
+                      <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Paper Packets</label>
+                    </span>
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <p-inputNumber [disabled]="waitingForPacketEntry" inputId="inputnumber" (onInput)="sheetCheck($event)" [(ngModel)]="paperSheet"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Paper Sheets</label>
+                    </span>
+                  </div>
+
+
+                  <p-dialog [closable]="true" header="How Many Paper Recieved ?" [(visible)]="paperRecieved" [style]="{width: '100vw'}">
 
                     <div>
-                        <div class="field col-12 md:col-4">
-                            <span class="p-float-label">
-                                <p-inputNumber inputId="inputnumber" autocomplete="off"  [(ngModel)]="extraPaperRecieved"></p-inputNumber>
-                                <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
-                                <label style=" font-size: 15px;"  for="inputnumber">Paper Recieved Today</label>
-                            </span>
-                        </div>
+                      <div class="field col-12 md:col-4">
+                        <span class="p-float-label">
+                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="extraPaperRecieved"></p-inputNumber>
+                          <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
+                          <label style=" font-size: 15px;" for="inputnumber">Paper Recieved Today</label>
+                        </span>
+                      </div>
 
                     </div>
 
                     <ng-template pTemplate="footer">
-                        <p-button icon="pi pi-check" [disabled]="entryPaperCheck()" (click)="paperCalculation()"  label="Save" styleClass="p-button-raised"></p-button>
+                      <p-button icon="pi pi-check" [disabled]="entryPaperCheck()" (click)="paperCalculation()" label="Save" styleClass="p-button-raised"></p-button>
                     </ng-template>
-                    </p-dialog>
-            </div>
+                  </p-dialog>
+                </div>
 
 
-            <div class="columntwo">
-                <div class="field col-12 md:col-4">
+                <div class="columntwo">
+                  <div class="field col-12 md:col-4">
                     <!-- <span class="p-float-label">
                         <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="todayStayCopyToday"></p-inputNumber>
 
@@ -738,12 +831,12 @@ BINDINGS &nbsp;- &nbsp; {{kdmAccountDetail.Bindings}}
 
 
 
-                </div>
-                <!-- (click)="extra.toggle($event)"  -->
-                <!-- <p-overlayPanel #extra>
-<app-copy-money></app-copy-money>
-                </p-overlayPanel> -->
-                <div class="field col-12 md:col-4">
+                  </div>
+                  <!-- (click)="extra.toggle($event)"  -->
+                  <!-- <p-overlayPanel #extra>
+                  <app-copy-money></app-copy-money>
+                                  </p-overlayPanel> -->
+                  <div class="field col-12 md:col-4">
                     <!-- <span class="p-float-label">
                         <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="todayStayMoneyToday"></p-inputNumber>
                         <label style="color: red; font-size: 15px;"  for="inputnumber">இன்று இருப்பு பணம்</label>
@@ -753,8 +846,8 @@ BINDINGS &nbsp;- &nbsp; {{kdmAccountDetail.Bindings}}
 
 
 
-                </div>
-                <div class="field col-12 md:col-4">
+                  </div>
+                  <div class="field col-12 md:col-4">
                     <!-- <span class="p-float-label">
                         <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="gonePastCopyToday"></p-inputNumber>
                         <label style="color: red; font-size: 15px;"  for="inputnumber">பழசு Copies போனது</label>
@@ -762,652 +855,651 @@ BINDINGS &nbsp;- &nbsp; {{kdmAccountDetail.Bindings}}
 
                     <button pButton (click)="oldSoldCheck=true" (click)="getOldDetails()" pRipple type="button" label="பழசு போனது" class="p-button-raised p-button-danger"></button>
 
+                  </div>
                 </div>
-            </div>
-            <!-- <div class="columntwo">
+                <!-- <div class="columntwo">
 
 
-                <div class="field col-12 md:col-4">
+                    <div class="field col-12 md:col-4">
+                        <span class="p-float-label">
+                            <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="oldStayCopyToday"></p-inputNumber>
+                            <label style="color: red; font-size: 15px;"  for="inputnumber">பழைய இருப்பு Copies</label>
+                        </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <span class="p-float-label">
+                            <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="oldStayMoneyToday"></p-inputNumber>
+                            <label style="color: red; font-size: 15px;"  for="inputnumber">பழைய இருப்பு பணம்</label>
+                        </span>
+                    </div>
+
+
+
+
+                    <div class="field col-12 md:col-4">
+                        <span class="p-float-label">
+                            <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="gonePastMoneyToday"></p-inputNumber>
+                            <label style="color: red; font-size: 15px;"  for="inputnumber">பழசு பணம் போனது</label>
+                        </span>
+                    </div>
+
+
+                </div> -->
+                <div class="columntwo">
+                  <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="oldStayCopyToday"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">பழைய இருப்பு Copies</label>
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="totalCountCash($event)" [(ngModel)]="cashIncome"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Cash</label>
                     </span>
-                </div>
-                <div class="field col-12 md:col-4">
+                  </div>
+                  <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="oldStayMoneyToday"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">பழைய இருப்பு பணம்</label>
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="totalCountPaytm($event)" [(ngModel)]="paytmIncome"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Gpay</label>
                     </span>
-                </div>
+                  </div>
 
-
-
-
-                <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="gonePastMoneyToday"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">பழசு பணம் போனது</label>
+                      <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="openingBalance"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Opening Balance</label>
                     </span>
+                  </div>
                 </div>
-              
-             
-            </div> -->
-            <div class="columntwo">
-                <div class="field col-12 md:col-4">
+                <div class="columntwo">
+                  <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="totalCountCash($event)" [(ngModel)]="cashIncome"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Cash</label>
+                      <!-- <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="notesToday"></p-inputNumber> -->
+                      <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="notesToday">
+                      <label style="color: red; font-size: 15px;" for="inputnumber">Notes</label>
                     </span>
-                </div>
-                <div class="field col-12 md:col-4">
+                  </div>
+                  <!-- <div class="field col-12 md:col-4">
+                      <span class="p-float-label">
+                          <textarea inputId="textarea" rows="3" style="resize: none;" cols="30" [(ngModel)]="cashIncome" pInputTextarea></textarea>
+                          <label for="textarea">Notes</label>
+                      </span>
+                  </div> -->
+                  <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="totalCountPaytm($event)" [(ngModel)]="paytmIncome"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Gpay</label>
+                      <p-inputNumber inputId="inputnumber2" (onInput)="tonerCame($event)" autocomplete="off" [(ngModel)]="toner"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber2">Toner Packet</label>
                     </span>
-                </div>
+                  </div>
 
-                <div class="field col-12 md:col-4">
+                  <!-- (onInput)="tonerCheck($event)" -->
+
+
+
+
+                  <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                        <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="openingBalance"></p-inputNumber>
-                        <label style="color: red; font-size: 15px;"  for="inputnumber">Opening Balance</label>
+                      <p-inputNumber inputId="inputnumber2" [readonly]="true" [disabled]="true" autocomplete="off" [(ngModel)]="totalIncome"></p-inputNumber>
+                      <label style="color: red; font-size: 15px;" for="inputnumber2">Total Income</label>
                     </span>
+                  </div>
                 </div>
-            </div>
-        <div class="columntwo">
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <!-- <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="notesToday"></p-inputNumber> -->
-                    <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="notesToday"> 
-                    <label style="color: red; font-size: 15px;"  for="inputnumber">Notes</label>
-                </span>
-            </div>
-            <!-- <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <textarea inputId="textarea" rows="3" style="resize: none;" cols="30" [(ngModel)]="cashIncome" pInputTextarea></textarea>
-                    <label for="textarea">Notes</label>
-                </span>
-            </div> -->
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <p-inputNumber inputId="inputnumber2"  (onInput)="tonerCame($event)" autocomplete="off" [(ngModel)]="toner"></p-inputNumber>
-                    <label style="color: red; font-size: 15px;"  for="inputnumber2">Toner Packet</label>
-                </span>
-            </div>
+                <!-- <div>
 
-<!-- (onInput)="tonerCheck($event)" -->
+                        <button (click)="activeIndex2 = 1" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
 
 
 
 
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <p-inputNumber inputId="inputnumber2" [readonly]="true" [disabled]="true" autocomplete="off" [(ngModel)]="totalIncome"></p-inputNumber>
-                    <label style="color: red; font-size: 15px;"  for="inputnumber2">Total Income</label>
-                </span>
-            </div>
-        </div>
-            <!-- <div>
-                
-                    <button (click)="activeIndex2 = 1" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
-            
-                
-               
-        
-            </div> -->
-        
+                </div> -->
 
+
+              </div>
+
+            </p-card>
           </div>
-    
-        </p-card>
-        </div>
 
+        </div>
+        <div *ngIf="activeIndex2==1">
+          <br>
+          <br>
+          <div class="second-step">
+            <div class="taj-attendence">
+              <div>
+                RASHEED ATTENDENCE
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton name="city" value="present" [(ngModel)]="rasheedPresentBool" inputId="city1"></p-radioButton>
+                <label for="city1">Present</label>
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton name="city" value="absent" [(ngModel)]="rasheedPresentBool" inputId="city2"></p-radioButton>
+                <label for="city2">Absent</label>
+              </div>
+
+              <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="isRasheedHalfDay" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Half Day</label>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="noor-attendence">
+              <div>
+                ASSAN ATTENDENCE
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton name="city" value="present" [(ngModel)]="assanPresentBool" inputId="city1"></p-radioButton>
+                <label for="city1">Present</label>
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton name="city" value="absent" [(ngModel)]="assanPresentBool" inputId="city2"></p-radioButton>
+                <label for="city2">Absent</label>
+              </div>
+
+              <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="isAssanHalfDay" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Half Day</label>
+              </div>
+            </div>
+
+
+            <br>
+            <br>
+            <div class="noor-attendence">
+              <div>
+                MANI ATTENDENCE
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton name="city" value="present" [(ngModel)]="maniPresentBool" inputId="city1"></p-radioButton>
+                <label for="city1">Present</label>
+              </div>
+              <div class="field-radiobutton">
+                <p-radioButton name="city" value="absent" [(ngModel)]="maniPresentBool" inputId="city2"></p-radioButton>
+                <label for="city2">Absent</label>
+              </div>
+
+              <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="isManiHalfDay" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Half Day</label>
+              </div>
+            </div>
+
+
+            <!--
+            <div class="btn-con">
+
+            <div>
+                <button (click)="activeIndex2 = 0" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+
+            </div>
+            <div>
+                <button pButton icon="pi pi-check" pRipple type="button" label="Save" class="p-button-rounded"></button>
+
+            </div>
+
+
+            </div> -->
+          </div>
+
+
+
+        </div>
       </div>
-<div *ngIf="activeIndex2==1">
-<br>
-<br>
-    <div class="second-step">
-<div class="taj-attendence">
-    <div>
-        RASHEED ATTENDENCE
-    </div>
-    <div class="field-radiobutton">
-        <p-radioButton name="city" value="present" [(ngModel)]="rasheedPresentBool" inputId="city1"></p-radioButton>
-        <label for="city1">Present</label>
-    </div>
-    <div class="field-radiobutton">
-        <p-radioButton name="city" value="absent" [(ngModel)]="rasheedPresentBool" inputId="city2"></p-radioButton>
-        <label for="city2">Absent</label>
-    </div>
 
-    <div class="field-checkbox">
-        <p-checkbox [(ngModel)]="isRasheedHalfDay" [binary]="true" inputId="binary"></p-checkbox>
-        <label for="binary">Half Day</label>
-    </div>
-</div>
-<br>
-<br>
-<div class="noor-attendence">
-    <div>
-        ASSAN ATTENDENCE
-    </div>
-    <div class="field-radiobutton">
-        <p-radioButton name="city" value="present" [(ngModel)]="assanPresentBool" inputId="city1"></p-radioButton>
-        <label for="city1">Present</label>
-    </div>
-    <div class="field-radiobutton">
-        <p-radioButton name="city" value="absent" [(ngModel)]="assanPresentBool" inputId="city2"></p-radioButton>
-        <label for="city2">Absent</label>
-    </div>
-
-    <div class="field-checkbox">
-        <p-checkbox [(ngModel)]="isAssanHalfDay" [binary]="true" inputId="binary"></p-checkbox>
-        <label for="binary">Half Day</label>
-    </div>
-</div>
-
-
-<br>
-<br>
-<div class="noor-attendence">
-    <div>
-        MANI ATTENDENCE
-    </div>
-    <div class="field-radiobutton">
-        <p-radioButton name="city" value="present" [(ngModel)]="maniPresentBool" inputId="city1"></p-radioButton>
-        <label for="city1">Present</label>
-    </div>
-    <div class="field-radiobutton">
-        <p-radioButton name="city" value="absent" [(ngModel)]="maniPresentBool" inputId="city2"></p-radioButton>
-        <label for="city2">Absent</label>
-    </div>
-
-    <div class="field-checkbox">
-        <p-checkbox [(ngModel)]="isManiHalfDay" [binary]="true" inputId="binary"></p-checkbox>
-        <label for="binary">Half Day</label>
-    </div>
-</div>
-
-
-<!-- 
-<div class="btn-con">
-
-<div>
-    <button (click)="activeIndex2 = 0" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
-
-</div>
-<div>
-    <button pButton icon="pi pi-check" pRipple type="button" label="Save" class="p-button-rounded"></button>
-
-</div>
-
-
-</div> -->
-</div>
-   
-        
-
-        </div>
-    </div>
-
-    <p-dialog header="இன்று இருப்பு" [(visible)]="todayStayCheck" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-    <div>
-
+      <p-dialog header="இன்று இருப்பு" [(visible)]="todayStayCheck" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+                [draggable]="true" [resizable]="true">
         <div>
+
+          <div>
 
             <!-- <i (click)="action1.toggle($event)" class="pi pi-info"></i> -->
 
             <button (click)="action1.toggle($event)" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded"></button>
             <p-overlayPanel #action1>
-                <div>
-                    Date :    {{beforeDate | date: 'dd/MM/yyyy'}}  &nbsp; Day : {{beforeDay }}
-                   </div>
-<div class="column">
+              <div>
+                Date :    {{beforeDate | date: 'dd/MM/yyyy'}}  &nbsp; Day : {{beforeDay }}
+              </div>
+              <div class="column">
 
-    <div class="row">
-<div >
-    இன்று இருப்பு
-</div>
+                <div class="row">
+                  <div>
+                    இன்று இருப்பு
+                  </div>
 
-<div>
-    <!-- this.todayStayDetail2 =this.customers[0].TodayStayDetail;
-    this.pastStayDetail2=this.customers[0].PastStayDetail;
-    this.pastSoldDetail2 -->
-    {{todayStayDetail2}}
-</div>
+                  <div>
+                    <!-- this.todayStayDetail2 =this.customers[0].TodayStayDetail;
+                    this.pastStayDetail2=this.customers[0].PastStayDetail;
+                    this.pastSoldDetail2 -->
+                    {{todayStayDetail2}}
+                  </div>
 
-    </div>
+                </div>
 
-    <br>
-    <div class="row">
+                <br>
+                <div class="row">
 
-<div>
-    பழசு இருப்பு
-</div>
+                  <div>
+                    பழசு இருப்பு
+                  </div>
 
-<div>
-    {{pastStayDetail2}}
-</div>
-    </div>
+                  <div>
+                    {{pastStayDetail2}}
+                  </div>
+                </div>
 
-    <br>
-    <div  class="row">
-        <div>
-            பழசு போனது
-        </div>
-        
-        <div>
-            {{pastSoldDetail2}}
-        </div>
+                <br>
+                <div class="row">
+                  <div>
+                    பழசு போனது
+                  </div>
 
-    </div>
-</div>
+                  <div>
+                    {{pastSoldDetail2}}
+                  </div>
+
+                </div>
+              </div>
             </p-overlayPanel>
 
 
+          </div>
+
+          <div>
+            <app-copy-money [isItemDetail]="stayDetail" (saveClicked)="copyMoneyGot($event)"></app-copy-money>
+          </div>
         </div>
-        
-<div>
-    <app-copy-money  [isItemDetail]="stayDetail" (saveClicked)="copyMoneyGot($event)" ></app-copy-money>
-</div>
-    </div>
 
 
-    </p-dialog>
-    <p-dialog header="பழசு இருப்பு" [(visible)]="oldStayCheck" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-    <div>
+      </p-dialog>
+      <p-dialog header="பழசு இருப்பு" [(visible)]="oldStayCheck" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+                [draggable]="true" [resizable]="true">
         <div>
+          <div>
             <!-- <i (click)="action2.toggle($event)" class="pi pi-info"></i> -->
             <button (click)="action2.toggle($event)" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded"></button>
 
             <p-overlayPanel #action2>
 
-                <div>
-                    Date :    {{beforeDate | date: 'dd/MM/yyyy'}}  &nbsp; Day : {{beforeDay }}
-                   </div>
-                <div class="column">
+              <div>
+                Date :    {{beforeDate | date: 'dd/MM/yyyy'}}  &nbsp; Day : {{beforeDay }}
+              </div>
+              <div class="column">
 
-                    <div class="row">
-                <div >
+                <div class="row">
+                  <div>
                     இன்று இருப்பு
-                </div>
-                
-                <div>
+                  </div>
+
+                  <div>
                     <!-- this.todayStayDetail2 =this.customers[0].TodayStayDetail;
                     this.pastStayDetail2=this.customers[0].PastStayDetail;
                     this.pastSoldDetail2 -->
                     {{todayStayDetail2}}
+                  </div>
+
                 </div>
-                
-                    </div>
-                    <div class="row">
-                
-                <div>
+                <div class="row">
+
+                  <div>
                     பழசு இருப்பு
-                </div>
-                
-                <div>
+                  </div>
+
+                  <div>
                     {{pastStayDetail2}}
+                  </div>
                 </div>
-                    </div>
-                    <div  class="row">
-                        <div>
-                            பழசு போனது
-                        </div>
-                        
-                        <div>
-                            {{pastSoldDetail2}}
-                        </div>
-                
-                    </div>
+                <div class="row">
+                  <div>
+                    பழசு போனது
+                  </div>
+
+                  <div>
+                    {{pastSoldDetail2}}
+                  </div>
+
                 </div>
+              </div>
 
 
             </p-overlayPanel>
 
+          </div>
+          <div><app-copy-money [isItemDetail]="stayDetail" (saveClicked)="copyMoneyGot($event)"></app-copy-money></div>
+
         </div>
-        <div><app-copy-money [isItemDetail]="stayDetail" (saveClicked)="copyMoneyGot($event)" ></app-copy-money></div> 
-
-    </div>
- 
 
 
-    </p-dialog>
-    <p-dialog header="பழசு போனது" [(visible)]="oldSoldCheck" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-  
-    <div>
+
+      </p-dialog>
+      <p-dialog header="பழசு போனது" [(visible)]="oldSoldCheck" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+                [draggable]="true" [resizable]="true">
+
         <div>
+          <div>
             <!-- <i (click)="action3.toggle($event)" class="pi pi-info"></i> -->
             <button (click)="action3.toggle($event)" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded"></button>
 
             <p-overlayPanel #action3>
 
-                <div>
-                 Date :    {{beforeDate | date: 'dd/MM/yyyy'}}  &nbsp; Day : {{beforeDay }}
-                </div>
+              <div>
+                Date :    {{beforeDate | date: 'dd/MM/yyyy'}}  &nbsp; Day : {{beforeDay }}
+              </div>
 
-                <div class="column">
+              <div class="column">
 
-                    <div class="row">
-                <div >
+                <div class="row">
+                  <div>
                     இன்று இருப்பு
-                </div>
-                
-                <div>
+                  </div>
+
+                  <div>
                     <!-- this.todayStayDetail2 =this.customers[0].TodayStayDetail;
                     this.pastStayDetail2=this.customers[0].PastStayDetail;
                     this.pastSoldDetail2 -->
                     {{todayStayDetail2}}
+                  </div>
+
                 </div>
-                
-                    </div>
-                    <div class="row">
-                
-                <div>
+                <div class="row">
+
+                  <div>
                     பழசு இருப்பு
-                </div>
-                
-                <div>
+                  </div>
+
+                  <div>
                     {{pastStayDetail2}}
+                  </div>
                 </div>
-                    </div>
-                    <div  class="row">
-                        <div>
-                            பழசு போனது
-                        </div>
-                        
-                        <div>
-                            {{pastSoldDetail2}}
-                        </div>
-                
-                    </div>
+                <div class="row">
+                  <div>
+                    பழசு போனது
+                  </div>
+
+                  <div>
+                    {{pastSoldDetail2}}
+                  </div>
+
                 </div>
+              </div>
             </p-overlayPanel>
+          </div>
+          <div>  <app-copy-money [isItemDetail]="stayDetail" (saveClicked)="copyMoneyGot($event)"></app-copy-money></div>
         </div>
-        <div>  <app-copy-money [isItemDetail]="stayDetail" (saveClicked)="copyMoneyGot($event)" ></app-copy-money></div>
-    </div>
-   
-  
 
-    </p-dialog>
 
-    
-    <p-dialog [closable]="true" header="How Many Toner Packet Recieved ? " [(visible)]="tonerRecieved" [style]="{width: '100vw'}">
+
+      </p-dialog>
+
+
+      <p-dialog [closable]="true" header="How Many Toner Packet Recieved ? " [(visible)]="tonerRecieved" [style]="{width: '100vw'}">
 
         <div>
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <p-inputNumber inputId="inputnumber" autocomplete="off"  [(ngModel)]="extraTonerRecieved"></p-inputNumber>
-                    <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
-                    <label style=" font-size: 15px;"  for="inputnumber">Toner Recieved Today</label>
-                </span>
-            </div>
+          <div class="field col-12 md:col-4">
+            <span class="p-float-label">
+              <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="extraTonerRecieved"></p-inputNumber>
+              <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
+              <label style=" font-size: 15px;" for="inputnumber">Toner Recieved Today</label>
+            </span>
+          </div>
 
         </div>
 
         <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" [disabled]="entryTonerCheck()" (click)="tonerCalculation()"  label="Save" styleClass="p-button-raised"></p-button>
+          <p-button icon="pi pi-check" [disabled]="entryTonerCheck()" (click)="tonerCalculation()" label="Save" styleClass="p-button-raised"></p-button>
         </ng-template>
-        </p-dialog>
-
-
-   </ng-template>
-        <ng-template pTemplate="footer">
-            <div  *ngIf="activeIndex2==1" class="btn-con">
-
-                <div>
-                    <button  (click)="activeIndex2 = 0" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
-                
-                </div>
-                <div >
-                    <button pButton icon="pi pi-check" (click)="saveAccounts()" [disabled]="checkAttendence()" pRipple type="button" label="Save" class="p-button-rounded"></button>
-                
-                </div>
-                
-                
-                </div>
-
-                <div  *ngIf="activeIndex2==0">
-                
-                    <button *ngIf="nextCheck()" (click)="nextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
-            
-                    <p-dialog [closable]="false" header="Paper Recieved?" [(visible)]="askTpmPaperReport" [style]="{width: '50vw'}">
-
-
-
-                        <div>
-                            PAPER RECIEVED ?
-
-
-                        </div>
-                        <br>
-                        <br>
-
-                        <button pButton pRipple type="button" (click)="finalNextButton()" (click)="askTpmPaperReport=false" icon="pi pi-times" label="No" class="p-button-raised"></button>
-
-                        <button pButton pRipple type="button" (click)="papersendedToTpm()" icon="pi pi-check" label="Yes" class="p-button-raised"></button>
-
-
-
-
-    
-                        <!-- <ng-template pTemplate="footer">
-                            <p-button icon="pi pi-check" [disabled]="entryPaperCheck()" (click)="paperCalculation()" (click)="paperRecieved=false" label="Save" styleClass="p-button-text"></p-button>
-                        </ng-template> -->
-                        </p-dialog>
-                       <p-dialog [closable]="false" header="How Many Paper Packet Recieved?" [(visible)]="tpmPaperSent" [style]="{width: '100vw'}">
-
-                    <div>
-                        <div class="field col-12 md:col-4">
-                            <span class="p-float-label">
-                                <p-inputNumber inputId="inputnumber" autocomplete="off"  [(ngModel)]="extraPaperRecieved"></p-inputNumber>
-                                <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
-                                <label style=" font-size: 15px;"  for="inputnumber">Paper Recieved Today</label>
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <ng-template pTemplate="footer">
-                        
-                        <p-button icon="pi pi-check" [disabled]="entryPaperCheck()" (click)="paperCalculation()"  label="Save" styleClass="p-button-raised "></p-button>
-                    </ng-template>
-                    </p-dialog>
-        
-            </div>
-
-        </ng-template>
-
-</p-dialog>
-
-<p-dialog header="Labours Data" [(visible)]="labourShow" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-    [draggable]="true" [resizable]="true">
-
-    <ng-template pTemplate="body">
-
-        <p-table #dt1 [value]="labours" dataKey="id"
-        [rows]="10"
-        [(selection)]="selectedLabours" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines"
-        [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['name','country.name','representative.name','status']">
-        <ng-template pTemplate="caption">
-            <div class="flex" style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
-                <div>
-                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-    
-                </div>
-                <div class="title-class"><h3>LABOUR SECTION</h3></div>
-                <!-- <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                     <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                </span> -->
-            
-                <!-- <div style="margin-left: 90%">
-                    <button pButton pRipple type="button" (click)="addAccounts()" icon="pi pi-plus" class="p-button-rounded p-button-success"></button>
-                </div>
-                <div style="margin-left: 30%">
-                    <button pButton pRipple type="button" label="labour" (click)="labourTable()" icon="pi pi-cog" class="p-button-rounded p-button-success"></button>
-                </div> -->
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                       Date
-                       <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                        Day
-                        <!-- <p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter> -->
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                        Rasheed Attendence
-                    
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                        Assan Attendence
-                    
-                    </div>
-                </th>
-
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                        Mani Attendence
-                    
-                    </div>
-                </th>
-
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                        Rasheed Expense
-                    
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                       Assan Expense
-                    
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-center align-items-center">
-                       Mani Expense
-                    
-                    </div>
-                </th>
-                <!-- <th>
-                    <div class="flex justify-content-center align-items-center">
-                        Activity
-                  
-                    </div>
-                </th> -->
-                <th style="width: 8rem">
-                    <div class="flex justify-content-center align-items-center">
-                       Actions
-                       
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-customer>
-            <tr>
-                <td>
-                    {{customer.Date | date: 'dd/MM/yyyy'}}
-                </td>
-                <td>
-                    {{customer.Day}}
-                </td>
-                <td>
-                    <span class="image-text">{{customer.RasheedPresent  }}</span>
-                </td>
-                <td>
-                    <span class="image-text">{{customer.AssanPresent}}</span>
-                </td>
-                <td>
-                    <span class="image-text">{{customer.ManiPresent}}</span>
-                </td>
-                <td>
-                    <span class="image-text">{{customer.RasheedExpense}}</span>
-                </td>
-                <td>
-                    <span class="image-text">{{customer.AssanExpense}}</span>
-                </td>
-                <td>
-                    <span class="image-text">{{customer.ManiExpense}}</span>
-                </td>
-                <!-- <td>
-                    <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-                </td> -->
-                <td class="text-center">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr;">
-                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"></button>
-                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
-                    </div>
-                  
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="7">No customers found.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+      </p-dialog>
 
 
     </ng-template>
-    
+    <ng-template pTemplate="footer">
+      <div *ngIf="activeIndex2==1" class="btn-con">
+
+        <div>
+          <button (click)="activeIndex2 = 0" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+
+        </div>
+        <div>
+          <button pButton icon="pi pi-check" (click)="saveAccounts()" [disabled]="checkAttendence()" pRipple type="button" label="Save" class="p-button-rounded"></button>
+
+        </div>
 
 
-    </p-dialog>
+      </div>
+
+      <div *ngIf="activeIndex2==0">
+
+        <button *ngIf="nextCheck()" (click)="nextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+
+        <p-dialog [closable]="false" header="Paper Recieved?" [(visible)]="askTpmPaperReport" [style]="{width: '50vw'}">
+
+
+
+          <div>
+            PAPER RECIEVED ?
+
+
+          </div>
+          <br>
+          <br>
+
+          <button pButton pRipple type="button" (click)="finalNextButton()" (click)="askTpmPaperReport=false" icon="pi pi-times" label="No" class="p-button-raised"></button>
+
+          <button pButton pRipple type="button" (click)="papersendedToTpm()" icon="pi pi-check" label="Yes" class="p-button-raised"></button>
+
+
+
+
+
+          <!-- <ng-template pTemplate="footer">
+              <p-button icon="pi pi-check" [disabled]="entryPaperCheck()" (click)="paperCalculation()" (click)="paperRecieved=false" label="Save" styleClass="p-button-text"></p-button>
+          </ng-template> -->
+        </p-dialog>
+        <p-dialog [closable]="false" header="How Many Paper Packet Recieved?" [(visible)]="tpmPaperSent" [style]="{width: '100vw'}">
+
+          <div>
+            <div class="field col-12 md:col-4">
+              <span class="p-float-label">
+                <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="extraPaperRecieved"></p-inputNumber>
+                <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
+                <label style=" font-size: 15px;" for="inputnumber">Paper Recieved Today</label>
+              </span>
+            </div>
+
+          </div>
+
+          <ng-template pTemplate="footer">
+
+            <p-button icon="pi pi-check" [disabled]="entryPaperCheck()" (click)="paperCalculation()" label="Save" styleClass="p-button-raised "></p-button>
+          </ng-template>
+        </p-dialog>
+
+      </div>
+
+    </ng-template>
+
+  </p-dialog>
+
+  <p-dialog header="Labours Data" [(visible)]="labourShow" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+            [draggable]="true" [resizable]="true">
+
+    <ng-template pTemplate="body">
+
+      <p-table #dt1 [value]="labours" dataKey="id"
+               [rows]="10"
+               [(selection)]="selectedLabours" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines"
+               [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+               [globalFilterFields]="['name','country.name','representative.name','status']">
+        <ng-template pTemplate="caption">
+          <div class="flex" style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+            <div>
+              <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+
+            </div>
+            <div class="title-class"><h3>LABOUR SECTION</h3></div>
+            <!-- <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                 <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span> -->
+            <!-- <div style="margin-left: 90%">
+                <button pButton pRipple type="button" (click)="addAccounts()" icon="pi pi-plus" class="p-button-rounded p-button-success"></button>
+            </div>
+            <div style="margin-left: 30%">
+                <button pButton pRipple type="button" label="labour" (click)="labourTable()" icon="pi pi-cog" class="p-button-rounded p-button-success"></button>
+            </div> -->
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Date
+                <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Day
+                <!-- <p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter> -->
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Rasheed Attendence
+
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Assan Attendence
+
+              </div>
+            </th>
+
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Mani Attendence
+
+              </div>
+            </th>
+
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Rasheed Expense
+
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Assan Expense
+
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-center align-items-center">
+                Mani Expense
+
+              </div>
+            </th>
+            <!-- <th>
+                <div class="flex justify-content-center align-items-center">
+                    Activity
+
+                </div>
+            </th> -->
+            <th style="width: 8rem">
+              <div class="flex justify-content-center align-items-center">
+                Actions
+
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+          <tr>
+            <td>
+              {{customer.Date | date: 'dd/MM/yyyy'}}
+            </td>
+            <td>
+              {{customer.Day}}
+            </td>
+            <td>
+              <span class="image-text">{{customer.RasheedPresent  }}</span>
+            </td>
+            <td>
+              <span class="image-text">{{customer.AssanPresent}}</span>
+            </td>
+            <td>
+              <span class="image-text">{{customer.ManiPresent}}</span>
+            </td>
+            <td>
+              <span class="image-text">{{customer.RasheedExpense}}</span>
+            </td>
+            <td>
+              <span class="image-text">{{customer.AssanExpense}}</span>
+            </td>
+            <td>
+              <span class="image-text">{{customer.ManiExpense}}</span>
+            </td>
+            <!-- <td>
+                <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
+            </td> -->
+            <td class="text-center">
+              <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info"></button>
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+              </div>
+
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">No customers found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
+    </ng-template>
+
+
+
+  </p-dialog>
 </div>
 <div *ngIf="loginDetail && !mainDetail" class="login-class">
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-        <p-panel header="Admin">
-            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-2">
-                        Login:
-                    </div>
-                    <div class="ui-grid-col-6">
-                        <input pInputText type="text" formControlName="login" class="form-control" name="login">
-                    </div>
-                    <div class="ui-grid-col-4">
-                        <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty" class="alert alert-danger">
-                            Login is required
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-2">
-                        Password:
-                    </div>
-                    <div class="ui-grid-col-6">
-                        <input pInputText type="password" formControlName="password" class="form-control" name="password">
-                    </div>
-                    <div class="ui-grid-col-4">
-                        <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty" class="alert alert-danger">
-                            Password is required
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-2"></div>
-                    <div class="ui-grid-col-6">
-                        <button pButton type="submit" label="Submit" [disabled]="!loginForm.valid"></button>
-                    </div>
-                    <div class="ui-grid-col-4"></div>
-                </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <p-panel header="Admin">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px ; display: grid; margin-left: 65%;">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Login:
+          </div>
+          <div class="ui-grid-col-6">
+            <input pInputText type="text" formControlName="login" class="form-control" name="login">
+          </div>
+          <div class="ui-grid-col-4">
+            <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty" class="alert alert-danger">
+              Login is required
             </div>
-        </p-panel>
-    </form>
-    </div> 
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Password:
+          </div>
+          <div class="ui-grid-col-6">
+            <input pInputText type="password" formControlName="password" class="form-control" name="password">
+          </div>
+          <div class="ui-grid-col-4">
+            <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty" class="alert alert-danger">
+              Password is required
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2"></div>
+          <div class="ui-grid-col-6">
+            <button pButton type="submit" label="Submit" [disabled]="!loginForm.valid"></button>
+          </div>
+          <div class="ui-grid-col-4"></div>
+        </div>
+      </div>
+    </p-panel>
+  </form>
+</div> 
