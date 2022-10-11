@@ -2,7 +2,7 @@
   <div class="main-class">
 
     <p-pickList (onMoveToTarget)="selectToTarget($event)" (onMoveToSource)="targetToSource($event)" (onSourceSelect)="editClicked($event)" styleClass="{ height: 'calc(100vh - 327px)' }" [source]="sourceProducts" [target]="targetProducts" sourceHeader="" targetHeader=''
-                [responsive]="true" [dragdrop]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="name"
+                [responsive]="true" [dragdrop]="true" [metaSelectionKey]="false" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="name"
                 sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
       <ng-template let-product pTemplate="item">
         <div (onClick)="editClicked(product.name)" class="product-item">
