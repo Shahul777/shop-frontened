@@ -1415,7 +1415,26 @@ clear(table: any) {
   table.clear();
 }
 isAddAccounts: boolean =false
-addAccounts(){
+  addAccounts() {
+    this.kdmAccountDetail.PaperQuantitySent = 0
+    this.kdmAccountDetail.isPaperCame = 0
+    this.kdmAccountDetail.isPaperSent = 0
+    this.kdmAccountDetail.isTonerSent = 0
+    this.kdmAccountDetail.isItemsCame = 0
+
+    this.kdmAccountDetail.Toner = 0
+
+    this.kdmAccountDetail.TonerSpent = 0
+    this.kdmAccountDetail.PaperQuantityCame = 0
+    this.kdmAccountDetail.isTonerCame = 0
+    this.kdmAccountDetail.TonerQuantityCame = 0
+    this.kdmAccountDetail.TonerQuantitySent = 0
+    this.kdmAccountDetail.isHoliday = 0
+    this.kdmAccountDetail.PaperSheet = 0
+
+
+
+
 this.isAddAccounts=true
 }
 storeDateFormat : any;
@@ -2123,7 +2142,7 @@ this.kdmLabourDetail.NoorExpense=this.noorExpense
 // this.kdmAccountDetail.Expenses+=this.tajExpense
 // this.kdmAccountDetail.Expenses+= this.noorExpense
 
-
+    console.log(this.kdmAccountDetail)
 this.service.addKdmAcccounts(this.kdmAccountDetail).subscribe((event)=>{
 
 this.service.addKdmLabours(this.kdmLabourDetail).subscribe((event: any)=>{

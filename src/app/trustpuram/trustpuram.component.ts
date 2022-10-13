@@ -1043,7 +1043,25 @@ clear(table: any) {
   table.clear();
 }
 isAddAccounts: boolean =false
-addAccounts(){
+  addAccounts() {
+
+    this.kdmAccountDetail.PaperQuantitySent = 0
+    this.kdmAccountDetail.isPaperCame = 0
+    this.kdmAccountDetail.isPaperSent = 0
+    this.kdmAccountDetail.isTonerSent = 0
+    this.kdmAccountDetail.isItemsCame = 0
+
+    this.kdmAccountDetail.Toner = 0
+
+    this.kdmAccountDetail.TonerSpent = 0
+    this.kdmAccountDetail.PaperQuantityCame = 0
+    this.kdmAccountDetail.isTonerCame = 0
+    this.kdmAccountDetail.TonerQuantityCame = 0
+    this.kdmAccountDetail.TonerQuantitySent = 0
+    this.kdmAccountDetail.isHoliday = 0
+    this.kdmAccountDetail.PaperSheet = 0
+
+
 this.isAddAccounts=true
 }
 storeDateFormat : any;

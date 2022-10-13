@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\calculator",
+    "\\src\\app\\homescreen",
+    "\\src\\app\\kodambakkam",
+    "\\src\\app\\trustpuram"
+  ],
+  "SelectedNode": "\\src\\app\\calculator\\calculator.component.html",
+  "PreviewInSolutionExplorer": false
+}
