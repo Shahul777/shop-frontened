@@ -9,7 +9,8 @@ export class ShopserviceService {
    //readonly APIUrl ="http://127.0.0.1:8000";
    //readonly adminUrl ="http://127.0.0.1:8000/admin/"
   readonly APIUrl ="https://shop-new-backened.herokuapp.com";
-  readonly adminUrl ="https://shop-new-backened.herokuapp.com/admin/"
+  readonly adminUrl = "https://shop-new-backened.herokuapp.com/admin/"
+
 
   constructor(private http : HttpClient) { }
 
