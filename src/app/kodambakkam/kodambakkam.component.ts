@@ -11,882 +11,935 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./kodambakkam.component.css']
 })
 export class KodambakkamComponent implements OnInit {
-  @Input() adminAccess : boolean =false
+  @Input() adminAccess: boolean = false
   @Output() saveClicked = new EventEmitter();
   kdmAccountDetail: kdmAccounts = <kdmAccounts>{};
-  kdmAccountHolidayDetail : kdmAccounts = <kdmAccounts>{};
-  allAccountDetail :kdmAccounts = <kdmAccounts>{};
-  allLabourDetail :kdmLabourDetails = <kdmLabourDetails>{};
-  dataIncome : any;
+  kdmAccountHolidayDetail: kdmAccounts = <kdmAccounts>{};
+  allAccountDetail: kdmAccounts = <kdmAccounts>{};
+  allLabourDetail: kdmLabourDetails = <kdmLabourDetails>{};
+  dataIncome: any;
   kdmLabourDetail: kdmLabourDetails = <kdmLabourDetails>{};
-  sundayKdmLabourDetail : kdmLabourDetails=<kdmLabourDetails>{};
-  sundayAccountDetail : kdmAccounts = <kdmAccounts>{};
-saveKdmAccount :kdmAccounts = <kdmAccounts>{};
-saveLabourAccount: kdmAccounts = <kdmAccounts>{};
-  customers:any;
-  items:any;
+  sundayKdmLabourDetail: kdmLabourDetails = <kdmLabourDetails>{};
+  sundayAccountDetail: kdmAccounts = <kdmAccounts>{};
+  saveKdmAccount: kdmAccounts = <kdmAccounts>{};
+  saveLabourAccount: kdmAccounts = <kdmAccounts>{};
+  customers: any;
+  items: any;
   representatives: any;
 
   statuses: any;
 
   loading: boolean = true;
-  activeIndex2: number=0;
- 
+  activeIndex2: number = 0;
+
   activityValues: number[] = [0, 100];
-isEditAccount: boolean =false;
-accountsTitle: string="Accounts Section"
-labourTitle: string="Labour Attendance"
-labours : any;
-tableCheckBox:any;
-selectedAccounts:any;
-selectedLabours : any;
-isKodambakkam : boolean =false;
-isTrustpuram : boolean =false;
-isAdminAccess : boolean =false;
+  isEditAccount: boolean = false;
+  accountsTitle: string = "Accounts Section"
+  labourTitle: string = "Labour Attendance"
+  labours: any;
+  tableCheckBox: any;
+  selectedAccounts: any;
+  selectedLabours: any;
+  isKodambakkam: boolean = false;
+  isTrustpuram: boolean = false;
+  isAdminAccess: boolean = false;
 
-todayStayCheck: boolean =false;
-oldStayCheck : boolean =false;
-oldSoldCheck : boolean =false;
-  
-
-todayStayList: any;
-oldStayList: any;
-oldSoldList : any;
+  todayStayCheck: boolean = false;
+  oldStayCheck: boolean = false;
+  oldSoldCheck: boolean = false;
 
 
-// [
-//   {
-//       "copies": 5,
-//       "money": 6
-//   },
-//   {
-//       "copies": 7,
-//       "money": 8
-//   }
-// ]
-// id : any;
-date : any;
-day : string="MONDAY";
-isSunday : number =0;
-isHoliday : number =0;
-isPaperCame: number=0;
-isTonerCame: number=0;
-isPaperSent : number =0;
-isTonerSent: number =0;
-
-paperQantityCame : number =0
-paperQuantitySent: number =0
-tonerQuantityCame : number =0
-tonerQuantitySend: number=0
+  todayStayList: any;
+  oldStayList: any;
+  oldSoldList: any;
 
 
+  // [
+  //   {
+  //       "copies": 5,
+  //       "money": 6
+  //   },
+  //   {
+  //       "copies": 7,
+  //       "money": 8
+  //   }
+  // ]
+  // id : any;
+  date: any;
+  day: string = "MONDAY";
+  isSunday: number = 0;
+  isHoliday: number = 0;
+  isPaperCame: number = 0;
+  isTonerCame: number = 0;
+  isPaperSent: number = 0;
+  isTonerSent: number = 0;
 
-isItemsCame : number=0;
-itemsInfo : string="No";
-blackMachineReading1 : number=0;
-blackMachineReading2 : number=0;
-colourMachineReading1: number=0;
-ColourMachineReading2 : number =0;
-blackCopies : number=0;
-colourCopies : number=0;
-b2bCopies : number=0;
-paperPresentToday : number=0;
-paperSheet : number =0;
-toner : number =0;
-tonerSpent : number =0;
-// paperYesterday : number=0;
-paperSoldToday : number=0;
-bindings : number=0;
-expenses : number=0;
-todayStayDetail :string='|';
-pastStayDetail: string='|';
-pastSoldDetail: string='|';
-todayStayingCopies: number=0;
-todayStayingMoney: number=0;
-oldStayingCopies : number=0;
-oldStayingMoney : number=0;
-goneCopiesPast: number=0;
-goneMoneyPast: number=0;
-notesToday: string="Notes: ";
-cashIncome: number=0;
-paytmIncome: number=0;
-totalIncome : number=0;
-openingBalance : number=0;
-netProfit : number=0;
-getTime : number=0;
+  paperQantityCame: number = 0
+  paperQuantitySent: number = 0
+  tonerQuantityCame: number = 0
+  tonerQuantitySend: number = 0
 
 
 
-colourMachineReading2 : number =0;
-// date: any;
-// day : any;
-// getTimeToday: any;
-// // cashIncome: any;
-// // isSunday : boolean =false;
-// // isHoliday : boolean =false;
-// blackMachine1Today: any;
-// blackMachine2Today: any;
-// colourMachine1Today: any;
-// blackReadingToday: number=0;
-// colourReadingToday: number=0;
-// b2bCopyToday: number=0;
-// totalBlackCopyToday : any
-// totalColourCopyToday: any
-// // paperPresentToday : any;
-// paperPastToday : any;
-// // paperSoldToday: any;
-// bindingGoneToday : any;
-// expenseToday: number=0;
-// todayStayCopyToday: number=0;
-// todayStayMoneyToday : number=0;
-// oldStayCopyToday : number=0;
-// oldStayMoneyToday: number=0;
-// gonePastMoneyToday: number=0;
-// gonePastCopyToday: number=0;
-// cashIncomeToday: any;
-// gpayIncomeToday: any;
-// openingBalToday: number=0;
-// // notesToday : any;
-// netProfitToday : any;
-// totalIncomeToday: any ;
-
- todayStayDetail2 :any;
-pastStayDetail2: any;
-pastSoldDetail2 : any
-
-
-tajPresentBool : any;
-noorPresentBool : any;
-isTajHalfDay : boolean =false;
-isNoorHalfDay : boolean =false;
-
-assanPresentBool : any;
-rasheedPresentBool : any;
-maniPresentBool : any;
-isAssanHalfDay : boolean =false;
-isRasheedHalfDay : boolean =false;
-isManiHalfDay : boolean = false;
-// Date: any;
-// Day : string;
-// GetTime:string;
-// TajPresent  : number;
-// TajExpense  : number;
-// NoorPresent  : number;
-// NoorExpense  : number;
-
-tajPresent: number=1;
-noorPresent : number =1;
-tajExpense : number = 90;
-noorExpense: number = 240;
-
-
-assanPresent : number =1;
-rasheedPresent : number =1;
-maniPresent : number =1;
-
-assanExpense : number = 240;
-rasheedExpense : number =70;
-maniExpense : number =70;
-
-// bata1 : number =90
-// bata2 : number =70
-// food: number =150
-// tajSalary : number =633.33;
-// noorSalary : number = 466.66;
-// assanSalary : number =466.66;
-// maniSalary : number = 333.33;
-// rasheedSalary : number =333.33;
-// tpmRent : number =516.66;
-// kdmRent : number =800;
-// currentBillKdm: number =110;
-// currentBillTpm : number =110;
-
-bata1 : any;
-bata2 : any;
-food: any;
-tajSalary : any;
-noorSalary : any;
-assanSalary : any;
-maniSalary : any;
-rasheedSalary : any;
-paperRate: any;
-tonerRate : any;
-singleRate: any;
-b2bRate: any;
-copiesPerToner : any;
-tpmRent: any;
-kdmRent: any;
-currentBillKdm: any;
-currentBillTpm : any;
-tonerCost: any;
-rentSheet: rentSheet = <rentSheet>{};
-
-// blackDonar : number =450;
-
-  constructor(  private service : ShopserviceService, private confirmationService : ConfirmationService) { }
-// private getTime(date? : Date){
-//   return date != null ? date.getTime() : 0;
-// }
-
-checkAttendence(){
-  if(this.tajPresentBool===undefined || this.noorPresentBool===undefined || !this.tajPresentBool.length|| !this.noorPresentBool.length){
-    return true
-  }
-  else{
-    return false
-  }
-}
-wholeDeleteShow: boolean =false;
-
-isViewAccountDetail : boolean =false;
-chartOptions: any;
-chartOptions2 : any;
-getDarkTheme() {
-  return {
-      plugins: {
-          legend: {
-              labels: {
-                  color: '#ebedef'
-              }
-          }
-      }
-  }
-}
+  isItemsCame: number = 0;
+  itemsInfo: string = "No";
+  blackMachineReading1: number = 0;
+  blackMachineReading2: number = 0;
+  colourMachineReading1: number = 0;
+  ColourMachineReading2: number = 0;
+  blackCopies: number = 0;
+  tempBlackCopies: number = 0;
+  colourCopies: number = 0;
+  b2bCopies: number = 0;
+  paperPresentToday: number = 0;
+  paperSheet: number = 0;
+  toner: number = 0;
+  tonerSpent: number = 0;
+  // paperYesterday : number=0;
+  paperSoldToday: number = 0;
+  bindings: number = 0;
+  expenses: number = 0;
+  todayStayDetail: string = '|';
+  pastStayDetail: string = '|';
+  pastSoldDetail: string = '|';
+  todayStayingCopies: number = 0;
+  todayStayingMoney: number = 0;
+  oldStayingCopies: number = 0;
+  oldStayingMoney: number = 0;
+  goneCopiesPast: number = 0;
+  goneMoneyPast: number = 0;
+  notesToday: string = "Notes: ";
+  cashIncome: number = 0;
+  paytmIncome: number = 0;
+  totalIncome: number = 0;
+  openingBalance: number = 0;
+  netProfit: number = 0;
+  getTime: number = 0;
 
 
 
-dataCopies : any
-updateChartOptions() {
- this.getDarkTheme();
-}
-singleSideCopies1: any;
-excessReach1: any;
-showDataPrint : boolean =false;
-editAccount2(id: any){
+  colourMachineReading2: number = 0;
+  // date: any;
+  // day : any;
+  // getTimeToday: any;
+  // // cashIncome: any;
+  // // isSunday : boolean =false;
+  // // isHoliday : boolean =false;
+  // blackMachine1Today: any;
+  // blackMachine2Today: any;
+  // colourMachine1Today: any;
+  // blackReadingToday: number=0;
+  // colourReadingToday: number=0;
+  // b2bCopyToday: number=0;
+  // totalBlackCopyToday : any
+  // totalColourCopyToday: any
+  // // paperPresentToday : any;
+  // paperPastToday : any;
+  // // paperSoldToday: any;
+  // bindingGoneToday : any;
+  // expenseToday: number=0;
+  // todayStayCopyToday: number=0;
+  // todayStayMoneyToday : number=0;
+  // oldStayCopyToday : number=0;
+  // oldStayMoneyToday: number=0;
+  // gonePastMoneyToday: number=0;
+  // gonePastCopyToday: number=0;
+  // cashIncomeToday: any;
+  // gpayIncomeToday: any;
+  // openingBalToday: number=0;
+  // // notesToday : any;
+  // netProfitToday : any;
+  // totalIncomeToday: any ;
 
-this.service.getKdmAccountsById(id).subscribe((account: any)=>{
-  this.kdmAccountDetail=account
+  todayStayDetail2: any;
+  pastStayDetail2: any;
+  pastSoldDetail2: any
 
-  this.labours.forEach((labour: any)=>{
+
+  tajPresentBool: any;
+  noorPresentBool: any;
+  isTajHalfDay: boolean = false;
+  isNoorHalfDay: boolean = false;
+
+  assanPresentBool: any;
+  rasheedPresentBool: any;
+  maniPresentBool: any;
+  isAssanHalfDay: boolean = false;
+  isRasheedHalfDay: boolean = false;
+  isManiHalfDay: boolean = false;
+  // Date: any;
+  // Day : string;
+  // GetTime:string;
+  // TajPresent  : number;
+  // TajExpense  : number;
+  // NoorPresent  : number;
+  // NoorExpense  : number;
+
+  tajPresent: number = 1;
+  noorPresent: number = 1;
+  tajExpense: number = 90;
+  noorExpense: number = 240;
 
 
-    if(labour.GetTime===this.kdmAccountDetail.GetTime){
-  
-  this.kdmLabourDetail=labour
-  
-  
+  assanPresent: number = 1;
+  rasheedPresent: number = 1;
+  maniPresent: number = 1;
+
+  assanExpense: number = 240;
+  rasheedExpense: number = 70;
+  maniExpense: number = 70;
+
+  // bata1 : number =90
+  // bata2 : number =70
+  // food: number =150
+  // tajSalary : number =633.33;
+  // noorSalary : number = 466.66;
+  // assanSalary : number =466.66;
+  // maniSalary : number = 333.33;
+  // rasheedSalary : number =333.33;
+  // tpmRent : number =516.66;
+  // kdmRent : number =800;
+  // currentBillKdm: number =110;
+  // currentBillTpm : number =110;
+
+  bata1: any;
+  bata2: any;
+  food: any;
+  tajSalary: any;
+  noorSalary: any;
+  assanSalary: any;
+  maniSalary: any;
+  rasheedSalary: any;
+  paperRate: any;
+  tonerRate: any;
+  singleRate: any;
+  b2bRate: any;
+  copiesPerToner: any;
+  tpmRent: any;
+  kdmRent: any;
+  currentBillKdm: any;
+  currentBillTpm: any;
+  tonerCost: any;
+  rentSheet: rentSheet = <rentSheet>{};
+
+  // blackDonar : number =450;
+
+  constructor(private service: ShopserviceService, private confirmationService: ConfirmationService) { }
+  // private getTime(date? : Date){
+  //   return date != null ? date.getTime() : 0;
+  // }
+
+  checkAttendence() {
+    if (this.tajPresentBool === undefined || this.noorPresentBool === undefined || !this.tajPresentBool.length || !this.noorPresentBool.length) {
+      return true
     }
-  })
+    else {
+      return false
+    }
+  }
+  wholeDeleteShow: boolean = false;
+
+  isViewAccountDetail: boolean = false;
+  chartOptions: any;
+  chartOptions2: any;
+  getDarkTheme() {
+    return {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ebedef'
+          }
+        }
+      }
+    }
+  }
 
 
 
-})
+  dataCopies: any
+  updateChartOptions() {
+    this.getDarkTheme();
+  }
+  singleSideCopies1: any;
+  excessReach1: any;
+  showDataPrint: boolean = false;
+  editAccount2(id: any) {
+
+    this.service.getKdmAccountsById(id).subscribe((account: any) => {
+      this.kdmAccountDetail = account
+
+      this.labours.forEach((labour: any) => {
+
+
+        if (labour.GetTime === this.kdmAccountDetail.GetTime) {
+
+          this.kdmLabourDetail = labour
+
+
+        }
+      })
+
+
+
+    })
 
 
 
 
 
-this.showDataPrint=true;
-
-}
-editAccount(id:any){
-this.service.getKdmAccountsById(id).subscribe((account: any)=>{
-this.kdmAccountDetail=account
-this.labours.forEach((labour: any)=>{
-
-
-  if(labour.GetTime===this.kdmAccountDetail.GetTime){
-
-this.kdmLabourDetail=labour
-
+    this.showDataPrint = true;
 
   }
-})
-this.kdmAccountDetail.TotalIncome+=this.kdmAccountDetail.OpeningBalance
-this.kdmAccountDetail.TotalIncome-=this.kdmAccountDetail.GoneMoneyPast
-this.kdmAccountDetail.TotalIncome+=this.kdmAccountDetail.TodayStayingMoney
-this.kdmAccountDetail.Expenses+=this.kdmLabourDetail.TajExpense
-this.kdmAccountDetail.Expenses+= this.kdmLabourDetail.NoorExpense
-this.kdmAccountDetail.NetProfit= (this.kdmAccountDetail.TotalIncome- this.kdmAccountDetail.Expenses)
-// this.kdmAccountDetail.NetProfit+=this.kdmAccountDetail.TodayStayingMoney
-// this.kdmAccountDetail.NetProfit-= this.kdmAccountDetail.GoneMoneyPast
-let colourCommission = Math.ceil((this.kdmAccountDetail.ColourCopies* 30)/100)
-let bindingCommision = Math.ceil((this.kdmAccountDetail.Bindings * 20/100))
+  editAccount(id: any) {
+    this.service.getKdmAccountsById(id).subscribe((account: any) => {
+      this.kdmAccountDetail = account
+      this.labours.forEach((labour: any) => {
 
-this.kdmAccountDetail.NetProfit-= colourCommission
-this.kdmAccountDetail.NetProfit-= bindingCommision
-// let excessReach = Math.ceil(this.kdmAccountDetail.BlackCopies * this.paperRate)
-let excessReach= Math.ceil(this.kdmAccountDetail.PaperSoldToday * this.singleRate)
-this.excessReach1=excessReach
-this.dataIncome={
-  labels: ['Total Income','Expenses','NetProfit','Excess Criteria'],
-  datasets: [
-      {
-          data: [this.kdmAccountDetail.TotalIncome, this.kdmAccountDetail.Expenses, this.kdmAccountDetail.NetProfit,excessReach],
-          backgroundColor: [
+
+        if (labour.GetTime === this.kdmAccountDetail.GetTime) {
+
+          this.kdmLabourDetail = labour
+
+
+        }
+      })
+      this.kdmAccountDetail.TotalIncome += this.kdmAccountDetail.OpeningBalance
+      this.kdmAccountDetail.TotalIncome -= this.kdmAccountDetail.GoneMoneyPast
+      this.kdmAccountDetail.TotalIncome += this.kdmAccountDetail.TodayStayingMoney
+      this.kdmAccountDetail.Expenses += this.kdmLabourDetail.TajExpense
+      this.kdmAccountDetail.Expenses += this.kdmLabourDetail.NoorExpense
+      this.kdmAccountDetail.NetProfit = (this.kdmAccountDetail.TotalIncome - this.kdmAccountDetail.Expenses)
+      // this.kdmAccountDetail.NetProfit+=this.kdmAccountDetail.TodayStayingMoney
+      // this.kdmAccountDetail.NetProfit-= this.kdmAccountDetail.GoneMoneyPast
+      let colourCommission = Math.ceil((this.kdmAccountDetail.ColourCopies * 30) / 100)
+      let bindingCommision = Math.ceil((this.kdmAccountDetail.Bindings * 20 / 100))
+
+      this.kdmAccountDetail.NetProfit -= colourCommission
+      this.kdmAccountDetail.NetProfit -= bindingCommision
+      // let excessReach = Math.ceil(this.kdmAccountDetail.BlackCopies * this.paperRate)
+      let excessReach = Math.ceil(this.kdmAccountDetail.PaperSoldToday * this.singleRate)
+      this.excessReach1 = excessReach
+      this.dataIncome = {
+        labels: ['Total Income', 'Expenses', 'NetProfit', 'Excess Criteria'],
+        datasets: [
+          {
+            data: [this.kdmAccountDetail.TotalIncome, this.kdmAccountDetail.Expenses, this.kdmAccountDetail.NetProfit, excessReach],
+            backgroundColor: [
               "##8F00FF",
               "#FF0000",
 
               "#00FF00",
               "#FFCE56"
-          ],
-          hoverBackgroundColor: [
+            ],
+            hoverBackgroundColor: [
               "##8F00FF",
               "#FF0000",
               "#00FF00",
               "#FFCE56"
-          ]
-      }
-  ]
-};
+            ]
+          }
+        ]
+      };
 
-let singleSideCopies = this.kdmAccountDetail.BlackCopies- this.kdmAccountDetail.B2bCopies
-this.singleSideCopies1=singleSideCopies
-this.dataCopies={
-  labels: ['Paper Sheets','Single Copies','B2B Copies','Colour Copies', 'Bindings'],
-  datasets: [
-      {
-          data: [this.kdmAccountDetail.PaperSoldToday,singleSideCopies,this.kdmAccountDetail.B2bCopies,this.kdmAccountDetail.ColourCopies,this.kdmAccountDetail.Bindings],
-          backgroundColor: [
+      let singleSideCopies = this.kdmAccountDetail.BlackCopies - this.kdmAccountDetail.B2bCopies
+      this.singleSideCopies1 = singleSideCopies
+      this.dataCopies = {
+        labels: ['Paper Sheets', 'Single Copies', 'B2B Copies', 'Colour Copies', 'Bindings'],
+        datasets: [
+          {
+            data: [this.kdmAccountDetail.PaperSoldToday, singleSideCopies, this.kdmAccountDetail.B2bCopies, this.kdmAccountDetail.ColourCopies, this.kdmAccountDetail.Bindings],
+            backgroundColor: [
               "#7D3C98",
               "#A93226",
               "#2ECC71",
               "#F1C40F",
               "#2C3E50"
+            ],
+            hoverBackgroundColor: [
+              "#7D3C98",
+              "#A93226",
+              "#2ECC71",
+              "#F1C40F",
+              "#2C3E50"
+            ]
+          }
+        ]
+      };
+
+
+
+
+
+
+      this.updateChartOptions();
+
+
+    })
+
+
+
+
+
+
+
+
+    this.isViewAccountDetail = true
+
+  }
+  deleteAccount(id: any, time: any) {
+    this.showProgress = true
+    this.service.deleteKdmAccountsById(id).subscribe((event: any) => {
+      // this.ngOnInit()
+
+
+      this.labours.forEach((labour: any) => {
+        if (labour.GetTime === time) {
+          this.service.deleteKdmLabourById(labour.id).subscribe((event: any) => {
+            this.ngOnInit()
+          },
+            error => {
+              console.log(error)
+              this.showProgress = false
+            })
+
+        }
+      })
+    },
+      error => {
+        console.log(error);
+        this.showProgress = false
+      })
+  }
+  deleteAllEntry() {
+    this.showProgress = true
+    this.selectedAccounts.forEach((account: any) => {
+      if (account === null || account === undefined) {
+
+      }
+      else {
+        let id = account.id
+        this.service.deleteKdmAccountsById(id).subscribe((event: any) => {
+
+          this.labours.forEach((labour: any) => {
+
+
+
+            if (labour.GetTime === account.GetTime) {
+              let id2 = labour.id
+              this.service.deleteKdmLabourById(id2).subscribe((event: any) => {
+                this.ngOnInit()
+              },
+                error => {
+                  console.log(error)
+                })
+            }
+            //           else if(labour.Date===account.Date){
+            //             let id2 = labour.id
+            // this.service.deleteKdmLabourById(id2).subscribe((event: any)=>{
+            // console.log(event,id2)
+            // this.ngOnInit()
+            // },
+            // error=>{
+            //   console.log(error)
+            // })
+
+            //           }
+          })
+
+
+
+
+
+
+        },
+          error => {
+            console.log(error);
+            this.showProgress = false
+          })
+      }
+    })
+
+    this.showProgress = false
+    this.wholeDeleteShow = false
+  }
+
+  wholeInfoShow: boolean = false;
+  showAllStaticDetail: boolean = false;
+  allDetailIndex: number = 0
+  staticNextClicked() {
+    this.allDetailIndex++
+  }
+  staticBackClicked() {
+    this.allDetailIndex--
+  }
+  excessreach2: any;
+  singleSideCopies2: any;
+  finalIncome: any;
+  finalCopy: any;
+  wholePaperCount: any
+  paperCameDate: any;
+  tonerCameDate: any;
+  totalItemCameDetail: any;
+  expenseSplit: any = ''
+  totalDays: number = 0
+  averageIncome: number = 0
+  averageProfit: number = 0
+  colourPerDay: number = 0
+  bindingPerDay: number = 0
+  blackPerDay: number = 0
+  paperPerDay: number = 0
+
+  showAllStatics() {
+    this.showProgress = true
+    this.paperCameDate = ""
+    this.tonerCameDate = ""
+    this.totalItemCameDetail = ""
+    console.log("SELECTED ACCOUNT", this.selectedAccounts)
+    this.wholePaperCount = 0
+    this.allAccountDetail.Date = new Date()
+    this.allAccountDetail.BlackCopies = 0
+    this.allAccountDetail.B2bCopies = 0
+    this.allAccountDetail.ColourCopies = 0
+    this.allAccountDetail.TotalIncome = 0
+    this.allAccountDetail.PaperSoldToday = 0
+    this.allAccountDetail.Bindings = 0
+    this.allAccountDetail.Expenses = 0
+    this.allAccountDetail.NetProfit = 0
+    this.allAccountDetail.TonerQuantityCame = 0
+    this.allAccountDetail.TonerQuantitySent = 0
+
+    this.allLabourDetail.TajExpense = 0
+    this.allLabourDetail.TajPresent = 0
+    this.allLabourDetail.isTajHalfDay = 0
+    this.allLabourDetail.NoorExpense = 0
+    this.allLabourDetail.NoorPresent = 0
+    this.allLabourDetail.isNoorHalfDay = 0
+
+
+    this.monthlySalaryNoor = 0
+    this.monthlySalaryTaj = 0
+    let counter = 0
+    let tempPaperCount = 0
+    let paperSentCount = 0
+    let accountLength = this.selectedAccounts.length
+    let leaveCount =0
+    let absentTaj = 0
+    let absentNoor= 0
+
+    let accountList: any;
+    accountList = this.selectedAccounts.reverse()
+    console.log("🚀 ~ file: kodambakkam.cot ~ showAllStatics ~ accountList", accountList)
+
+    accountList.forEach((account: any) => {
+
+      if (account !== undefined && account !== null) {
+        counter += 1
+        // console.log(counter)
+        let accountDetail: kdmAccounts = <kdmAccounts>{};
+        let labourDetail: kdmLabourDetails = <kdmLabourDetails>{};
+        accountDetail = account
+        this.labours.forEach((labour: any) => {
+          // console.log(labour.GetTime, account.GetTime)
+          if (labour.GetTime === account.GetTime) {
+            console.log(labour)
+            labourDetail = labour
+            if (labour.TajPresent) {
+              if (labour.isTajHalfDay) {
+
+                this.allLabourDetail.TajPresent += 0.5
+                this.allLabourDetail.TajExpense += labour.TajExpense
+                this.monthlySalaryTaj += this.tajSalary / 2
+                absentTaj+=0.5
+              }
+              else {
+                this.allLabourDetail.TajPresent += 1
+                this.allLabourDetail.TajExpense += labour.TajExpense
+                this.monthlySalaryTaj += this.tajSalary
+               
+              }
+            }
+            else {
+              this.allLabourDetail.TajExpense += labour.TajExpense
+              this.monthlySalaryTaj += this.tajSalary
+              absentTaj += 1
+
+            }
+
+            if (labour.NoorPresent) {
+
+              if (labour.isNoorHalfDay) {
+                this.allLabourDetail.NoorPresent += 0.5
+                this.allLabourDetail.NoorExpense += labour.NoorExpense
+                this.monthlySalaryNoor += this.noorSalary / 2
+                absentNoor +=0.5
+              }
+              else {
+                this.allLabourDetail.NoorPresent += 1
+                this.allLabourDetail.NoorExpense += labour.NoorExpense
+                this.monthlySalaryNoor += this.noorSalary
+              }
+            }
+            else {
+              absentNoor += 1
+              this.allLabourDetail.NoorExpense += labour.NoorExpense
+              this.monthlySalaryNoor += this.noorSalary
+            }
+
+            // account.TotalIncome+=account.OpeningBalance
+
+            console.log("🚀 ~ file: kodambakkam.component.ts ~ line 526 ~ KodambakkamComponent ~ this.labours.forEach ~ account.GoneMoneyPast", account.GoneMoneyPast)
+
+ 
+
+            if (account.isSunday || account.isHoliday) {
+              leaveCount+=1
+              let sunday_exp = 0
+              sunday_exp = labour.NoorExpense + labour.TajExpense 
+              //this.allAccountDetail.Expenses += sunday_exp
+              this.allAccountDetail.Expenses += this.currentBillKdm
+              this.allAccountDetail.Expenses += this.kdmRent
+              this.allAccountDetail.NetProfit += 0
+              this.allAccountDetail.TotalIncome += 0
+              this.allAccountDetail.TonerQuantityCame += 0
+              this.allAccountDetail.TonerQuantitySent += 0
+            }
+            else {
+              //this.allAccountDetail.Expenses += account.Expenses
+              this.allAccountDetail.Expenses += this.currentBillKdm
+              this.allAccountDetail.NetProfit += account.NetProfit
+              this.allAccountDetail.TotalIncome += account.TotalIncome
+              this.allAccountDetail.Expenses += this.kdmRent
+              this.allAccountDetail.TonerQuantityCame += account.TonerQuantityCame
+              this.allAccountDetail.TonerQuantitySent += account.TonerQuantitySent
+
+              if (accountLength === counter) {
+                this.allAccountDetail.TotalIncome += account.TodayStayingMoney + account.OldStayingMoney
+                console.log("stay", account.TodayStayingMoney, account.OldStayingMoney)
+              }
+              // this.allAccountDetail.TotalIncome+=account.OpeningBalance
+              // this.allAccountDetail.TotalIncome+=account.TodayStayingMoney
+              // this.allAccountDetail.TotalIncome-= account.GoneMoneyPast
+            }
+            this.allAccountDetail.B2bCopies += account.B2bCopies
+
+
+            if (account.isPaperCame) {
+              let dateString = account.Date
+              let month = '' + (dateString.getMonth() + 1);
+              let day = '' + dateString.getDate();
+              let year = '' + dateString.getFullYear();
+
+              if (month.length < 2) {
+                month = '0' + month;
+              }
+              if (day.length < 2) {
+                day = '0' + day;
+              }
+              let dateSend = [year, month, day].join('-');
+
+              this.paperCameDate += " | " + dateSend + "-->" + account.PaperQuantityCame + " | "
+            }
+            if (account.isTonerCame) {
+
+              let dateString = account.Date
+              let month = '' + (dateString.getMonth() + 1);
+              let day = '' + dateString.getDate();
+              let year = '' + dateString.getFullYear();
+
+              if (month.length < 2) {
+                month = '0' + month;
+              }
+              if (day.length < 2) {
+                day = '0' + day;
+              }
+              let dateSend = [year, month, day].join('-');
+
+
+              this.tonerCameDate += " | " + dateSend + " | "
+            }
+            if (account.isItemsCame) {
+              this.totalItemCameDetail += " | " + account.ItemsInfo + " | "
+            }
+            this.allAccountDetail.BlackCopies += account.BlackCopies
+            this.allAccountDetail.ColourCopies += account.ColourCopies
+            this.allAccountDetail.Bindings += account.Bindings
+            this.allAccountDetail.TonerSpent += account.TonerSpent
+
+
+            let singleSideCopies = account.BlackCopies - account.B2bCopies
+
+
+
+            this.singleSideCopies1 += singleSideCopies
+            this.allAccountDetail.PaperSoldToday += account.PaperSoldToday
+            this.wholePaperCount += account.PaperSoldToday
+
+
+
+
+          }
+
+
+
+
+        })
+
+
+
+      }
+
+
+
+    })
+
+    this.totalDays = accountLength
+
+    if (accountLength === 31 || accountLength === 30) {
+      this.monthlySalaryTaj = (30 - absentTaj) * this.tajSalary
+      this.monthlySalaryNoor = (30 - absentNoor) * this.noorSalary
+    }
+    else {
+      this.monthlySalaryTaj = this.allLabourDetail.TajPresent * this.tajSalary
+      this.monthlySalaryNoor = this.allLabourDetail.NoorPresent * this.noorSalary
+    }
+
+    console.log(this.allAccountDetail.PaperSoldToday * this.paperRate)
+  
+    let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 30) / 100)
+    let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 20 / 100))
+    let salary = Math.ceil( this.monthlySalaryTaj + this.monthlySalaryNoor)
+    let commision = colourCommission + bindingCommision
+    let tonerCost = Math.ceil( this.tonerCost * this.allAccountDetail.BlackCopies)
+    let rent = Math.ceil( accountLength * this.kdmRent)
+    this.allAccountDetail.Expenses += commision
+    this.allAccountDetail.Expenses += salary
+
+    let paperAmount = Math.ceil( this.allAccountDetail.PaperSoldToday * this.paperRate)
+    this.allAccountDetail.Expenses += paperAmount
+    this.allAccountDetail.Expenses += tonerCost
+    this.expenseSplit += 'Rent:' + rent + "|| " + 'Salary :' + salary + "|| " + 'Paper Cost:' + paperAmount + "|| " + 'Binding & colour:' + commision + "|| " + 'Toner Cost :' + tonerCost
+    this.allAccountDetail.NetProfit = this.allAccountDetail.TotalIncome - this.allAccountDetail.Expenses
+
+    this.averageIncome = this.allAccountDetail.TotalIncome / (this.totalDays - leaveCount)
+    this.averageProfit = this.allAccountDetail.NetProfit / this.totalDays 
+    this.colourPerDay = Math.ceil((this.allAccountDetail.ColourCopies) / (this.totalDays - leaveCount))
+
+    this.bindingPerDay = Math.ceil(this.allAccountDetail.Bindings) / (this.totalDays - leaveCount)
+    this.blackPerDay = Math.ceil((this.allAccountDetail.BlackCopies) / (this.totalDays - leaveCount))
+
+
+
+
+    this.allAccountDetail.NetProfit = Math.ceil(this.allAccountDetail.NetProfit)
+    this.allAccountDetail.TotalIncome = Math.ceil(this.allAccountDetail.TotalIncome)
+    this.allAccountDetail.Expenses = Math.ceil(this.allAccountDetail.Expenses)
+    this.averageIncome = Math.ceil(this.averageIncome)
+    this.averageProfit = Math.ceil(this.averageProfit)
+    this.excessreach2 = this.allAccountDetail.TotalIncome / this.wholePaperCount
+    this.wholePaperCount = this.wholePaperCount / 500
+    this.paperPerDay = this.wholePaperCount / (this.totalDays - leaveCount)
+
+
+
+    this.finalIncome = {
+      labels: ['Total Income', 'Expenses', 'NetProfit', 'Excess Criteria'],
+      datasets: [
+        {
+          data: [this.allAccountDetail.TotalIncome, this.allAccountDetail.Expenses, this.allAccountDetail.NetProfit, this.excessreach2],
+          backgroundColor: [
+            "##8F00FF",
+            "#FF0000",
+
+            "#00FF00",
+            "#FFCE56"
+          ],
+          hoverBackgroundColor: [
+            "##8F00FF",
+            "#FF0000",
+            "#00FF00",
+            "#FFCE56"
+          ]
+        }
+      ]
+    };
+
+    let singleSideCopies = this.allAccountDetail.BlackCopies - this.allAccountDetail.B2bCopies
+
+    this.singleSideCopies1 = singleSideCopies
+    this.finalCopy = {
+      labels: ['Paper Sheets', 'Single Copies', 'B2B Copies', 'Colour Copies', 'Bindings'],
+      datasets: [
+        {
+          data: [this.wholePaperCount, this.singleSideCopies1, this.allAccountDetail.B2bCopies, this.allAccountDetail.ColourCopies, this.allAccountDetail.Bindings],
+          backgroundColor: [
+            "#7D3C98",
+            "#A93226",
+            "#2ECC71",
+            "#F1C40F",
+            "#2C3E50"
           ],
           hoverBackgroundColor: [
             "#7D3C98",
-              "#A93226",
-              "#2ECC71",
-              "#F1C40F",
-              "#2C3E50"
+            "#A93226",
+            "#2ECC71",
+            "#F1C40F",
+            "#2C3E50"
           ]
-      }
-  ]
-};
+        }
+      ]
+    };
+
+
+    this.salaryChart = {
+      labels: ['Taj Salary', 'Noor Salary'],
+      datasets: [
+        {
+          data: [this.monthlySalaryTaj, this.monthlySalaryNoor ],
+          backgroundColor: [
+            "#7D3C98",
+            "#A93226",
+
+          ],
+          hoverBackgroundColor: [
+            "#7D3C98",
+            "#A93226",
+
+          ]
+        }
+      ]
+    };
 
 
 
+    this.updateChartOptions();
 
+    this.showProgress = false
 
-
-this.updateChartOptions();
-
-
-})
-
-
-
-
-
-
-
-
-this.isViewAccountDetail=true
-
-}
-deleteAccount(id: any, time: any){
-  this.showProgress=true
-   this.service.deleteKdmAccountsById(id).subscribe((event: any)=>{
-        // this.ngOnInit()
-        
-
-        this.labours.forEach((labour: any)=>{
-if(labour.GetTime===time){
-this.service.deleteKdmLabourById(labour.id).subscribe((event: any)=>{
-  this.ngOnInit()
-},
-error=>{
-  console.log(error)
-  this.showProgress=false
-})
-
-}
-        })
-      },
-      error=>{
-        console.log(error);
-        this.showProgress=false
-      })
-}
-deleteAllEntry(){
-  this.showProgress=true
-  this.selectedAccounts.forEach((account: any)=>{
-    if(account===null || account===undefined){
-     
+    this.showAllStaticDetail = true
+  }
+  checkTick: boolean = false
+  salaryChart: any
+  checkBoxx() {
+    if (!this.checkTick) {
+      this.wholeInfoShow = true
+      this.wholeDeleteShow = true
+      this.checkTick = true
     }
-    else{
-let id= account.id
-      this.service.deleteKdmAccountsById(id).subscribe((event: any)=>{
-
-        this.labours.forEach((labour: any)=>{
-
-
-
-          if(labour.GetTime===account.GetTime){
-            let id2 = labour.id
-this.service.deleteKdmLabourById(id2).subscribe((event: any)=>{
-this.ngOnInit()
-},
-error=>{
-  console.log(error)
-})
-          }
-//           else if(labour.Date===account.Date){
-//             let id2 = labour.id
-// this.service.deleteKdmLabourById(id2).subscribe((event: any)=>{
-// console.log(event,id2)
-// this.ngOnInit()
-// },
-// error=>{
-//   console.log(error)
-// })
-
-//           }
-        })
-
-     
-
-
-
-       
-      },
-      error=>{
-        console.log(error);
-        this.showProgress=false
-      })
-    }
-  })
-
-  this.showProgress=false
-  this.wholeDeleteShow=false
-}
-
-wholeInfoShow: boolean =false;
-showAllStaticDetail: boolean =false;
-allDetailIndex : number =0
-staticNextClicked(){
-this.allDetailIndex++
-}
-staticBackClicked(){
-this.allDetailIndex--
-}
-excessreach2 : any;
-singleSideCopies2 : any;
-finalIncome : any;
-finalCopy : any;
-wholePaperCount : any
-paperCameDate: any;
-tonerCameDate: any;
-totalItemCameDetail: any;
-showAllStatics(){
-  this.showProgress=true
-  this.paperCameDate=""
-  this.tonerCameDate=""
-  this.totalItemCameDetail=""
-  console.log("SELECTED ACCOUNT", this.selectedAccounts)
-  this.wholePaperCount=0
-  this.allAccountDetail.Date= new Date()
-  this.allAccountDetail.BlackCopies=0
-  this.allAccountDetail.B2bCopies=0
-  this.allAccountDetail.ColourCopies=0
-  this.allAccountDetail.TotalIncome=0
-  this.allAccountDetail.PaperSoldToday=0
-  this.allAccountDetail.Bindings=0
-  this.allAccountDetail.Expenses=0
-  this.allAccountDetail.NetProfit=0
-
-  this.allLabourDetail.TajExpense=0
-  this.allLabourDetail.TajPresent=0
-  this.allLabourDetail.isTajHalfDay=0
-  this.allLabourDetail.NoorExpense=0
-  this.allLabourDetail.NoorPresent=0
-  this.allLabourDetail.isNoorHalfDay=0
-
-
-  this.monthlySalaryNoor=0
-  this.monthlySalaryTaj=0
-  let counter =0
-  let tempPaperCount =0
-  let paperSentCount=0
-  let accountLength = this.selectedAccounts.length
-
-  let accountList:any;
-accountList=this.selectedAccounts.reverse()
-console.log("🚀 ~ file: kodambakkam.cot ~ showAllStatics ~ accountList", accountList)
-
-accountList.forEach((account: any)=>{
-
-if(account!==undefined && account!==null){
-  counter+=1
-  // console.log(counter)
-let accountDetail :kdmAccounts = <kdmAccounts>{};    
-let labourDetail :kdmLabourDetails = <kdmLabourDetails>{};
-accountDetail=account
-this.labours.forEach((labour: any)=>{
-// console.log(labour.GetTime, account.GetTime)
-  if(labour.GetTime===account.GetTime){
-console.log(labour)
-    labourDetail= labour
-    if(labour.TajPresent){
-      if(labour.isTajHalfDay){
-
-this.allLabourDetail.TajPresent+=0.5
-this.allLabourDetail.TajExpense+=labour.TajExpense
-this.monthlySalaryTaj+=this.tajSalary/2
-      }
-      else{
-this.allLabourDetail.TajPresent+=1
-this.allLabourDetail.TajExpense+=labour.TajExpense
-this.monthlySalaryTaj+=this.tajSalary
-      }
-    }
-    else{
-      this.allLabourDetail.TajExpense+=labour.TajExpense
-      this.monthlySalaryTaj+=this.tajSalary
+    else {
+      this.wholeDeleteShow = false
+      this.wholeInfoShow = false
+      this.checkTick = false
 
     }
-    if(labour.NoorPresent){
 
-      if(labour.isNoorHalfDay){
-        this.allLabourDetail.NoorPresent+=0.5
-        this.allLabourDetail.NoorExpense+=labour.NoorExpense
-        this.monthlySalaryNoor+=this.noorSalary/2
-      }
-      else{
-        this.allLabourDetail.NoorPresent+=1
-        this.allLabourDetail.NoorExpense+=labour.NoorExpense
-        this.monthlySalaryNoor+=this.noorSalary
-      }
+  }
+  beforeDay: any;
+  getOldDetails() {
+
+    if (this.customers.length) {
+      this.beforeDate = this.customers[0].Date
+      this.beforeDay = this.customers[0].Day
+
     }
-else{
-  this.allLabourDetail.NoorExpense+=labour.NoorExpense
-  this.monthlySalaryNoor+=this.noorSalary
-}
+    else {
+      // this.beforeDate="No Date"
+      this.beforeDate = new Date()
+      this.beforeDay = "No Day"
+    }
 
-// account.TotalIncome+=account.OpeningBalance
 
-console.log("🚀 ~ file: kodambakkam.component.ts ~ line 526 ~ KodambakkamComponent ~ this.labours.forEach ~ account.GoneMoneyPast", account.GoneMoneyPast)
 
-account.Expenses+=labour.TajExpense
-account.Expenses+= labour.NoorExpense
-account.NetProfit= ((account.TotalIncome)- account.Expenses)
+    if (!this.customers.length) {
+      this.todayStayDetail2 = "";
+      this.pastStayDetail2 = "";
+      this.pastSoldDetail2 = "";
+    }
 
-let colourCommission = Math.ceil((account.ColourCopies* 30)/100)
-let bindingCommision = Math.ceil((account.Bindings * 20/100))
+    else {
+      this.todayStayDetail2 = this.customers[0].TodayStayDetail;
+      this.pastStayDetail2 = this.customers[0].PastStayDetail;
+      this.pastSoldDetail2 = this.customers[0].PastSoldDetail;
 
-account.NetProfit-= colourCommission
-account.NetProfit-= bindingCommision
-// isSunday : number;
-// isHoliday : number;
+    }
 
-if(account.isSunday || account.isHoliday){
-  let sunday_exp= 0
-  sunday_exp= labour.NoorExpense + labour.TajExpense + this.currentBillKdm + this.kdmRent
-  this.allAccountDetail.Expenses+=sunday_exp
-  this.allAccountDetail.NetProfit +=0
-  this.allAccountDetail.TotalIncome+=0
-}
-else{
-  this.allAccountDetail.Expenses+=account.Expenses
-  this.allAccountDetail.NetProfit +=account.NetProfit
-  this.allAccountDetail.TotalIncome+=account.TotalIncome
-  
-  if(accountLength===counter){
-    this.allAccountDetail.TotalIncome+= account.TodayStayingMoney + account.OldStayingMoney
-    console.log("stay",account.TodayStayingMoney,account.OldStayingMoney)
   }
-  // this.allAccountDetail.TotalIncome+=account.OpeningBalance
-  // this.allAccountDetail.TotalIncome+=account.TodayStayingMoney
-  // this.allAccountDetail.TotalIncome-= account.GoneMoneyPast
-}
-this.allAccountDetail.B2bCopies+= account.B2bCopies
-this.allAccountDetail.TonerQuantityCame+=account.TonerQuantityCame
-this.allAccountDetail.TonerQuantitySent+= account.TonerQuantitySent
 
-if(account.isPaperCame){
-  let dateString = account.Date
-  let month ='' + (dateString.getMonth()+1);
-  let day =''+ dateString.getDate();
-  let year =''+ dateString.getFullYear();
-  
-  if(month.length< 2){
-    month ='0'+ month;
+  // todayStayingCopies: number=0;
+  // todayStayingMoney: number=0;
+  // oldStayingCopies : number=0;
+  // oldStayingMoney : number=0;
+  // goneCopiesPast: number=0;
+  // goneMoneyPast: number=0;
+
+  // todayStayDetail :any;
+  // pastStayDetail: any;
+  // pastSoldDetail: any;
+
+  // [
+  //   {
+  //       "copies": 5,
+  //       "money": 6
+  //   },
+  //   {
+  //       "copies": 7,
+  //       "money": 8
+  //   }
+  // ]
+  machine1BlackTemp: number = 0
+  machine2BlackTemp: number = 0
+  colour1Temp: number = 0
+  colour2Temp: number = 0
+  totalTempCash: number = 0
+  totalTempPaytm: number = 0;
+  totalCountCash(event: any) {
+    let current = event.value
+    // this.totalIncome=0
+    // this.totalIncome+=current
+    // this.totalIncome+=this.totalTempPaytm
+    // this.totalTempCash=this.totalIncome
+    this.totalIncome = event.value + this.paytmIncome
   }
-  if(day.length<2 ){
-    day= '0'+ day;
+  totalCountPaytm(event: any) {
+    let current = event.value
+    this.totalIncome = event.value + this.cashIncome
   }
-  let dateSend = [year,month,day].join('-');
+  copiesGone: number = 0
+  paperSheetGone: number = 0
 
-this.paperCameDate +=  " | " + dateSend + "-->" + account.PaperQuantityCame + " | " 
-}
-if(account.isTonerCame){
+  showTpmCopies: boolean = false
+  tpmCopyCheck: any = false
 
-  let dateString = account.Date
-  let month ='' + (dateString.getMonth()+1);
-  let day =''+ dateString.getDate();
-  let year =''+ dateString.getFullYear();
-  
-  if(month.length< 2){
-    month ='0'+ month;
+  saveTpmCopy() {
+
+    let balanceCopies = 0
+    balanceCopies = this.tempBlackCopies - this.copiesGone
+    this.blackCopies = this.tempBlackCopies
+
+
+
+    this.showTpmCopies = false
   }
-  if(day.length<2 ){
-    day= '0'+ day;
+  cancelTpmCopy() {
+    this.blackCopies = this.tempBlackCopies
+    this.showTpmCopies = false
   }
-  let dateSend = [year,month,day].join('-');
-
-
-  this.tonerCameDate+=  " | " + dateSend + " | "
-}
-if(account.isItemsCame){
-this.totalItemCameDetail += " | " + account.ItemsInfo + " | "
-}
-this.allAccountDetail.BlackCopies+=account.BlackCopies
-this.allAccountDetail.ColourCopies+=account.ColourCopies
-this.allAccountDetail.Bindings+= account.Bindings
-this.allAccountDetail.TonerSpent+=account.TonerSpent
-
-// let excessReach = Math.ceil(this.kdmAccountDetail.BlackCopies * this.paperRate)
-// let excessReach= Math.ceil(account.PaperSoldToday * this.singleRate)
-// this.excessReach1+=excessReach
-
-let singleSideCopies = account.BlackCopies- account.B2bCopies
-
-
-
-this.singleSideCopies1+=singleSideCopies
-this.allAccountDetail.PaperSoldToday+=account.PaperSoldToday
-this.wholePaperCount+=account.PaperSoldToday
-
-// if(counter===1){
-// tempPaperCount=(account.PaperPresentToday * 500) + account.PaperSheet
-// this.wholePaperCount+= account.PaperSoldToday
-// console.log("🚀 ~ file: kodambt  ~ this.wholePaperCount", this.wholePaperCount)
-
-// let excessReach= Math.ceil(this.wholePaperCount * this.singleRate)
-// this.excessreach2 =excessReach
-// }
-// else{
-// if(accountLength===counter){
-
-// if(account.isPaperSent){
-// paperSentCount+= account.PaperQuantitySent
-// }
-// let newcounter= tempPaperCount-((account.PaperPresentToday *500) + account.PaperSheet)
-// this.wholePaperCount+= newcounter
-
-// this.wholePaperCount-=paperSentCount
-// let excessReach= Math.ceil(this.wholePaperCount * this.singleRate)
-// this.excessreach2 =excessReach
-
-
-// }
-// else{
-// if(account.isPaperCame){
-  
-//     let yesterdayPaper = (accountList[counter-2].PaperPresentToday * 500)+ accountList[counter-2].PaperSheet
-//    let newcounter = tempPaperCount-yesterdayPaper
-// newcounter = newcounter + ((yesterdayPaper +(account.PaperQuantityCame * 500))-((account.PaperPresentToday * 500) + account.PaperSheet ))
-
-//    this.wholePaperCount+=newcounter
-//    tempPaperCount=(account.PaperPresentToday *500) + account.PaperSheet
+  tpmCopiesGone(event: any) {
+    if (this.tpmCopyCheck === false) {
+      let tempCopies = this.tempBlackCopies
+      let current = event.value
+      if (current < tempCopies) {
+        this.showTpmCopies = true
+        console.log(this.showTpmCopies)
+      }
       
-//     if(account.isPaperSent){
-//       paperSentCount+= account.PaperQuantitySent
-//     }
+      console.log(event.value)
+      this.tpmCopyCheck=true
+    }
  
 
-// }
-// else {
-//   if(account.isPaperSent){
-//     paperSentCount+= account.PaperQuantitySent
-//   }
-// }
-// }
-
-// }
-
-
-  }
-
-
-
-
-})
-
-
-
-}
-
-
-
-  })
-  this.allAccountDetail.NetProfit=this.allAccountDetail.TotalIncome-this.allAccountDetail.Expenses
-  this.excessreach2=this.allAccountDetail.TotalIncome/this.wholePaperCount
-  this.wholePaperCount= this.wholePaperCount/500
-
-  this.finalIncome={
-    labels: ['Total Income','Expenses','NetProfit','Excess Criteria'],
-    datasets: [
-        {
-            data: [this.allAccountDetail.TotalIncome, this.allAccountDetail.Expenses, this.allAccountDetail.NetProfit,this.excessreach2],
-            backgroundColor: [
-                "##8F00FF",
-                "#FF0000",
-  
-                "#00FF00",
-                "#FFCE56"
-            ],
-            hoverBackgroundColor: [
-                "##8F00FF",
-                "#FF0000",
-                "#00FF00",
-                "#FFCE56"
-            ]
-        }
-    ]
-  };
-  
-  let singleSideCopies = this.allAccountDetail.BlackCopies- this.allAccountDetail.B2bCopies
-  this.singleSideCopies1=singleSideCopies
-  this.finalCopy={
-    labels: ['Paper Sheets','Single Copies','B2B Copies','Colour Copies', 'Bindings'],
-    datasets: [
-        {
-            data: [this.wholePaperCount,this.singleSideCopies1,this.allAccountDetail.B2bCopies,this.allAccountDetail.ColourCopies,this.allAccountDetail.Bindings],
-            backgroundColor: [
-                "#7D3C98",
-                "#A93226",
-                "#2ECC71",
-                "#F1C40F",
-                "#2C3E50"
-            ],
-            hoverBackgroundColor: [
-              "#7D3C98",
-                "#A93226",
-                "#2ECC71",
-                "#F1C40F",
-                "#2C3E50"
-            ]
-        }
-    ]
-  };
-  
-  
-  this.salaryChart={
-    labels: ['Taj Salary','Noor Salary'],
-    datasets: [
-        {
-            data: [this.allLabourDetail.TajPresent * this.tajSalary,this.allLabourDetail.NoorPresent* this.noorSalary],
-            backgroundColor: [
-                "#7D3C98",
-                "#A93226",
-           
-            ],
-            hoverBackgroundColor: [
-              "#7D3C98",
-                "#A93226",
-           
-            ]
-        }
-    ]
-  };
-  
-  
-  
-  this.updateChartOptions();
-
-  this.showProgress=false
     
-    this.showAllStaticDetail=true
-}
-checkTick: boolean =false
-salaryChart : any
-checkBoxx(){
-if(!this.checkTick){
-  this.wholeInfoShow=true
-  this.wholeDeleteShow=true
-  this.checkTick=true
-}
-else{
-this.wholeDeleteShow=false
-this.wholeInfoShow=false
-this.checkTick=false
-
-}
-
-}
-beforeDay : any;
-getOldDetails(){
-
-  if(this.customers.length){
-    this.beforeDate=this.customers[0].Date
-    this.beforeDay= this.customers[0].Day
 
   }
-  else{
-    // this.beforeDate="No Date"
-    this.beforeDate=new Date()
-    this.beforeDay="No Day"
-  }
-
-
-
-  if(!this.customers.length){
-    this.todayStayDetail2 ="";
-    this.pastStayDetail2="";
-    this.pastSoldDetail2="";
-  }
-
-else{
-  this.todayStayDetail2 =this.customers[0].TodayStayDetail;
-  this.pastStayDetail2=this.customers[0].PastStayDetail;
-  this.pastSoldDetail2=this.customers[0].PastSoldDetail;
-
-}
- 
-}
-
-// todayStayingCopies: number=0;
-// todayStayingMoney: number=0;
-// oldStayingCopies : number=0;
-// oldStayingMoney : number=0;
-// goneCopiesPast: number=0;
-// goneMoneyPast: number=0;
-
-// todayStayDetail :any;
-// pastStayDetail: any;
-// pastSoldDetail: any;
-
-// [
-//   {
-//       "copies": 5,
-//       "money": 6
-//   },
-//   {
-//       "copies": 7,
-//       "money": 8
-//   }
-// ]
-machine1BlackTemp : number =0
-machine2BlackTemp: number=0
-colour1Temp : number =0
-colour2Temp : number =0
-totalTempCash:number=0
-totalTempPaytm: number=0;
-totalCountCash(event : any){
-let current=event.value
-// this.totalIncome=0
-// this.totalIncome+=current
-// this.totalIncome+=this.totalTempPaytm
-// this.totalTempCash=this.totalIncome
-this.totalIncome=event.value + this.paytmIncome
-}
-totalCountPaytm(event : any){
-let current = event.value
-this.totalIncome=event.value + this.cashIncome
-}
-
 machinecolour2(event: any){
 
   let oldReading: any
@@ -930,7 +983,9 @@ machineblack1(event: any){
 
 this.blackCopies=0
 this.blackCopies+=current-oldReading
-this.blackCopies+=this.machine2BlackTemp
+  this.blackCopies += this.machine2BlackTemp
+
+  this.tempBlackCopies = this.blackCopies
 this.machine1BlackTemp=current-oldReading
 
 
@@ -956,7 +1011,8 @@ machineblack2(event : any){
 
   this.blackCopies=0
   this.blackCopies+=current-oldReading
-  this.blackCopies+=this.machine1BlackTemp
+  this.blackCopies += this.machine1BlackTemp
+  this.tempBlackCopies = this.blackCopies
   this.machine2BlackTemp=current-oldReading
   if(current==0){
     this.blackMachineReading2=oldReading
@@ -1186,7 +1242,7 @@ this.maniSalary=val7
 let val8 : number =+ this.rentSheet.rasheedSalary
 this.rasheedSalary=val8
 let paper8 : number =+ this.rentSheet.paperRate
-this.paperRate= paper8 / 500
+this.paperRate= paper8 
 
 
 
@@ -1558,7 +1614,7 @@ this.kdmAccountDetail.B2bCopies=this.b2bCopies
 this.kdmAccountDetail.TonerQuantityCame= this.cashIncome
 this.kdmAccountDetail.TonerQuantitySent=this.paytmIncome
 this.kdmAccountDetail.TonerSpent=this.expenses
-this.kdmAccountDetail.Expenses=this.expenses
+//this.kdmAccountDetail.Expenses=this.expenses
 // this.kdmAccountDetail.Expenses+=this.kdmRent
 // this.kdmAccountDetail.Expenses+=this.currentBillKdm
 // this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
@@ -1866,12 +1922,12 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   this.kdmAccountDetail.Bindings=0
   
   this.kdmAccountDetail.Expenses=0
-  this.kdmAccountDetail.Expenses+=20
-  this.kdmAccountDetail.Expenses+=this.kdmRent
-  this.kdmAccountDetail.Expenses+=this.currentBillKdm
-  this.kdmAccountDetail.Expenses+= this.tonerCost* this.kdmAccountDetail.BlackCopies
+  this.kdmAccountDetail.Expenses=20
+  //this.kdmAccountDetail.Expenses+=this.kdmRent
+  //this.kdmAccountDetail.Expenses+=this.currentBillKdm
+  //this.kdmAccountDetail.Expenses+= this.tonerCost* this.kdmAccountDetail.BlackCopies
   this.kdmAccountDetail.PaperSoldToday=0
-  this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
+  //this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
   this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
   
   this.kdmAccountDetail.TonerSpent=0
@@ -2027,14 +2083,16 @@ this.kdmLabourDetail.Day=this.kdmAccountDetail.Day
 this.kdmLabourDetail.GetTime=this.kdmAccountDetail.GetTime
 
 // this.kdmAccountDetail.Expenses=this.expenses
-this.kdmAccountDetail.Expenses+=20
-this.kdmAccountDetail.Expenses+=this.kdmRent
-this.kdmAccountDetail.Expenses+=this.currentBillKdm
-this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
-this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
+this.kdmAccountDetail.Expenses =20
+//this.kdmAccountDetail.Expenses+=this.kdmRent
+//this.kdmAccountDetail.Expenses+=this.currentBillKdm
+//this.kdmAccountDetail.Expenses += this.tonerCost * this.blackCopies
+
+  
+//this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
 // this.kdmAccountDetail.Expenses+=this.tajExpense
 // this.kdmAccountDetail.Expenses+= this.noorExpense
-this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
+//this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
 
 if(this.kdmAccountDetail.Day==="SATURDAY"){
 this.service.addKdmAcccounts(this.kdmAccountDetail).subscribe((event: any)=>{
@@ -2059,17 +2117,18 @@ this.kdmAccountDetail.B2bCopies=0
 this.kdmAccountDetail.Bindings=0
 
 this.kdmAccountDetail.Expenses=0
-this.kdmAccountDetail.Expenses+=20
-this.kdmAccountDetail.Expenses+=this.kdmRent
-this.kdmAccountDetail.Expenses+=this.currentBillKdm
-this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
-this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
-this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
+this.kdmAccountDetail.Expenses=20
+//this.kdmAccountDetail.Expenses+=this.kdmRent
+//this.kdmAccountDetail.Expenses+=this.currentBillKdm
+//this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
+
+//this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
 
 this.kdmAccountDetail.TonerSpent=0
 this.kdmAccountDetail.PaperSoldToday=0
 this.kdmAccountDetail.TodayStayingCopies=0
-this.kdmAccountDetail.TodayStayingMoney=0
+    this.kdmAccountDetail.TodayStayingMoney = 0
+    //this.kdmAccountDetail.Expenses += this.paperRate * this.kdmAccountDetail.PaperSoldToday
 // this.kdmAccountDetail.OldStayingCopies=0
 // this.kdmAccountDetail.OldStayingMoney=0
 this.kdmAccountDetail.GoneCopiesPast=0

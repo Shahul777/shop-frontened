@@ -246,6 +246,15 @@
       <div>
 
         <p-chart type="pie" [data]="finalCopy" [options]="chartOptions" [style]="{'width': '10px'}"></p-chart>
+        <div class="column2">Total Days : {{totalDays}}</div>
+        <div class="column2">Income Per Day : {{averageIncome}}</div>
+        <div class="column2"> Profit Per Day : {{averageProfit}}</div>
+        <div class="column2"> Paper Per Day : {{paperPerDay}}</div>
+        <div class="column2"> Black Per Day : {{blackPerDay}}</div>
+        <div class="column2"> Colour Per Day : {{colourPerDay}}</div>
+        <div class="column2"> binding Per Day : {{bindingPerDay}}</div>
+
+
 
       </div>
 
@@ -309,7 +318,7 @@
       <div><br>Colour COPIES : {{allAccountDetail.ColourCopies}}<hr></div>
 
       <div><br>BINDINGS : {{allAccountDetail.Bindings}}<hr></div>
-
+      <div>   <br /> Expense Details :              {{expenseSplit}}           </div>
     </div>
     <ng-template pTemplate="footer">
 
@@ -623,7 +632,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
-                      <p-inputNumber inputId="inputnumber" [readonly]="true" [disabled]="true" [(ngModel)]="blackCopies"></p-inputNumber>
+                      <p-inputNumber inputId="inputnumber" [readonly]="false" (onInput)="tpmCopiesGone($event)" [disabled]="false" [(ngModel)]="blackCopies"></p-inputNumber>
                       <label style="color: red; font-size: 15px;" for="inputnumber">Total Black Copies</label>
                     </span>
                   </div>
@@ -663,7 +672,50 @@
                       <label style="color: red; font-size: 15px;" for="inputnumber">Paper Sheets</label>
                     </span>
                   </div>
+                  <p-dialog [closable]="true" header="How Many Copies and Paper sheet Gone ?" [(visible)]="showTpmCopies" [style]="{width: '100vw'}">
 
+                    <div style="display:grid; grid-template-rows:1fr 1fr;">
+
+                      <br />
+                      <br />
+                      <br />
+                      <div class="field col-12 md:col-4">
+                        <span class="p-float-label">
+                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="copiesGone"></p-inputNumber>
+                          <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
+                          <label style=" font-size: 15px;" for="inputnumber">Copies Gone</label>
+                        </span>
+                      </div>
+                      <br />
+                      <br />
+                      <br />
+                      <div class="field col-12 md:col-4">
+                        <span class="p-float-label">
+                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="paperSheetGone"></p-inputNumber>
+                          <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
+                          <label style=" font-size: 15px;" for="inputnumber">Money</label>
+                        </span>
+                      </div>
+
+                    </div>
+
+                    <ng-template pTemplate="footer">
+                      <div style="display:grid; grid-template-columns:1fr 1fr;">
+
+                        <div>
+                          <p-button icon="pi pi-times" (click)="cancelTpmCopy()" label="Canel" styleClass="p-button-raised"></p-button>
+
+                        </div>
+
+
+                        <div>
+                          <p-button icon="pi pi-check" (click)="saveTpmCopy()" label="Save" styleClass="p-button-raised"></p-button>
+
+                        </div>
+
+                      </div>
+                    </ng-template>
+                  </p-dialog>
 
                   <p-dialog [closable]="true" header="How Many Paper Recieved ?" [(visible)]="paperRecieved" [style]="{width: '100vw'}">
 

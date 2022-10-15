@@ -85,7 +85,8 @@ blackMachineReading1 : number=0;
 blackMachineReading2 : number=0;
 colourMachineReading1: number=0;
 ColourMachineReading2 : number =0;
-blackCopies : number=0;
+  blackCopies: number = 0;
+  tempBlackCopies: number =0
 colourCopies : number=0;
 b2bCopies : number=0;
 paperPresentToday : number=0;
@@ -433,17 +434,7 @@ error=>{
   console.log(error)
 })
           }
-//           else if(labour.Date===account.Date){
-//             let id2 = labour.id
-// this.service.deleteKdmLabourById(id2).subscribe((event: any)=>{
-// console.log(event,id2)
-// this.ngOnInit()
-// },
-// error=>{
-//   console.log(error)
-// })
 
-//           }
         })
 
      
@@ -524,7 +515,43 @@ totalCountPaytm(event : any){
 let current = event.value
 this.totalIncome=event.value + this.cashIncome
 }
+  copiesGone: number = 0
+  paperSheetGone: number = 0
 
+  showTpmCopies: boolean = false
+  tpmCopyCheck: any = false
+
+  saveTpmCopy() {
+
+    let balanceCopies = 0
+    balanceCopies = this.tempBlackCopies - this.copiesGone
+    this.blackCopies = this.tempBlackCopies
+
+
+
+    this.showTpmCopies = false
+  }
+  cancelTpmCopy() {
+    this.blackCopies = this.tempBlackCopies
+    this.showTpmCopies = false
+  }
+  tpmCopiesGone(event: any) {
+    if (this.tpmCopyCheck === false) {
+      let tempCopies = this.tempBlackCopies
+      let current = event.value
+      if (current < tempCopies) {
+        this.showTpmCopies = true
+        console.log(this.showTpmCopies)
+      }
+
+      console.log(event.value)
+      this.tpmCopyCheck = true
+    }
+
+
+
+
+  }
 machinecolour2(event: any){
 
   let oldReading: any
@@ -568,7 +595,8 @@ machineblack1(event: any){
 
 this.blackCopies=0
 this.blackCopies+=current-oldReading
-this.blackCopies+=this.machine2BlackTemp
+  this.blackCopies += this.machine2BlackTemp
+  this.tempBlackCopies =  this.blackCopies 
 this.machine1BlackTemp=current-oldReading
 
 
@@ -594,7 +622,8 @@ machineblack2(event : any){
 
   this.blackCopies=0
   this.blackCopies+=current-oldReading
-  this.blackCopies+=this.machine1BlackTemp
+  this.blackCopies += this.machine1BlackTemp
+  this.tempBlackCopies = this.blackCopies 
   this.machine2BlackTemp=current-oldReading
   if(current==0){
     this.blackMachineReading2=oldReading
@@ -757,7 +786,10 @@ this.blackMachineReading1 =0;
 this.blackMachineReading2 =0;
 this.colourMachineReading1=0;
 this.colourMachineReading2=0;
-this.blackCopies =0;
+    this.blackCopies = 0;
+    this.tempBlackCopies = 0
+
+
 this.colourCopies =0;
 this.b2bCopies =0;
 this.paperPresentToday =0;
@@ -822,7 +854,7 @@ this.maniSalary=val7
 let val8 : number =+ this.rentSheet.rasheedSalary
 this.rasheedSalary=val8
 let paper8 : number =+ this.rentSheet.paperRate
-this.paperRate= paper8 / 500
+this.paperRate= paper8 
 
 
 
@@ -1180,7 +1212,7 @@ this.kdmAccountDetail.PaperPresentToday=this.paperPresentToday
 this.kdmAccountDetail.B2bCopies=this.b2bCopies
 
 
-this.kdmAccountDetail.Expenses=this.expenses
+//this.kdmAccountDetail.Expenses=this.expenses
 // this.kdmAccountDetail.Expenses+=this.kdmRent
 // this.kdmAccountDetail.Expenses+=this.currentBillKdm
 // this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
@@ -1323,7 +1355,15 @@ monthlySalaryRasheed : any;
 monthlySalaryMani : any;
 paperCameDate: any;
 tonerCameDate: any;
-totalItemCameDetail: any;
+  totalItemCameDetail: any;
+  expenseSplit: any = ''
+  totalDays: number = 0
+  averageIncome: number = 0
+  averageProfit: number = 0
+  colourPerDay: number = 0
+  bindingPerDay: number = 0
+  blackPerDay: number = 0
+  paperPerDay: number = 0
 showAllStatics(){
   
 
@@ -1344,7 +1384,8 @@ showAllStatics(){
   this.allAccountDetail.Bindings=0
   this.allAccountDetail.Expenses=0
   this.allAccountDetail.NetProfit=0
-
+  this.allAccountDetail.TonerQuantityCame =0
+  this.allAccountDetail.TonerQuantitySent =0
   this.allLabourDetail.RasheedExpense=0
   this.allLabourDetail.RasheedPresent=0
   this.allLabourDetail.isRasheedHalfDay=0
@@ -1360,9 +1401,12 @@ showAllStatics(){
   this.monthlySalaryMani=0
   let counter =0
   let tempPaperCount =0
-  let paperSentCount=0
+  let paperSentCount = 0
+  let leaveCount =0
   let accountLength = this.selectedAccounts.length
-
+  let absentRasheed = 0
+  let absentMani = 0
+  let absentAssan=0
   let accountList:any;
 accountList=this.selectedAccounts.reverse()
 
@@ -1385,7 +1429,8 @@ this.labours.forEach((labour: any)=>{
 
 this.allLabourDetail.AssanPresent+=0.5
 this.allLabourDetail.AssanExpense+=labour.AssanExpense
-this.monthlySalaryAssan+=this.assanSalary/2
+        this.monthlySalaryAssan += this.assanSalary / 2
+        absentAssan+=0.5
       }
       else{
 this.allLabourDetail.AssanPresent+=1
@@ -1395,15 +1440,16 @@ this.monthlySalaryAssan+=this.assanSalary
     }
     else{
       this.allLabourDetail.AssanExpense+=labour.AssanExpense
-      this.monthlySalaryAssan+=this.assanSalary
-
+      this.monthlySalaryAssan += this.assanSalary
+      absentAssan+=1
     }
     if(labour.RasheedPresent){
 
       if(labour.isRasheedHalfDay){
         this.allLabourDetail.RasheedPresent+=0.5
         this.allLabourDetail.RasheedExpense+=labour.RasheedExpense
-        this.monthlySalaryRasheed+=this.rasheedSalary/2
+        this.monthlySalaryRasheed += this.rasheedSalary / 2
+        absentRasheed+=0.5
       }
       else{
         this.allLabourDetail.RasheedPresent+=1
@@ -1413,14 +1459,16 @@ this.monthlySalaryAssan+=this.assanSalary
     }
 else{
   this.allLabourDetail.RasheedExpense+=labour.RasheedExpense
-  this.monthlySalaryRasheed+=this.rasheedSalary
+      this.monthlySalaryRasheed += this.rasheedSalary
+      absentRasheed+=1
 }
 if(labour.ManiPresent){
 
   if(labour.isManiHalfDay){
     this.allLabourDetail.ManiPresent+=0.5
     this.allLabourDetail.ManiExpense+=labour.ManiExpense
-    this.monthlySalaryMani+=this.maniSalary/2
+    this.monthlySalaryMani += this.maniSalary / 2
+    absentMani+=0.5
   }
   else{
     this.allLabourDetail.ManiPresent+=1
@@ -1430,44 +1478,51 @@ if(labour.ManiPresent){
 }
 else{
 this.allLabourDetail.ManiExpense+=labour.ManiExpense
-this.monthlySalaryMani+=this.maniSalary
+  this.monthlySalaryMani += this.maniSalary
+  absentMani+=1
 }
 
 // account.TotalIncome+=account.OpeningBalance
 console.log("🚀 ~ file: kodamours.forEach ~ account.Expenses", account.Expenses)
 
-account.Expenses+=labour.RasheedExpense
-account.Expenses+= labour.AssanExpense
-account.Expenses+= labour.ManiExpense
-account.NetProfit= (account.TotalIncome- account.Expenses)
-// account.NetProfit+=account.TodayStayingMoney
-// account.NetProfit-= account.GoneMoneyPast
-let colourCommission = Math.ceil((account.ColourCopies* 30)/100)
-let bindingCommision = Math.ceil((account.Bindings * 20/100))
+//account.Expenses+=labour.RasheedExpense
+//account.Expenses+= labour.AssanExpense
+//account.Expenses+= labour.ManiExpense
+//account.NetProfit= (account.TotalIncome- account.Expenses)
 
-account.NetProfit-= colourCommission
-account.NetProfit-= bindingCommision
-if(account.isSunday || account.isHoliday){
+    if (account.isSunday || account.isHoliday) {
+      leaveCount+=1
   let sunday_exp= 0
-  sunday_exp= labour.AssanExpense + labour.RasheedExpense + labour.ManiExpense + this.currentBillTpm + this.tpmRent
-  this.allAccountDetail.Expenses+=sunday_exp
+  sunday_exp= labour.AssanExpense + labour.RasheedExpense + labour.ManiExpense 
+  //this.allAccountDetail.Expenses += sunday_exp
+  this.allAccountDetail.Expenses += this.tpmRent
+  this.allAccountDetail.Expenses += this.currentBillTpm
+
   this.allAccountDetail.NetProfit +=0
-  this.allAccountDetail.TotalIncome+=0
+  this.allAccountDetail.TotalIncome += 0
+  this.allAccountDetail.TonerQuantityCame += 0
+  this.allAccountDetail.TonerQuantitySent += 0
 }
 else{
-  this.allAccountDetail.Expenses+=account.Expenses
+  //this.allAccountDetail.Expenses += account.Expenses
+  this.allAccountDetail.Expenses += this.currentBillTpm
+  this.allAccountDetail.Expenses += this.tpmRent
   this.allAccountDetail.NetProfit +=account.NetProfit
-  this.allAccountDetail.TotalIncome+=account.TotalIncome
+  this.allAccountDetail.TotalIncome += account.TotalIncome
 
-  console.log("c",counter)
-  console.log("AD",accountLength)
+  console.log(account.TonerQuantityCame)
+  console.log(account.TonerQuantitySent)
+   
+  this.allAccountDetail.TonerQuantityCame += account.TonerQuantityCame
+  
+  this.allAccountDetail.TonerQuantitySent += account.TonerQuantitySent
+
   if(accountLength===counter){
     this.allAccountDetail.TotalIncome+= account.TodayStayingMoney + account.OldStayingMoney
   }
 }
 
-this.allAccountDetail.TonerQuantityCame+=account.TonerQuantityCame
-this.allAccountDetail.TonerQuantitySent+= account.TonerQuantitySent
+
 
 if(account.isPaperCame){
   let dateString = account.Date
@@ -1522,53 +1577,6 @@ this.singleSideCopies1+=singleSideCopies
 
 this.allAccountDetail.PaperSoldToday+=account.PaperSoldToday
 this.wholePaperCount+=account.PaperSoldToday
-// if(counter===1){
-// tempPaperCount=(account.PaperPresentToday * 500) + account.PaperSheet
-// this.wholePaperCount+= account.PaperSoldToday
-
-
-// let excessReach= Math.ceil(this.wholePaperCount * this.singleRate)
-// this.excessreach2 =excessReach
-// }
-// else{
-// if(accountLength===counter){
-
-// if(account.isPaperSent){
-// paperSentCount+= account.PaperQuantitySent
-// }
-// let newcounter= tempPaperCount-((account.PaperPresentToday *500) + account.PaperSheet)
-// this.wholePaperCount+= newcounter
-
-// this.wholePaperCount-=paperSentCount
-// let excessReach= Math.ceil(this.wholePaperCount * this.singleRate)
-// this.excessreach2 =excessReach
-
-// }
-// else{
-// if(account.isPaperCame){
-  
-
-//     let yesterdayPaper = (accountList[counter-2].PaperPresentToday * 500)+ accountList[counter-2].PaperSheet
-//    let newcounter = tempPaperCount-yesterdayPaper
-// newcounter = newcounter + ((yesterdayPaper +(account.PaperQuantityCame * 500))-((account.PaperPresentToday * 500) + account.PaperSheet ))
-
-//    this.wholePaperCount+=newcounter
-//    tempPaperCount=(account.PaperPresentToday *500) + account.PaperSheet
-      
-//     if(account.isPaperSent){
-//       paperSentCount+= account.PaperQuantitySent
-//     }
- 
-
-// }
-// else {
-//   if(account.isPaperSent){
-//     paperSentCount+= account.PaperQuantitySent
-//   }
-// }
-// }
-
-// }
 
 
   }
@@ -1584,11 +1592,55 @@ this.wholePaperCount+=account.PaperSoldToday
 
 
 
-  })
+})
 
-  this.allAccountDetail.NetProfit=this.allAccountDetail.TotalIncome-this.allAccountDetail.Expenses
-  this.excessreach2=this.allAccountDetail.TotalIncome/this.wholePaperCount
-  this.wholePaperCount= this.wholePaperCount/500
+  this.totalDays = accountLength
+  if (accountLength === 31 || accountLength === 30) {
+    this.monthlySalaryMani = (30 - absentMani) * this.maniSalary
+    this.monthlySalaryAssan = (30 - absentAssan) * this.assanSalary
+    this.monthlySalaryRasheed = (30 - absentRasheed) * this.rasheedSalary
+  }
+  else {
+    this.monthlySalaryMani = this.allLabourDetail.ManiPresent * this.maniSalary
+    this.monthlySalaryAssan = this.allLabourDetail.AssanPresent * this.assanSalary
+    this.monthlySalaryRasheed = this.allLabourDetail.RasheedPresent * this.rasheedSalary
+  }
+ 
+
+  let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 30) / 100)
+  let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 20 / 100))
+  let salary = Math.ceil(this.monthlySalaryMani + this.monthlySalaryAssan + this.monthlySalaryRasheed)
+  let commision = colourCommission + bindingCommision
+  let tonerCost = Math.ceil(this.tonerCost * this.allAccountDetail.BlackCopies)
+  let rent = Math.ceil(accountLength * this.tpmRent)
+  this.allAccountDetail.Expenses += commision
+  this.allAccountDetail.Expenses += salary
+
+  let paperAmount = Math.ceil(this.allAccountDetail.PaperSoldToday * this.paperRate)
+  this.allAccountDetail.Expenses += paperAmount
+  this.allAccountDetail.Expenses += tonerCost
+  this.expenseSplit += 'Rent:' + rent + "|| " + 'Salary :' + salary + "|| " + 'Paper Cost:' + paperAmount + "|| " + 'Binding & colour:' + commision + "|| " + 'Toner Cost :' + tonerCost
+  this.allAccountDetail.NetProfit = this.allAccountDetail.TotalIncome - this.allAccountDetail.Expenses
+
+  this.averageIncome = this.allAccountDetail.TotalIncome / (this.totalDays - leaveCount)
+  this.averageProfit = this.allAccountDetail.NetProfit / this.totalDays 
+  this.colourPerDay = Math.ceil((this.allAccountDetail.ColourCopies) / (this.totalDays - leaveCount))
+
+  this.bindingPerDay = Math.ceil(this.allAccountDetail.Bindings) / (this.totalDays - leaveCount)
+  this.blackPerDay = Math.ceil((this.allAccountDetail.BlackCopies) / (this.totalDays - leaveCount))
+
+
+
+
+  this.allAccountDetail.NetProfit = Math.ceil(this.allAccountDetail.NetProfit)
+  this.allAccountDetail.TotalIncome = Math.ceil(this.allAccountDetail.TotalIncome)
+
+  Math.ceil(this.allAccountDetail.Expenses)
+  this.averageIncome = Math.ceil(this.averageIncome)
+  this.averageProfit = Math.ceil(this.averageProfit)
+  this.excessreach2 = this.allAccountDetail.TotalIncome / this.wholePaperCount
+  this.wholePaperCount = this.wholePaperCount / 500
+  this.paperPerDay = this.wholePaperCount / (this.totalDays - leaveCount)
   this.finalIncome={
     labels: ['Total Income','Expenses','NetProfit','Excess Criteria'],
     datasets: [
@@ -1642,7 +1694,7 @@ this.wholePaperCount+=account.PaperSoldToday
     labels: ['Assan Salary','Rasheed Salary','Mani Salary'],
     datasets: [
         {
-            data: [this.allLabourDetail.AssanPresent * this.assanSalary,this.allLabourDetail.RasheedPresent * this.rasheedSalary,this.allLabourDetail.ManiPresent * this.maniSalary],
+        data: [this.monthlySalaryAssan, this.monthlySalaryRasheed, this.monthlySalaryMani],
             backgroundColor: [
                 "#7D3C98",
                 "#A93226",
@@ -1694,34 +1746,60 @@ nextClicked(){
 
 waitNext:boolean=false
 paperRepeatAsk : boolean =false
-paperCalculation(){
+  paperCalculation(name: any){
+    if (name === "kodambakkam") {
+      if (this.extraPaperRecieved === 0 || this.extraPaperRecieved === undefined || this.extraPaperRecieved === null || this.extraPaperRecieved === 0) {
 
-if(this.extraPaperRecieved===0 || this.extraPaperRecieved===undefined|| this.extraPaperRecieved===null|| this.extraPaperRecieved===0){
+      }
+      else {
 
-}
-else {
-  // let todayPaperRecieved = this.extraPaperRecieved
-  let todayPaperRecievedSheet = this.extraPaperRecieved *500
-  this.paperRepeatAsk=true
-  this.kdmAccountDetail.isPaperCame=1
-  this.kdmAccountDetail.PaperQuantityCame= this.extraPaperRecieved
-  this.extraPaperRecieved=0
-  // let paperYesterday = this.customers[0].paperPresentToday
-  // let actualTodaySpent =(this.paperPresentToday- todayPaperRecieved)+ paperYesterday
+        let todayPaperRecievedSheet = this.extraPaperRecieved * 500
+        this.paperRepeatAsk = true
+        this.kdmAccountDetail.isPaperCame = 1
+        this.kdmAccountDetail.PaperQuantityCame = this.extraPaperRecieved
+        this.extraPaperRecieved = 0
+
+        let paperToSheetYesterday = ((this.paperPresentYesterday * 500) + this.sheetYesterday)
+        let actualSpentSheet = Math.abs((paperToSheetYesterday + todayPaperRecievedSheet) - this.totalPaperSheet)
+
+        this.kdmAccountDetail.PaperSoldToday = actualSpentSheet
+        this.paperCalculated = true
+        this.paperRecieved = false
+        this.waitNext = false;
+        this.isPaperCame = 1
+        this.tpmPaperSent = false;
+        this.askTpmPaperReport = false;
+        this.finalNextButton();
 
 
-  // let actualTodaySpent=Math.abs((this.paperPresentYesterday + todayPaperRecieved)-this.paperPresentToday)
-let paperToSheetYesterday = ((this.paperPresentYesterday * 500) + this.sheetYesterday)
-let actualSpentSheet = Math.abs((paperToSheetYesterday + todayPaperRecievedSheet)-this.totalPaperSheet)
-  // this.kdmAccountDetail.PaperSoldToday=actualTodaySpent
+      }
 
-  this.kdmAccountDetail.PaperSoldToday=actualSpentSheet
-  this.paperCalculated=true
-  this.paperRecieved=false
-  this.waitNext=false;
-  this.isPaperCame=1
-}
- 
+    }
+
+    else {
+      if (this.extraPaperRecieved === 0 || this.extraPaperRecieved === undefined || this.extraPaperRecieved === null || this.extraPaperRecieved === 0) {
+
+      }
+      else {
+
+        let todayPaperRecievedSheet = this.extraPaperRecieved * 500
+        this.paperRepeatAsk = true
+        this.kdmAccountDetail.isPaperCame = 1
+        this.kdmAccountDetail.PaperQuantityCame = this.extraPaperRecieved
+        this.extraPaperRecieved = 0
+
+        let paperToSheetYesterday = ((this.paperPresentYesterday * 500) + this.sheetYesterday)
+        let actualSpentSheet = Math.abs((paperToSheetYesterday + todayPaperRecievedSheet) - this.totalPaperSheet)
+
+        this.kdmAccountDetail.PaperSoldToday = actualSpentSheet
+        this.paperCalculated = true
+        this.paperRecieved = false
+        this.waitNext = false;
+        this.isPaperCame = 1
+      }
+
+    }
+
 
 }
 tonerCalculated : boolean =false;
@@ -1860,12 +1938,12 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   this.kdmAccountDetail.Bindings=0
   
   this.kdmAccountDetail.Expenses=0
-  this.kdmAccountDetail.Expenses+=20
-  this.kdmAccountDetail.Expenses+=this.kdmRent
+  this.kdmAccountDetail.Expenses=20
+  //this.kdmAccountDetail.Expenses+=this.tpmRent
   this.kdmAccountDetail.Expenses+=this.currentBillKdm
-  this.kdmAccountDetail.Expenses+= this.tonerCost* this.kdmAccountDetail.BlackCopies
+  //this.kdmAccountDetail.Expenses+= this.tonerCost* this.kdmAccountDetail.BlackCopies
   this.kdmAccountDetail.PaperSoldToday=0
-  this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
+  //this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
   this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
   
   this.kdmAccountDetail.TonerSpent=0
@@ -2054,11 +2132,11 @@ this.kdmLabourDetail.Day=this.kdmAccountDetail.Day
 this.kdmLabourDetail.GetTime=this.kdmAccountDetail.GetTime
 
 // this.kdmAccountDetail.Expenses=this.expenses
-this.kdmAccountDetail.Expenses+=20
-this.kdmAccountDetail.Expenses+=this.kdmRent
+  this.kdmAccountDetail.Expenses = 20
+  //this.kdmAccountDetail.Expenses += this.tpmRent
 this.kdmAccountDetail.Expenses+=this.currentBillKdm
-this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
-this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
+//this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
+//this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
 // this.kdmAccountDetail.Expenses+=this.tajExpense
 // this.kdmAccountDetail.Expenses+= this.noorExpense
 this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
@@ -2086,11 +2164,11 @@ this.kdmAccountDetail.B2bCopies=0
 this.kdmAccountDetail.Bindings=0
 
 this.kdmAccountDetail.Expenses=0
-this.kdmAccountDetail.Expenses+=20
-this.kdmAccountDetail.Expenses+=this.kdmRent
+    this.kdmAccountDetail.Expenses = 20
+   // this.kdmAccountDetail.Expenses += this.tpmRent
 this.kdmAccountDetail.Expenses+=this.currentBillKdm
-this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
-this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
+//this.kdmAccountDetail.Expenses+= this.tonerCost* this.blackCopies
+//this.kdmAccountDetail.Expenses+= this.paperRate* this.kdmAccountDetail.PaperSoldToday
 this.kdmAccountDetail.Expenses= Math.ceil(this.kdmAccountDetail.Expenses)
 
 this.kdmAccountDetail.TonerSpent=0
