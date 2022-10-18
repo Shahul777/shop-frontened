@@ -1006,6 +1006,10 @@ for(let i =0 ; i < this.customers.length;i++){
 
   if(i===this.customers.length-1){
     this.sortArray()
+    this.blackMachineReading1= this.customers[0].BlackMachineReading1
+    this.blackMachineReading2= this.customers[0].BlackMachineReading2
+    this.colourMachineReading1= this.customers[0].ColourMachineReading1
+    this.colourMachineReading2= this.customers[0].ColourMachineReading2
     let val8: number=0
 let toners : number =0
 let sheet : number =0
@@ -1622,20 +1626,19 @@ this.wholePaperCount+=account.PaperSoldToday
   this.expenseSplit += 'Rent:' + rent + "|| " + 'Salary :' + salary + "|| " + 'Paper Cost:' + paperAmount + "|| " + 'Binding & colour:' + commision + "|| " + 'Toner Cost :' + tonerCost
   this.allAccountDetail.NetProfit = this.allAccountDetail.TotalIncome - this.allAccountDetail.Expenses
 
-  this.averageIncome = this.allAccountDetail.TotalIncome / (this.totalDays - leaveCount)
-  this.averageProfit = this.allAccountDetail.NetProfit / this.totalDays 
+  this.averageIncome = Math.ceil((this.allAccountDetail.TotalIncome) / (this.totalDays - leaveCount))
+  this.averageProfit = Math.ceil((this.allAccountDetail.NetProfit) / (this.totalDays)) 
   this.colourPerDay = Math.ceil((this.allAccountDetail.ColourCopies) / (this.totalDays - leaveCount))
 
-  this.bindingPerDay = Math.ceil(this.allAccountDetail.Bindings) / (this.totalDays - leaveCount)
+  this.bindingPerDay = Math.ceil((this.allAccountDetail.Bindings) / (this.totalDays - leaveCount))
   this.blackPerDay = Math.ceil((this.allAccountDetail.BlackCopies) / (this.totalDays - leaveCount))
 
 
 
+  this.allAccountDetail.NetProfit = Math.ceil(this.allAccountDetail.NetProfit/1)
+  this.allAccountDetail.TotalIncome = Math.ceil(this.allAccountDetail.TotalIncome/1)
+this.allAccountDetail.Expenses= Math.ceil(this.allAccountDetail.Expenses/1)
 
-  this.allAccountDetail.NetProfit = Math.ceil(this.allAccountDetail.NetProfit)
-  this.allAccountDetail.TotalIncome = Math.ceil(this.allAccountDetail.TotalIncome)
-
-  Math.ceil(this.allAccountDetail.Expenses)
   this.averageIncome = Math.ceil(this.averageIncome)
   this.averageProfit = Math.ceil(this.averageProfit)
   this.excessreach2 = this.allAccountDetail.TotalIncome / this.wholePaperCount

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ShopserviceService } from '../shopservice.service';
 @Component({
   selector: 'app-homescreen',
   templateUrl: './homescreen.component.html',
@@ -18,7 +18,7 @@ export class HomescreenComponent implements OnInit {
 
   // subscription: Subscription;
   // private galleriaService: PhotoService, private nodeService: NodeService, private messageService: MessageService, private terminalService: TerminalService
-  constructor(private router: Router) { }
+  constructor(private router: Router , private service : ShopserviceService) { }
 
   items: any;
   trustpuramSaved() {
@@ -146,6 +146,10 @@ export class HomescreenComponent implements OnInit {
     this.showkodambakkam = false;
     this.showNetCalculation = false;
     this.showHouseSpends = false;
+  }
+  adminUrl : any= this.service.adminUrl
+  showAdminFunc(){
+console.log(this.adminUrl)
   }
 }
 
