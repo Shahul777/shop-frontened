@@ -2,9 +2,11 @@
   <div class="main-class">
 
     <p-pickList (onMoveToTarget)="selectToTarget($event)"  (onMoveToSource)="targetToSource($event)" (onSourceSelect)="editClicked($event)" styleClass="{ height: 'calc(100vh - 327px)' }" [source]="sourceProducts" [target]="targetProducts" sourceHeader="" targetHeader=''
-                [responsive]="true" [dragdrop]="true" [metaKeySelection]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="name"
+                [responsive]="true" [dragdrop]="true"  [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="name"
                (onChange)="editClicked($event)" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
       <ng-template let-product pTemplate="item">
+
+        <!-- [metaKeySelection]="true" -->
         <div class="product-item">
           <div class="image-container">
             <img src="assets/showcase/{{product.image}}.png" [alt]="product.name" class="product-image" width="150"
@@ -156,9 +158,9 @@
   <ng-template pTemplate="footer">
 
     <div style="display:grid; grid-template-columns: 1fr 1fr">
-    <div style="margin-right:40% ;">
+    <!-- <div style="margin-right:40% ;">
       <button pButton pRipple type="button" icon="pi pi-times" (click)="cancelCalc()" label="Cancel" class="p-button-raised p-button-success"></button>
-    </div>
+    </div> -->
 
     <div style="margin-right:20% ;">
       <button pButton pRipple type="button" icon="pi pi-file" (click)="saveEdit()" label="Success" class="p-button-raised p-button-success"></button>

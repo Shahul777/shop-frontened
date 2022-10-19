@@ -80,3 +80,20 @@
     font-size: medium;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 } */
+
+:host ::ng-deep  .p-dock .p-dock-list {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.5rem;
+
+}
+
+  .dock-window {
+    width: 100%;
+    height: 450px;
+    position: relative;
+    background-image: url(window.051ab7f4e3d1ccf2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}

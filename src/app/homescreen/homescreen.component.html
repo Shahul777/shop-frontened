@@ -1,4 +1,4 @@
-<div class="container-main">
+<!-- <div class="container-main">
   <div class="card-component">
     <p-card>
       <div class="title-class" style="font-style: italic; color: black;    font-family: ui-rounded;"><h1>S T U D E N T S    &nbsp;&nbsp; P A R K  &nbsp;&nbsp;</h1></div>
@@ -9,7 +9,6 @@
             <p-splitButton label="Entry" (onClick)="adminfunc('info')" icon="pi pi-cog" [model]="items" styleClass="p-button-warning"></p-splitButton>
           </div>
 
-          <!-- <i class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></i> -->
 
         </div>
 
@@ -57,19 +56,44 @@
                [style]="{ width: '40em' }">
       <app-netcalculate *ngIf="showNetCalculation"></app-netcalculate>
     </p-sidebar>
-    <!-- <p-sidebar
-      [(visible)]="showCalculator"
-      position="right"
-      [baseZIndex]="10000"
-      position="right"
-      [style]="{ width: '80em' }"
-    > -->
+
     <app-calculator></app-calculator>
-    <!-- </p-sidebar> -->
 
   </div>
 
+
+
+  
+
+
+
+
+
+
+
   <router-outlet></router-outlet>
+</div> -->
+
+
+<p-menubar [model]="menubarItems">
+  <ng-template pTemplate="start">
+      <i class="pi pi-apple"></i>
+  </ng-template>
+  <ng-template pTemplate="end">
+      <!-- <i class="pi pi-video"></i>
+      <i class="pi pi-wifi"></i>
+      <i class="pi pi-volume-up"></i> -->
+      <span>{{dateShow}}</span>
+      <!-- <i class="pi pi-search"></i>
+      <i class="pi pi-bars"></i> -->
+  </ng-template>
+</p-menubar>
+
+<div class="dock-window">
+  <p-dock [model]="dockItems" position="bottom">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%">
+    </ng-template>
+  </p-dock>
+  
 </div>
-
-
