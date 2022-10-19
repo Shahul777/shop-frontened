@@ -152,3 +152,10 @@ grid-gap: 28px;
     background: black;
     /* color: #dce3f5; */
 }
+
+:host ::ng-deep.p-datatable-responsive-scroll>.p-datatable-wrapper {
+    /* overflow-x: auto; */
+    /* overflow: scroll; */
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
