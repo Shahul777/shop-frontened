@@ -89,6 +89,83 @@ currentBillTpm : any;
   adminTrustpuram: boolean = false
   dateShow: any;
   dateStr: any='';
+  tempMenu : any[]=[
+    {
+        label: 'Calendar',
+        tooltipOptions: {
+            tooltipLabel: "Calendar",
+            tooltipPosition: 'top',
+            positionTop: -15,
+            positionLeft: 15
+        },
+        icon: "assets/showcase/calendar.png",
+        command: () => {
+     
+  
+           this.calendarOn()
+            console.log("fefef")
+     
+        }
+    },
+    {
+        label: 'Grocerry',
+        tooltipOptions: {
+            tooltipLabel: "Grocerry",
+            tooltipPosition: 'top',
+            positionTop: -15,
+            positionLeft: 15
+        },
+        icon: "assets/showcase/grocerry.png",
+        command: () => {
+            // this.displayTerminal = true;
+            // this.editClicked("Black-Printout")
+        }
+    },
+    {
+        label: 'Maintanence',
+        tooltipOptions: {
+            tooltipLabel: "Maintanence",
+            tooltipPosition: 'top',
+            positionLeft: 15,
+            positionTop: -15
+        },
+        icon: "assets/showcase/maintanence.png",
+        command: () => {
+          // this.editClicked("Colour-Xerox")
+            // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
+        }
+    },
+    {
+        label: 'Entertainment',
+        tooltipOptions: {
+            tooltipLabel: "Entertainment",
+            tooltipPosition: 'top',
+            positionTop: -15,
+            positionLeft: 15
+        },
+        icon: "assets/showcase/entertainment.png",
+        command: () => {
+          // this.editClicked("Colour-Printout")
+            // this.messageService.add({severity: 'warn', summary: 'Safari has stopped working'});
+        }
+    },
+    {
+        label: 'Deposit',
+        tooltipOptions: {
+            tooltipLabel: "Deposit",
+            tooltipPosition: 'top',
+            positionTop: -15,
+            positionLeft: 15
+        },
+        icon: "assets/showcase/deposit.png",
+        command: () => {
+            // this.displayGalleria = true
+            // this.editClicked("Bindings")
+        }
+    },
+  
+  ];
+  
   ngOnInit() {
 
 
@@ -333,84 +410,82 @@ currentBillTpm : any;
 ];
 
 
-this.dockItemsSpents = [
-  {
-      label: 'Calendar',
-      tooltipOptions: {
-          tooltipLabel: "Calendar",
-          tooltipPosition: 'top',
-          positionTop: -15,
-          positionLeft: 15
-      },
-      icon: "assets/showcase/calendar.png",
-      command: () => {
-          // this.displayFinder = true;
-          console.log("fefef")
-          // this.editClicked("Black-Xerox")
-      }
-  },
-  {
-      label: 'Grocerry',
-      tooltipOptions: {
-          tooltipLabel: "Grocerry",
-          tooltipPosition: 'top',
-          positionTop: -15,
-          positionLeft: 15
-      },
-      icon: "assets/showcase/grocerry.png",
-      command: () => {
-          // this.displayTerminal = true;
-          // this.editClicked("Black-Printout")
-      }
-  },
-  {
-      label: 'Maintanence',
-      tooltipOptions: {
-          tooltipLabel: "Maintanence",
-          tooltipPosition: 'top',
-          positionLeft: 15,
-          positionTop: -15
-      },
-      icon: "assets/showcase/maintanence.png",
-      command: () => {
-        // this.editClicked("Colour-Xerox")
-          // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
-      }
-  },
-  {
-      label: 'Entertainment',
-      tooltipOptions: {
-          tooltipLabel: "Entertainment",
-          tooltipPosition: 'top',
-          positionTop: -15,
-          positionLeft: 15
-      },
-      icon: "assets/showcase/entertainment.png",
-      command: () => {
-        // this.editClicked("Colour-Printout")
-          // this.messageService.add({severity: 'warn', summary: 'Safari has stopped working'});
-      }
-  },
-  {
-      label: 'Deposit',
-      tooltipOptions: {
-          tooltipLabel: "Deposit",
-          tooltipPosition: 'top',
-          positionTop: -15,
-          positionLeft: 15
-      },
-      icon: "assets/showcase/deposit.png",
-      command: () => {
-          // this.displayGalleria = true
-          // this.editClicked("Bindings")
-      }
-  },
-
-];
+// this.dockItemsSpents = []
 
 
+// this.dockItemsSpents.push(this.tempMenu[0])
+// [
+//   {
+//       label: 'Calendar',
+//       tooltipOptions: {
+//           tooltipLabel: "Calendar",
+//           tooltipPosition: 'top',
+//           positionTop: -15,
+//           positionLeft: 15
+//       },
+//       icon: "assets/showcase/calendar.png",
+//       command: () => {
+//           // this.displayFinder = true;
 
+//          this.calendarOn()
+//           console.log("fefef")
+  
+//       }
+//   },
+//   {
+//       label: 'Grocerry',
+//       tooltipOptions: {
+//           tooltipLabel: "Grocerry",
+//           tooltipPosition: 'top',
+//           positionTop: -15,
+//           positionLeft: 15
+//       },
+//       icon: "assets/showcase/grocerry.png",
+//       command: () => {
 
+//       }
+//   },
+//   {
+//       label: 'Maintanence',
+//       tooltipOptions: {
+//           tooltipLabel: "Maintanence",
+//           tooltipPosition: 'top',
+//           positionLeft: 15,
+//           positionTop: -15
+//       },
+//       icon: "assets/showcase/maintanence.png",
+//       command: () => {
+      
+//       }
+//   },
+//   {
+//       label: 'Entertainment',
+//       tooltipOptions: {
+//           tooltipLabel: "Entertainment",
+//           tooltipPosition: 'top',
+//           positionTop: -15,
+//           positionLeft: 15
+//       },
+//       icon: "assets/showcase/entertainment.png",
+//       command: () => {
+
+//       }
+//   },
+//   {
+//       label: 'Deposit',
+//       tooltipOptions: {
+//           tooltipLabel: "Deposit",
+//           tooltipPosition: 'top',
+//           positionTop: -15,
+//           positionLeft: 15
+//       },
+//       icon: "assets/showcase/deposit.png",
+//       command: () => {
+
+//       }
+//   },
+
+// ];
 
 
 
@@ -461,6 +536,103 @@ this.dockItemsSpents = [
     //   }
     // },
 
+
+  }
+
+  spendShow: boolean =false;
+  dateSpend: any
+  calendarShow : boolean=false
+
+  calendarOn(){
+    this.calendarShow=true
+  }
+  dateSelected(event:any){
+console.log(event)
+let temp=[]
+for(let i=1 ; i < this.tempMenu.length ; i++){
+  
+  temp.push(this.tempMenu[i])
+}
+this.dockItemsSpents=[]
+this.dockItemsSpents=temp
+
+
+this.calendarShow=false
+  }
+
+  tempMenu2: any=[
+    {
+        label: 'Admin',
+        tooltipOptions: {
+            tooltipLabel: "Admin",
+            tooltipPosition: 'top',
+            positionTop: -15,
+            positionLeft: 15
+        },
+        icon: "assets/showcase/admin.png",
+        command: () => {
+     
+  
+           this.adminClicked()
+            console.log("fefef")
+     
+        }
+    },
+    {
+        label: 'Kodambakkam',
+        tooltipOptions: {
+            tooltipLabel: "Kodambakkam",
+            tooltipPosition: 'top',
+            positionTop: -15,
+            positionLeft: 15
+        },
+        icon: "assets/showcase/kodambakkam.png",
+        command: () => {
+            // this.displayTerminal = true;
+            // this.editClicked("Black-Printout")
+        }
+    },
+    {
+        label: 'Trustpuram',
+        tooltipOptions: {
+            tooltipLabel: "Trustpuram",
+            tooltipPosition: 'top',
+            positionLeft: 15,
+            positionTop: -15
+        },
+        icon: "assets/showcase/trustpuram.png",
+        command: () => {
+          // this.editClicked("Colour-Xerox")
+            // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
+        }
+    },
+
+  
+  ];
+  adminClicked(){
+    this.dockItemsSpents=[]
+    let temp=[]
+for(let i=1 ; i < this.tempMenu2.length ; i++){
+  
+  temp.push(this.tempMenu2[i])
+}
+this.dockItemsSpents=[]
+this.dockItemsSpents=temp
+  }
+  
+  spendPage(){
+
+    if(!this.spendShow){
+      this.spendShow=true
+      this.dockItemsSpents=[]
+      this.dockItemsSpents.push(this.tempMenu[0])
+      this.dockItemsSpents.push(this.tempMenu2[0])
+    }
+    else{
+      this.dockItemsSpents=[]
+      this.spendShow=false
+      this.calendarShow=false
+    }
 
   }
   adminfunc(event: any) {

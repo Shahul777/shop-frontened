@@ -540,6 +540,9 @@ export class KodambakkamComponent implements OnInit {
         accountDetail = account
         this.labours.forEach((labour: any) => {
           // console.log(labour.GetTime, account.GetTime)
+
+          console.log(account.GetTime)
+          console.log(labour.GetTime)
           if (labour.GetTime === account.GetTime) {
             console.log(labour)
             labourDetail = labour

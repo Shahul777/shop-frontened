@@ -83,7 +83,7 @@
       <!-- <i class="pi pi-video"></i>
       <i class="pi pi-wifi"></i>
       <i class="pi pi-volume-up"></i> -->
-      <span style="font-style: italic; color: black;    font-family: ui-rounded;"> <h4 style="color: black;">TOTAL:  ₹ {{totalValue}}</h4>  Students Park Xerox   {{dateStr}}</span>
+      <span (click)="spendPage()" style="font-style: italic; color: black; cursor: pointer;    font-family: ui-rounded;"> <h4 style="color: black;">TOTAL:  ₹ {{totalValue}}</h4>  Students Park Xerox   {{dateStr}}</span>
       <!-- <i class="pi pi-search"></i>
       <i class="pi pi-bars"></i> -->
   </ng-template>
@@ -96,13 +96,13 @@
     </ng-template>
   </p-dock>
 
-  <!-- <p-dock [model]="dockItemsSpents" position="left">
+  <p-dock *ngIf="spendShow" [model]="dockItemsSpents" position="right">
     <ng-template pTemplate="item" let-item>
         <img [src]="item.icon" [alt]="item.label" width="100%">
     </ng-template>
-</p-dock> -->
+</p-dock>
 
-
+<p-calendar *ngIf="calendarShow"  (onSelect)="dateSelected($event)"  [(ngModel)]="dateSpend" [inline]="true" [showWeek]="true"></p-calendar>
   <div class="child-component">
     <p-sidebar [(visible)]="showkodambakkam"
                position="right"
