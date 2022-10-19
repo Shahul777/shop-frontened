@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShopserviceService } from '../shopservice.service';
+import { rentSheet } from '../kodambakkam/kdmDataModel';
+
 @Component({
   selector: 'app-homescreen',
   templateUrl: './homescreen.component.html',
@@ -14,8 +16,58 @@ export class HomescreenComponent implements OnInit {
   showNetCalculation: boolean = false;
   showHouseSpends: boolean = false;
 
+  displayEditDialog : boolean =false;
+  sourceProducts: any;
+tempSourceProduct: any;
+  targetProducts: any;
 
+showData : boolean = false;
+isBlackXerox: boolean =false
+isBlackPrintout : boolean =false;
+isColourXerox : boolean =false;
+isColourPrintout : boolean =false;
+isBinding : boolean =false;
+isScanning : boolean =false;
+isLamination : boolean =false;
 
+title : any ='';
+copy: any;
+copy2: any
+blackCopies : any;
+singleCopies: any;
+b2bCopies : any;
+blackPrintCopies: any;
+blacksinglePrint: any;
+blackB2bPrint : any;
+isNetCharge : boolean =true
+isFreshCustomer : boolean = true
+colourCopies: any;
+colourPrintCopies: any;
+scanCopies : any;
+bindingRate : any;
+laminationRate : any;
+totalValue : number=0;
+value1: string = "off";
+value2 : string ="off"
+stateOptions: any
+rentSheet: rentSheet = <rentSheet>{};
+
+bata1 : any;
+bata2 : any;
+food: any;
+tajSalary : any;
+noorSalary : any;
+assanSalary : any;
+maniSalary : any;
+rasheedSalary : any;
+paperRate: any;
+tonerRate : any;
+singleRate: any;
+b2bRate: any;
+tpmRent: any;
+kdmRent: any;
+currentBillKdm: any;
+currentBillTpm : any;
   // subscription: Subscription;
   // private galleriaService: PhotoService, private nodeService: NodeService, private messageService: MessageService, private terminalService: TerminalService
   constructor(private router: Router , private service : ShopserviceService) { }
@@ -37,6 +89,83 @@ export class HomescreenComponent implements OnInit {
   dateShow: any;
   dateStr: any='';
   ngOnInit() {
+
+
+    this.totalValue=0
+    this.stateOptions = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
+    this.sourceProducts=[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
+      'name': 'Black-Printout','price':0,'image':'blackxerox'
+    },{'name': 'Colour-Xerox','price':0,'image':'colour'},
+    {'name': 'Colour-Printout','price':0,'image':'colour'},
+    {'name': 'Bindings','price':0,'image':'binding'},
+    {'name': 'Lamination','price':0,'image':'lamination'},
+    {'name': 'Scanning','price':0,'image':'scanning'},
+  ]
+  this.tempSourceProduct=[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
+    'name': 'Black-Printout','price':0,'image':'blackxerox'
+  },{'name': 'Colour-Xerox','price':0,'image':'colour'},
+  {'name': 'Colour-Printout','price':0,'image':'colour'},
+  {'name': 'Bindings','price':0,'image':'binding'},
+  {'name': 'Lamination','price':0,'image':'lamination'},
+  {'name': 'Scanning','price':0,'image':'scanning'},
+]
+      this.targetProducts = [];
+      this.showData=true
+
+
+      this.service.getRateSheet().subscribe((rate: any)=>{
+        this.rentSheet=rate[0]
+      
+
+      
+      
+       
+      
+      let val1 : number =+ this.rentSheet.bata1
+      this.bata1=val1
+      let val2 : number =+ this.rentSheet.bata2
+      this.bata2=val2
+      let val3 : number =+ this.rentSheet.food
+      this.food=val3
+      let val4 : number =+ this.rentSheet.tajSalary
+      this.tajSalary=val4
+      
+      let val5 : number =+ this.rentSheet.noorSalary
+      this.noorSalary=val5
+      let val6 : number =+ this.rentSheet.assanSalary
+      this.assanSalary=val6
+      let val7 : number =+ this.rentSheet.maniSalary
+      this.maniSalary=val7
+      let val8 : number =+ this.rentSheet.rasheedSalary
+      this.rasheedSalary=val8
+      let paper8 : number =+ this.rentSheet.paperRate
+      this.paperRate= paper8
+      
+      let paper9 : number =+ this.rentSheet.tonerRate
+      this.tonerRate= paper9
+      let paper10 : number =+ this.rentSheet.singleRate
+      this.singleRate= paper10
+      let paper11 : number =+ this.rentSheet.b2bRate
+      this.b2bRate= paper11
+      
+      
+      
+      
+      let val9 : number =+ this.rentSheet.tpmRent
+      this.tpmRent=val9
+      let val10 : number =+ this.rentSheet.kdmRent
+      this.kdmRent=val10
+      let val11 : number =+ this.rentSheet.currentBillKdm
+      this.currentBillKdm=val11
+      let val12 : number =+ this.rentSheet.currentBillTpm
+      this.currentBillTpm=val12
+      
+      let val : number = + this.rentSheet.tajSalary
+      })
+
+
+
+
     this.dateShow=new Date()
 
     let dateString = this.dateShow
@@ -58,208 +187,110 @@ export class HomescreenComponent implements OnInit {
     this.adminTrustpuram = false
     this.menubarItems = [
       {
-          label: 'Finder',
-          className: 'menubar-root'
-      },
-      {
-          label: 'File',
-          items: [
-              {
-                  label: 'New',
-                  icon: 'pi pi-fw pi-plus',
-                  items: [
-                      {
-                          label: 'Bookmark',
-                          icon: 'pi pi-fw pi-bookmark'
-                      },
-                      {
-                          label: 'Video',
-                          icon: 'pi pi-fw pi-video'
-                      },
+          label: 'Reset',
+          className: 'menubar-root',
+          command: () => {
+          
+            this.resetAll()
+          }
 
-                  ]
-              },
-              {
-                  label: 'Delete',
-                  icon: 'pi pi-fw pi-trash'
-              },
-              {
-                  separator: true
-              },
-              {
-                  label: 'Export',
-                  icon: 'pi pi-fw pi-external-link'
-              }
-          ]
-      },
-      {
-          label: 'Edit',
-          items: [
-              {
-                  label: 'Left',
-                  icon: 'pi pi-fw pi-align-left'
-              },
-              {
-                  label: 'Right',
-                  icon: 'pi pi-fw pi-align-right'
-              },
-              {
-                  label: 'Center',
-                  icon: 'pi pi-fw pi-align-center'
-              },
-              {
-                  label: 'Justify',
-                  icon: 'pi pi-fw pi-align-justify'
-              },
 
-          ]
+         
       },
       {
-          label: 'Users',
-          items: [
-              {
-                  label: 'New',
-                  icon: 'pi pi-fw pi-user-plus',
-
-              },
-              {
-                  label: 'Delete',
-                  icon: 'pi pi-fw pi-user-minus',
-
-              },
-              {
-                  label: 'Search',
-                  icon: 'pi pi-fw pi-users',
-                  items: [
-                      {
-                          label: 'Filter',
-                          icon: 'pi pi-fw pi-filter',
-                          items: [
-                              {
-                                  label: 'Print',
-                                  icon: 'pi pi-fw pi-print'
-                              }
-                          ]
-                      },
-                      {
-                          icon: 'pi pi-fw pi-bars',
-                          label: 'List'
-                      }
-                  ]
-              }
-          ]
+        label: 'Kodambakkam',
+        icon: 'pi pi-refresh', 
+        command: () => {
+          console.log("wdwd")
+          this.showkodambakkamFunc('labour');
+        }
       },
       {
-          label: 'Events',
-          items: [
-              {
-                  label: 'Edit',
-                  icon: 'pi pi-fw pi-pencil',
-                  items: [
-                      {
-                          label: 'Save',
-                          icon: 'pi pi-fw pi-calendar-plus'
-                      },
-                      {
-                          label: 'Delete',
-                          icon: 'pi pi-fw pi-calendar-minus'
-                      }
-                  ]
-              },
-              {
-                  label: 'Archieve',
-                  icon: 'pi pi-fw pi-calendar-times',
-                  items: [
-                      {
-                          label: 'Remove',
-                          icon: 'pi pi-fw pi-calendar-minus'
-                      }
-                  ]
-              }
-          ]
+         label: 'Trustpuram',
+        icon: 'pi pi-times', command: () => {
+          this.showTrustpuramFunc('labour');
+        }
       },
       {
-          label: 'Quit'
+        label: 'Net-Calculation',
+        icon: 'pi pi-external-link'
+        , command: () => {
+          this.netcalculateFunc();
+        }
+      },
+      {
+        label: 'House-Spends',
+        icon: 'pi pi-upload', command: () => {
+          this.housespendsFunc();
+        }
       }
   ];
 
-  //   this.dockItems = [
-  //     {
-  //         label: 'Finder',
-  //         icon: "assets/showcase/binding.png"
-  //     },
-  //     {
-  //         label: 'App Store',
-  //         icon: "assets/showcase/binding.png"
-  //     },
-  //     {
-  //         label: 'Photos',
-  //         icon: "assets/showcase/binding.png"
-  //     },
-  //     {
-  //         label: 'Trash',
-  //         icon: "assets/showcase/binding.png"
-  //     }
-  // ];
+
 
 
   this.dockItems = [
     {
-        label: 'Finder',
+        label: 'Black Xerox',
         tooltipOptions: {
-            tooltipLabel: "Finder",
+            tooltipLabel: "Black Xerox",
             tooltipPosition: 'top',
             positionTop: -15,
             positionLeft: 15
         },
-        icon: "assets/showcase/binding.png",
+        icon: "assets/showcase/blackxerox.png",
         command: () => {
             // this.displayFinder = true;
+            console.log("fefef")
+            this.editClicked("Black-Xerox")
         }
     },
     {
-        label: 'Terminal',
+        label: 'Black Printout',
         tooltipOptions: {
-            tooltipLabel: "Terminal",
+            tooltipLabel: "Black Printout",
             tooltipPosition: 'top',
             positionTop: -15,
             positionLeft: 15
         },
-        icon: "assets/showcase/binding.png",
+        icon: "assets/showcase/blackxerox.png",
         command: () => {
             // this.displayTerminal = true;
+            this.editClicked("Black-Printout")
         }
     },
     {
-        label: 'App Store',
+        label: 'Colour Xerox',
         tooltipOptions: {
-            tooltipLabel: "App Store",
+            tooltipLabel: "Colour Xerox",
             tooltipPosition: 'top',
             positionLeft: 15,
             positionTop: -15
         },
-        icon: "assets/showcase/binding.png",
+        icon: "assets/showcase/colour.png",
         command: () => {
+          this.editClicked("Colour-Xerox")
             // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
         }
     },
     {
-        label: 'Safari',
+        label: 'Colour Printout',
         tooltipOptions: {
-            tooltipLabel: "Safari",
+            tooltipLabel: "Colour Printout",
             tooltipPosition: 'top',
             positionTop: -15,
             positionLeft: 15
         },
-        icon: "assets/showcase/binding.png",
+        icon: "assets/showcase/colour.png",
         command: () => {
+          this.editClicked("Colour-Printout")
             // this.messageService.add({severity: 'warn', summary: 'Safari has stopped working'});
         }
     },
     {
-        label: 'Photos',
+        label: 'Bindings',
         tooltipOptions: {
-            tooltipLabel: "Photos",
+            tooltipLabel: "Bindings",
             tooltipPosition: 'top',
             positionTop: -15,
             positionLeft: 15
@@ -267,18 +298,36 @@ export class HomescreenComponent implements OnInit {
         icon: "assets/showcase/binding.png",
         command: () => {
             // this.displayGalleria = true
+            this.editClicked("Bindings")
         }
     },
     {
-        label: 'GitHub',
-        icon: "assets/showcase/binding.png",
+        label: 'Lamination',
+        tooltipOptions: {
+          tooltipLabel: "Lamination",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/lamination.png",
+      command: () => {
+          // this.displayGalleria = true
+          this.editClicked("Lamination")
+      }
     },
     {
-        label: 'Trash',
-        icon: "assets/showcase/binding.png",
-        command: () => {
-            // this.messageService.add({severity: 'info', summary: 'Empty Trash'});
-        }
+      label: 'Scanning',
+      tooltipOptions: {
+        tooltipLabel: "Scanning",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/scanning.png",
+    command: () => {
+        // this.displayGalleria = true
+        this.editClicked("Scanning")
+    }
     }
 ];
     this.items = [
@@ -402,5 +451,401 @@ export class HomescreenComponent implements OnInit {
   showAdminFunc(){
 console.log(this.adminUrl)
   }
+
+
+
+  copySelected: boolean=false
+  saveEdit(){
+  this.copySelected=false
+    if(this.isBlackXerox){
+      let rate=0
+      if(this.value1==='off'){
+        if(this.copy==="Single-Side"){
+          rate = Math.ceil(this.blackCopies * this.singleRate)
+        }
+        else if(this.copy==="Front-&-Back"){
+          rate =Math.ceil(this.blackCopies * this.b2bRate)
+   
+   
+   
+        }
+        else{
+          rate =0
+        }
+        this.sourceProducts.forEach((prod: any)=>{
+         if(prod.name==="Black-Xerox"){
+           prod.price=rate
+         }
+        })
+      }
+     else{
+let rate1 = Math.ceil(this.singleCopies * this.singleRate)
+let rate2 = Math.ceil(this.b2bCopies * this.b2bRate)
+rate= rate1+rate2
+this.sourceProducts.forEach((prod: any)=>{
+  if(prod.name==="Black-Xerox"){
+    prod.price=rate
+  }
+ })
+     }
+ 
+    }
+    else if(this.isBlackPrintout){
+      let rate=0
+      if(this.value2==='off'){
+        if(this.copy2==="Single-Side"){
+          if(this.isNetCharge){
+            if(this.isFreshCustomer){
+              if(this.blackPrintCopies<=10){
+                rate+=10
+                rate +=Math.ceil(this.blackPrintCopies * 2)
+              }
+              else{
+                rate+=10
+                let copies = this.blackPrintCopies-10
+                rate+=20
+                rate+=Math.ceil(copies * this.singleRate)
+              }
+            }
+            else{
+            
+                rate+=10
+                rate +=Math.ceil(this.blackPrintCopies * this.singleRate)
+              
+       
+            }
+           
+         
+          }
+          else{
+            if(this.isFreshCustomer){
+              if(this.blackPrintCopies<=10){
+       
+                rate +=Math.ceil(this.blackPrintCopies * 2)
+              }
+              else{
+               
+                let copies = this.blackPrintCopies-10
+                rate+=20
+                rate+=Math.ceil(copies * this.singleRate)
+              }
+            }
+            else{
+              rate +=Math.ceil(this.blackPrintCopies * this.singleRate)
+            }
+          }
+   
+        }
+        else if(this.copy2==="Front-&-Back"){
+          if(this.isNetCharge){
+            if(this.isFreshCustomer){
+              rate+=10
+              if(this.blackPrintCopies<=10){
+             
+                rate +=Math.ceil(this.blackPrintCopies * 2)
+              }
+              else{
+             
+                let copies = this.blackPrintCopies-10
+                rate+=20
+                rate+=Math.ceil(copies * 1)
+              }
+            }
+            else{
+            
+                rate+=10
+                rate +=Math.ceil(this.blackPrintCopies * 1)
+              
+       
+            }
+           
+
+          }
+          else{
+            if(this.isFreshCustomer){
+              if(this.blackPrintCopies<=10){
+       
+                rate +=Math.ceil(this.blackPrintCopies * 2)
+              }
+              else{
+               
+                let copies = this.blackPrintCopies-10
+                rate+=20
+                rate+=Math.ceil(copies * 1)
+              }
+            }
+            else{
+              rate +=Math.ceil(this.blackPrintCopies * 1)
+            }
+          }
+   
+   
+   
+        }
+        else{
+          rate =0
+        }
+        this.sourceProducts.forEach((prod: any)=>{
+         if(prod.name==="Black-Printout"){
+           prod.price=rate
+         }
+        })
+      }
+     else{
+
+     }
+this.isNetCharge=true
+this.isFreshCustomer=true
+    }
+    else if(this.isColourXerox){
+      let rate = 0
+      if(this.colourCopies===1){
+        rate=15
+
+      }
+      else if(this.colourCopies>1){
+        let copies =this.colourCopies-1
+rate+=15
+rate +=Math.ceil(copies * 10)
+      }
+      this.sourceProducts.forEach((prod: any)=>{
+        if(prod.name==="Colour-Xerox"){
+          prod.price=rate
+        }
+       })
+    }
+    else if(this.isColourPrintout){
+      let rate =0
+      if(this.isNetCharge){
+        rate+=10
+
+          if(this.colourPrintCopies===1){
+            rate+=15
+    
+          }
+          else if(this.colourPrintCopies>1){
+            let copies =this.colourPrintCopies-1
+    rate+=15
+    rate +=Math.ceil(copies * 10)
+          }
+    
+
+      }
+      else{
+        if(this.colourPrintCopies===1){
+          rate+=15
+  
+        }
+        else if(this.colourPrintCopies>1){
+          let copies =this.colourPrintCopies-1
+  rate+=15
+  rate +=Math.ceil(copies * 10)
+        }
+      }
+
+
+      this.sourceProducts.forEach((prod: any)=>{
+        if(prod.name==="Colour-Printout"){
+          prod.price=rate
+        }
+       })
+      this.isNetCharge=true
+this.isFreshCustomer=true
+      
+    }
+    else if(this.isBinding ){
+      this.sourceProducts.forEach((prod: any)=>{
+        if(prod.name==="Bindings"){
+          prod.price=this.bindingRate
+        }
+       })
+    }
+    else if(this.isScanning){
+      let rate=0
+      rate =Math.ceil(this.scanCopies * 10)
+      this.sourceProducts.forEach((prod: any)=>{
+        if(prod.name==="Scanning"){
+          prod.price=rate
+        }
+       })
+    }
+    else if(this.isLamination){
+      this.sourceProducts.forEach((prod: any)=>{
+        if(prod.name==="Lamination"){
+          prod.price=this.laminationRate
+        }
+       })
+    }
+    this.displayEditDialog=false
+
+
+
+// this.totalValue=0
+this.sourceProducts.forEach((source: any)=>{
+
+  this.totalValue+= source.price
+})
+
+
+this.cancelCalc()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
+cancelCalc(){
+  this.isBlackXerox=false
+  this.isBlackPrintout  =false;
+  this.isColourXerox=false;
+  this.isColourPrintout =false;
+  this.isBinding  =false;
+  this.isScanning  =false;
+  this.isLamination  =false;
+  let temp =[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
+    'name': 'Black-Printout','price':0,'image':'blackxerox'
+  },{'name': 'Colour-Xerox','price':0,'image':'colour'},
+  {'name': 'Colour-Printout','price':0,'image':'colour'},
+  {'name': 'Bindings','price':0,'image':'binding'},
+  {'name': 'Lamination','price':0,'image':'lamination'},
+  {'name': 'Scanning','price':0,'image':'scanning'},
+]
+this.sourceProducts=[]
+  this.sourceProducts=temp
+
+  
+  this.displayEditDialog=false
+  this.initialize()
+
+
+}
+
+initialize(){
+  this.title =""
+  this.copy=0
+  this.copy2=0
+  this.blackCopies=0
+  this.singleCopies=0
+  this.b2bCopies =0
+  this.blackPrintCopies=0
+  this.blacksinglePrint=0
+  this.blackB2bPrint =0
+  this.isNetCharge  =true
+  this.isFreshCustomer= true
+  this.colourCopies=0
+  this.colourPrintCopies=0
+  this.scanCopies =0
+  this.bindingRate =0
+  this.laminationRate=0
+  // this.totalValue =0
+  this.value1 = "off";
+  this.value2  ="off"
+
+}
+
+resetAll(){
+  this.totalValue=0
+  this.targetProducts=[]
+  this.sourceProducts.forEach((source: any)=>{
+    source.price=0
+  })
+}
+editClicked(event : any){
+
+  console.log(event)
+
+  // (onClick)="editClicked(product.name)" 
+ let item: any
+
+
+
+
+item =event
+
+
+  if(item==='Black-Xerox'){
+    this.isBlackXerox=true
+    this.isBlackPrintout  =false;
+    this.isColourXerox=false;
+    this.isColourPrintout =false;
+    this.isBinding  =false;
+    this.isScanning  =false;
+    this.isLamination  =false;
+    this.title="Black & White Xerox"
+  }
+  else if(item==='Black-Printout'){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =true;
+    this.isColourXerox=false;
+    this.isColourPrintout =false;
+    this.isBinding  =false;
+    this.isScanning  =false;
+    this.isLamination  =false;
+    this.title="Black & White Printout"
+  }
+  else if(item==='Colour-Xerox'){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =false;
+    this.isColourXerox=true;
+    this.isColourPrintout =false;
+    this.isBinding  =false;
+    this.isScanning  =false;
+    this.isLamination  =false;
+    this.title="Colour Xerox"
+  }
+  else if(item==='Colour-Printout'){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =false;
+    this.isColourXerox=false;
+    this.isColourPrintout =true;
+    this.isBinding  =false;
+    this.isScanning  =false;
+    this.isLamination  =false;
+    this.title="Colour Printout"
+  }
+  else if(item==='Bindings'){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =false;
+    this.isColourXerox=false;
+    this.isColourPrintout =false;
+    this.isBinding  =true;
+    this.isScanning  =false;
+    this.isLamination  =false;
+    this.title="Binding"
+  }
+  else if(item==='Lamination'){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =false;
+    this.isColourXerox=false;
+    this.isColourPrintout =false;
+    this.isBinding  =false;
+    this.isScanning  =false;
+    this.isLamination  =true;
+    this.title="Lamination"
+  }
+  else if(item==='Scanning'){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =false;
+    this.isColourXerox=false;
+    this.isColourPrintout =false;
+    this.isBinding  =false;
+    this.isScanning  =true;
+    this.isLamination  =false;
+    this.title="Scanning"
+  }
+  this.displayEditDialog=true
+}
+
+
+
+}

@@ -523,30 +523,7 @@ this.sourceProducts.forEach((source: any)=>{
 })
 
 
-// this.isBlackXerox=false
-// this.isBlackPrintout  =false;
-// this.isColourXerox=false;
-// this.isColourPrintout =false;
-// this.isBinding  =false;
-// this.isScanning  =false;
-// this.isLamination  =false;
 
-
-// let temp =[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
-//   'name': 'Black-Printout','price':0,'image':'blackxerox'
-// },{'name': 'Colour-Xerox','price':0,'image':'colour'},
-// {'name': 'Colour-Printout','price':0,'image':'colour'},
-// {'name': 'Bindings','price':0,'image':'binding'},
-// {'name': 'Lamination','price':0,'image':'lamination'},
-// {'name': 'Scanning','price':0,'image':'scanning'},
-// ]
-// this.sourceProducts=[]
-// this.sourceProducts=temp
-
-
-
-// this.displayEditDialog=false
-// this.initialize()
   }
   selectToTarget(event : any){
     if(this.targetProducts.length){
