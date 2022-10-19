@@ -1,8 +1,8 @@
 <div class="loading-indicator" *ngIf="showProgress">
   <p-progressSpinner></p-progressSpinner>
 </div>
-
-<div *ngIf="!loginDetail && mainDetail">
+<!-- *ngIf="!loginDetail && mainDetail" -->
+<div >
   <p-table #dt1 [value]="customers" dataKey="id"
            [rows]="8"
            [(selection)]="selectedAccounts" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" [loading]="loading" styleClass="p-datatable-gridlines"
@@ -29,13 +29,13 @@
         </div>
         <div style="margin-left: 20%">
           <button pButton pRipple type="button" (click)="addAccounts()" icon="pi pi-plus" class="p-button-rounded p-button-success"></button>
-          <span *ngIf="adminCheck" style="margin-left: 30%" class="p-float-label">
+          <!-- <span *ngIf="adminCheck" style="margin-left: 30%" class="p-float-label">
          
             <p-inputNumber  inputId="inputnumber" (onInput)="adminGo($event)" autocomplete="off" [(ngModel)]="adminKey"></p-inputNumber>
             <label style="color: red; font-size: 15px;" for="inputnumber">
               Trustpuram
             </label>
-          </span>
+          </span> -->
       
       
         </div>
@@ -1536,7 +1536,9 @@
 
   </p-dialog>
 </div>
-<div *ngIf="loginDetail && !mainDetail" class="login-class">
+
+
+<!-- <div *ngIf="loginDetail && !mainDetail" class="login-class">
   <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
     <p-panel header="Admin">
       <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px ; display: grid; margin-left: 65%;">
@@ -1576,4 +1578,4 @@
       </div>
     </p-panel>
   </form>
-</div> 
+</div>  -->

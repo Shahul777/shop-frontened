@@ -588,6 +588,7 @@ this.calendarShow=false
         },
         icon: "assets/showcase/kodambakkam.png",
         command: () => {
+          this.kodambakkamAdmin()
             // this.displayTerminal = true;
             // this.editClicked("Black-Printout")
         }
@@ -602,6 +603,8 @@ this.calendarShow=false
         },
         icon: "assets/showcase/trustpuram.png",
         command: () => {
+
+          this.trustpuramAdmin()
           // this.editClicked("Colour-Xerox")
             // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
         }
@@ -609,6 +612,15 @@ this.calendarShow=false
 
   
   ];
+
+  kodambakkamAdmin(){
+    this.showkodambakkam=true
+    this.adminKodambakkam=true
+  }
+  trustpuramAdmin(){
+    this.showTrustpuram=true
+    this.adminTrustpuram=true
+  }
   adminClicked(){
     this.dockItemsSpents=[]
     let temp=[]
@@ -625,13 +637,16 @@ this.dockItemsSpents=temp
     if(!this.spendShow){
       this.spendShow=true
       this.dockItemsSpents=[]
+      this.dateSpend=new Date()
       this.dockItemsSpents.push(this.tempMenu[0])
       this.dockItemsSpents.push(this.tempMenu2[0])
+      
     }
     else{
       this.dockItemsSpents=[]
       this.spendShow=false
       this.calendarShow=false
+      this.dateSpend=new Date()
     }
 
   }
