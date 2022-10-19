@@ -50,7 +50,7 @@ export class HomescreenComponent implements OnInit {
     if (day.length < 2) {
       day = '0' + day;
     }
-    this.dateStr = [year, month, day].join('-');
+    this.dateStr = [day, month, year].join('-');
 
 
     this.showCalculator = true
