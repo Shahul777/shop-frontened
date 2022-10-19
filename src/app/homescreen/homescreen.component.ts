@@ -35,8 +35,24 @@ export class HomescreenComponent implements OnInit {
   menubarItems: any;
   adminTrustpuram: boolean = false
   dateShow: any;
+  dateStr: any='';
   ngOnInit() {
     this.dateShow=new Date()
+
+    let dateString = this.dateShow
+    let month = '' + (dateString.getMonth() + 1);
+    let day = '' + dateString.getDate();
+    let year = '' + dateString.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+    this.dateStr = [year, month, day].join('-');
+
+
     this.showCalculator = true
     this.adminKodambakkam = false
     this.adminTrustpuram = false
