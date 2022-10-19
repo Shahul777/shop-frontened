@@ -84,6 +84,7 @@ currentBillTpm : any;
     this.ngOnInit();
   }
   dockItems: any;
+  dockItemsSpents: any;
   menubarItems: any;
   adminTrustpuram: boolean = false
   dateShow: any;
@@ -330,6 +331,91 @@ currentBillTpm : any;
     }
     }
 ];
+
+
+this.dockItemsSpents = [
+  {
+      label: 'Calendar',
+      tooltipOptions: {
+          tooltipLabel: "Calendar",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/calendar.png",
+      command: () => {
+          // this.displayFinder = true;
+          console.log("fefef")
+          // this.editClicked("Black-Xerox")
+      }
+  },
+  {
+      label: 'Grocerry',
+      tooltipOptions: {
+          tooltipLabel: "Grocerry",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/grocerry.png",
+      command: () => {
+          // this.displayTerminal = true;
+          // this.editClicked("Black-Printout")
+      }
+  },
+  {
+      label: 'Maintanence',
+      tooltipOptions: {
+          tooltipLabel: "Maintanence",
+          tooltipPosition: 'top',
+          positionLeft: 15,
+          positionTop: -15
+      },
+      icon: "assets/showcase/maintanence.png",
+      command: () => {
+        // this.editClicked("Colour-Xerox")
+          // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
+      }
+  },
+  {
+      label: 'Entertainment',
+      tooltipOptions: {
+          tooltipLabel: "Entertainment",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/entertainment.png",
+      command: () => {
+        // this.editClicked("Colour-Printout")
+          // this.messageService.add({severity: 'warn', summary: 'Safari has stopped working'});
+      }
+  },
+  {
+      label: 'Deposit',
+      tooltipOptions: {
+          tooltipLabel: "Deposit",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/deposit.png",
+      command: () => {
+          // this.displayGalleria = true
+          // this.editClicked("Bindings")
+      }
+  },
+
+];
+
+
+
+
+
+
+
+
+
     this.items = [
       {
         label: 'Kodambakkam',

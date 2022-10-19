@@ -96,6 +96,12 @@
     </ng-template>
   </p-dock>
 
+  <p-dock [model]="dockItemsSpents" position="left">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%">
+    </ng-template>
+</p-dock>
+
 
   <div class="child-component">
     <p-sidebar [(visible)]="showkodambakkam"
