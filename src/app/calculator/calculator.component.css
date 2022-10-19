@@ -95,3 +95,26 @@ img {
   transition: box-shadow 0.2s;
   height: 60px;
 }
+:host ::ng-deep .p-picklist .p-picklist-list .p-picklist-item {
+  padding: 0.5rem 1rem;
+  margin: 0;
+  border: 0 none;
+  color: wheat;
+  background: transparent;
+  transition: box-shadow 0.2s;
+  height: 60px;
+  background: black;
+}
+:host ::ng-deep .p-picklist .p-picklist-filter-container {
+  padding: 1rem;
+  background: black;
+  border: 1px solid #dee2e6;
+  border-bottom: 0 none;
+}
+
+/* @media screen and (max-width: 960px) */
+:host ::ng-deep .p-picklist .p-picklist-buttons {
+    padding: var(--content-padding);
+    flex-direction: row;
+    background: black;
+}

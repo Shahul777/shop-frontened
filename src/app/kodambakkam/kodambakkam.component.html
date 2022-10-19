@@ -30,7 +30,20 @@
         </div>
         <div style="margin-left: 20%">
           <button pButton pRipple type="button" (click)="addAccounts()" icon="pi pi-plus" class="p-button-rounded p-button-success"></button>
+          <span *ngIf="adminCheck" style="margin-left: 30%" class="p-float-label">
+         
+            <p-inputNumber  inputId="inputnumber" (onInput)="adminGo($event)" autocomplete="off" [(ngModel)]="adminKey"></p-inputNumber>
+            <label style="color: red; font-size: 15px;" for="inputnumber">
+              Secret Key
+            </label>
+          </span>
+  
+        
+        
         </div>
+
+
+
         <div *ngIf="adminAccess" style="margin-left: 30%">
           <button pButton pRipple type="button" label="labour" (click)="labourTable()" icon="pi pi-cog" class="p-button-rounded p-button-success"></button>
         </div>
@@ -351,7 +364,7 @@
     </ng-template>
   </p-dialog>
 
-  <p-dialog header="Data Print" [closable]="false" [(visible)]="showDataPrint" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+  <p-dialog header="KODAMBAKKAM" [closable]="true" [(visible)]="showDataPrint" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
             [draggable]="true" [resizable]="true">
 
     <ng-template pTemplate="body">
@@ -359,7 +372,8 @@
       <div class="print-main">
         <div class="date" style="text-align: center;">
 
-          {{kdmAccountDetail.Date | date: 'dd/MM/yyyy'}}
+
+          {{kdmAccountDetail.Date | date: 'dd/MM/yyyy' }} | {{kdmAccountDetail.Day}}
 
         </div>
 
@@ -372,13 +386,13 @@
             <p>2. Black Reading2 &nbsp;- &nbsp; {{kdmAccountDetail.BlackMachineReading2}} &nbsp;  </p>
             <!-- <br> -->
 
-            <p>Total Black Copies = {{kdmAccountDetail.BlackCopies}}</p>
+            <p style="font-style: italic">Total Black Copies = {{kdmAccountDetail.BlackCopies}}</p>
 
             <p>3. Colour Reading1 &nbsp;- &nbsp;  {{kdmAccountDetail.ColourMachineReading1}} &nbsp;  </p>
             <!-- <br> -->
             <!-- <br> -->
 
-            <p> Total Colour Copies = {{kdmAccountDetail.ColourCopies}}</p>
+            <p style="font-style: italic"> Total Colour Copies = {{kdmAccountDetail.ColourCopies}}</p>
 
           </div>
           <div style="text-align: right;">
@@ -421,6 +435,8 @@
 
           <div>
             A4 PAPER PACKET &nbsp;- &nbsp; {{kdmAccountDetail.PaperPresentToday}}&nbsp; + &nbsp; {{kdmAccountDetail.PaperSheet}} sheets
+<br>
+            B2B Copies Gone &nbsp;- &nbsp; {{kdmAccountDetail.B2bCopies}}
             <div *ngIf="kdmAccountDetail.isPaperCame">
               PAPER PACKET CAME TODAY &nbsp;- &nbsp; {{kdmAccountDetail.PaperQuantityCame}}
             </div>
@@ -448,11 +464,11 @@
             <br>
             Others - {{kdmAccountDetail.TonerSpent}}
             <div *ngIf="kdmLabourDetail.TajPresent">
-              Taj - {{bata1}}
+              Taj 
 
             </div>
             <div *ngIf="kdmLabourDetail.NoorPresent">
-              Noor - {{bata1 + 150}}
+              Noor 
 
             </div>
 
@@ -524,12 +540,12 @@
 
 
 
-  <p-dialog header="Kodambakkam Entry" [closable]="false" [(visible)]="isAddAccounts" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+  <p-dialog header="Kodambakkam Entry" [closable]="true" [(visible)]="isAddAccounts" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
             [draggable]="true" [resizable]="true">
     <ng-template pTemplate="body">
 
       <div class="field col-12 md:col-4">
-        <p-steps [model]="items"
+        <p-steps [model]="items3"
                  [(activeIndex)]="activeIndex2"
                  [readonly]="true"></p-steps>
         <div *ngIf="activeIndex2==0">
@@ -1159,7 +1175,7 @@
 
       <div *ngIf="activeIndex2==0">
 
-        <button *ngIf="nextCheck()" (click)="nextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+        <button *ngIf="nextCheck('t')" (click)="nextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
 
         <p-dialog [closable]="false" header="Paper Sent ?" [(visible)]="askTpmPaperReport" [style]="{width: '50vw'}">
 

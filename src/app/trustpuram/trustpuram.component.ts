@@ -750,7 +750,7 @@ this.mainDetail=true
   // alert(JSON.stringify(this.loginForm.value));
 }
 
-
+items3:any
   ngOnInit(): void {
     this.showProgress=true
     if(this.adminAccess){
@@ -890,6 +890,10 @@ this.currentBillTpm=val12
       {label: 'Data Section'},
       
   ];
+  this.items3=[
+    {label: 'Accounts Section'},
+    {label: 'Labour Section'},
+  ]
   this.service.getTpmLabours().subscribe((labour: any)=>{
 this.labours=labour
 if(!this.labours.length){
@@ -1038,7 +1042,15 @@ tonerYesterday: number=0;
 paperPresentYesterday:number =0;
 sheetYesterday : number =0
 
-
+adminKey: number =0;
+adminCheck : boolean = true;
+adminGo(event : any){
+  let current = event.value
+  if(current===77){
+this.adminAccess=true
+this.adminCheck=false
+  }
+}
 confirm(key: string, message: string, header1: string) {
   // this.confirmationService.confirm({
 
@@ -1079,7 +1091,72 @@ clear(table: any) {
   table.clear();
 }
 isAddAccounts: boolean =false
+paperQuantityCame: number =0
   addAccounts() {
+
+    this.activeIndex2=0
+    this.blackMachineReading1= this.customers[0].BlackMachineReading1
+    this.blackMachineReading2= this.customers[0].BlackMachineReading2
+    this.colourMachineReading1= this.customers[0].ColourMachineReading1
+    this.colourMachineReading2= this.customers[0].ColourMachineReading2
+
+    this.bindings=0
+    this.cashIncome=0
+    this.paytmIncome=0
+    this.paperPresentToday=0
+    this.paperSheet=0
+    this.openingBalance=0
+    this.expenses=0
+    this.oldStayingCopies=0
+    this.oldStayingMoney=0
+    this.goneCopiesPast=0
+    this.goneMoneyPast=0
+    this.todayStayingMoney=0
+    this.todayStayingCopies=0
+    this.todayStayDetail="|"
+    this.pastStayDetail="|"
+    this.pastSoldDetail="|"
+    this.paperQuantityCame=0
+    this.paperQuantitySent=0
+    this.tonerQuantityCame=0
+    this.tonerQuantitySend=0
+    this.toner=0
+    this.b2bCopies=0
+    this.isSunday =0
+    this.isHoliday =0
+    this.isPaperCame=0
+    this.isPaperSent =0
+
+    this.isTonerCame=0
+    this.isTonerSent =0
+
+this.tonerSpent=0
+this.paperSoldToday=0
+    this.isItemsCame =0
+    this.itemsInfo="No Items"
+    this.blackCopies =0
+    this.colourCopies =0
+    this.b2bCopies =0
+this.totalIncome=0
+this.netProfit=0
+    this.date = new Date()
+
+this.maniExpense=0
+this.assanExpense=0
+this.rasheedExpense=0
+
+this.maniPresentBool=''
+this.assanPresentBool=''
+this.rasheedPresentBool=''
+this.isManiHalfDay=false
+this.isAssanHalfDay=false
+this.isRasheedHalfDay=false
+
+
+
+
+
+
 
     this.kdmAccountDetail.PaperQuantitySent = 0
     this.kdmAccountDetail.isPaperCame = 0
@@ -1096,6 +1173,8 @@ isAddAccounts: boolean =false
     this.kdmAccountDetail.TonerQuantitySent = 0
     this.kdmAccountDetail.isHoliday = 0
     this.kdmAccountDetail.PaperSheet = 0
+
+
 
 
 this.isAddAccounts=true
@@ -1859,8 +1938,13 @@ nextCheck(){
     return false
     }
     else{
-
-      return true
+      if(this.paperPresentToday===0 || this.paperPresentToday===null || this.cashIncome===0 || this.paytmIncome===null || this.cashIncome===null){
+        return false
+      }
+      else{
+        return true
+      
+      }
     }
 
 

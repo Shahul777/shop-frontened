@@ -24,7 +24,7 @@ isBinding : boolean =false;
 isScanning : boolean =false;
 isLamination : boolean =false;
 
-title : any;
+title : any ='';
 copy: any;
 copy2: any
 blackCopies : any;
@@ -40,7 +40,7 @@ colourPrintCopies: any;
 scanCopies : any;
 bindingRate : any;
 laminationRate : any;
-totalValue : any;
+totalValue : number=0;
 value1: string = "off";
 value2 : string ="off"
 stateOptions: any
@@ -67,7 +67,28 @@ currentBillTpm : any;
 
 
   constructor(private service : ShopserviceService) { }
+initialize(){
+  this.title =""
+  this.copy=0
+  this.copy2=0
+  this.blackCopies=0
+  this.singleCopies=0
+  this.b2bCopies =0
+  this.blackPrintCopies=0
+  this.blacksinglePrint=0
+  this.blackB2bPrint =0
+  this.isNetCharge  =true
+  this.isFreshCustomer= true
+  this.colourCopies=0
+  this.colourPrintCopies=0
+  this.scanCopies =0
+  this.bindingRate =0
+  this.laminationRate=0
+  // this.totalValue =0
+  this.value1 = "off";
+  this.value2  ="off"
 
+}
   ngOnInit() {
     this.totalValue=0
     this.stateOptions = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
@@ -157,8 +178,17 @@ currentBillTpm : any;
   calculateTotal(){
 
   }
+  listItems:any;
   editClicked(event : any){
+
+    console.log(event)
+
+    // (onClick)="editClicked(product.name)" 
    let item: any
+
+   this.listItems=event.items[0]
+
+   console.log(this.listItems)
   item =event.items[0].name
     if(item==='Black-Xerox'){
       this.isBlackXerox=true
@@ -231,6 +261,32 @@ currentBillTpm : any;
       this.title="Scanning"
     }
     this.displayEditDialog=true
+  }
+
+  cancelCalc(){
+    this.isBlackXerox=false
+    this.isBlackPrintout  =false;
+    this.isColourXerox=false;
+    this.isColourPrintout =false;
+    this.isBinding  =false;
+    this.isScanning  =false;
+    this.isLamination  =false;
+    let temp =[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
+      'name': 'Black-Printout','price':0,'image':'blackxerox'
+    },{'name': 'Colour-Xerox','price':0,'image':'colour'},
+    {'name': 'Colour-Printout','price':0,'image':'colour'},
+    {'name': 'Bindings','price':0,'image':'binding'},
+    {'name': 'Lamination','price':0,'image':'lamination'},
+    {'name': 'Scanning','price':0,'image':'scanning'},
+  ]
+  this.sourceProducts=[]
+    this.sourceProducts=temp
+
+    
+    this.displayEditDialog=false
+    this.initialize()
+
+
   }
   copySelected: boolean=false
   saveEdit(){
@@ -458,12 +514,37 @@ this.isFreshCustomer=true
 
 
 
-this.totalValue=0
+// this.totalValue=0
 this.sourceProducts.forEach((source: any)=>{
 
   this.totalValue+= source.price
 })
 
+
+this.isBlackXerox=false
+this.isBlackPrintout  =false;
+this.isColourXerox=false;
+this.isColourPrintout =false;
+this.isBinding  =false;
+this.isScanning  =false;
+this.isLamination  =false;
+
+
+let temp =[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
+  'name': 'Black-Printout','price':0,'image':'blackxerox'
+},{'name': 'Colour-Xerox','price':0,'image':'colour'},
+{'name': 'Colour-Printout','price':0,'image':'colour'},
+{'name': 'Bindings','price':0,'image':'binding'},
+{'name': 'Lamination','price':0,'image':'lamination'},
+{'name': 'Scanning','price':0,'image':'scanning'},
+]
+this.sourceProducts=[]
+this.sourceProducts=temp
+
+
+
+this.displayEditDialog=false
+this.initialize()
   }
   selectToTarget(event : any){
     if(this.targetProducts.length){

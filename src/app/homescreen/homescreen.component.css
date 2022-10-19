@@ -7,7 +7,8 @@
     text-align:center;
     /* font-style: italic; */
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: yellow;
+    /* background-color: yellow; */
+    background-color: #2dfbb4;
 }
 .container-main{
     display: grid;
@@ -58,3 +59,24 @@
     color: black;
     height: 5px;
 }
+:host ::ng-deep .p-sidebar-right {
+    top: 0;
+    right: 0;
+    width: 20rem;
+    height: 100%;
+    background: black;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header {
+    background: #f4f4f4;
+    color: white;
+    background: black;
+    border: 1px solid #c8c8c8;
+}
+
+/* :host ::ng-deep  .p-datatable .p-datatable-thead > tr > th {
+    color: #16ff9e;
+    background: black;
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} */

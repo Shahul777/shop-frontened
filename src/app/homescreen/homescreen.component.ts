@@ -63,19 +63,25 @@ export class HomescreenComponent implements OnInit {
         }
       },
 
-      {
-        label: 'Kodambakkam-Admin',
-        icon: 'pi pi-slack', command: () => {
-          this.showkodambakkamFunc('admin');
-        }
-      },
-      {
-        label: 'Trustpuram-Admin',
-        icon: 'pi pi-paypal', command: () => {
-          this.showTrustpuramFunc('admin');
-        }
-      },
+
     ];
+
+
+
+    // {
+    //   label: 'Kodambakkam-Admin',
+    //   icon: 'pi pi-slack', command: () => {
+    //     this.showkodambakkamFunc('admin');
+    //   }
+    // },
+    // {
+    //   label: 'Trustpuram-Admin',
+    //   icon: 'pi pi-paypal', command: () => {
+    //     this.showTrustpuramFunc('admin');
+    //   }
+    // },
+
+
   }
   adminfunc(event: any) {
     console.log(event)
