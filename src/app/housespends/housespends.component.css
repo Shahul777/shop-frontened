@@ -21,3 +21,49 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.53);
   }
+
+
+  :host ::ng-deep  .p-datatable .p-datatable-thead > tr > th {
+    color: #16ff9e;
+    background: black;
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:host ::ng-deep  .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+    border-width: 1px;
+    font-family: ui-sans-serif;
+    font-style: initial;
+    font-weight: 300;
+    font-size: medium;
+    background: black;
+    color: #c6e22b;
+}
+
+:host ::ng-deep .p-datatable .p-paginator-bottom {
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    background: black;
+    /* color: #dce3f5; */
+}
+
+:host ::ng-deep.p-datatable-responsive-scroll>.p-datatable-wrapper {
+    /* overflow-x: auto; */
+    /* overflow: scroll; */
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+/* :host ::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+    border-width: 1px;
+    font-family: ui-sans-serif;
+    font-style: initial;
+    font-weight: 300;
+    font-size: medium;
+    background: black;
+    color: #c6e22b;
+
+    position: fixed;
+    right: 40px;
+} */
+

@@ -1,7 +1,13 @@
 <div class="loading-indicator" *ngIf="showProgress">
     <p-progressSpinner></p-progressSpinner>
   </div>
-<p-table [value]="houseData" responsiveLayout="scroll">
+
+
+  <p-table #dt1 [value]="houseData" dataKey="id"
+           [rows]="8"
+           responsiveLayout="scroll"    styleClass="p-datatable-gridlines"
+           [paginator]="true" 
+           [globalFilterFields]="['name','country.name','representative.name','status']">
     <ng-template pTemplate="header">
         <tr>
             <th>Date</th>
@@ -10,11 +16,12 @@
             <th>Maintanence</th>
             <th>Deposit</th>
             <th>Expense</th>
+            <!-- <th>Expand</th> -->
     
 
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="body" let-product let-i="rowIndex" >
         <tr>
             <td>{{product.Date| date: 'dd/MM/yyyy'}}</td>
             <td>{{product.Grocerry}}</td>
@@ -22,6 +29,25 @@
             <td>{{product.Maintanence}}</td>
             <td>{{product.MoneyDeposit}}</td>
             <td>{{product.TotalExpense}}</td>
+
+            <!-- <td>
+              {{product.Date| date: 'dd/MM/yyyy'}}
+              {{i}}
+                <p-listbox [options]="listItem" [group]="true" [(ngModel)]="listSelect" [metaKeySelection]="false"   [style]="{'width':'15rem'}">
+                <ng-template let-group pTemplate="group">
+                    <div class="flex align-items-center">
+                        
+                        <span>{{group.name}}</span>
+                        <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/>
+                        <span>{{group.age}}</span>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        
+
+
+        
+        </td> -->
         </tr>
     </ng-template>
 </p-table>

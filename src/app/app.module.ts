@@ -64,7 +64,7 @@ import {PanelModule} from 'primeng/panel';
 import {DataViewModule} from 'primeng/dataview';
 import {ChartModule} from 'primeng/chart';
 import {RatingModule} from 'primeng/rating';
-
+import {ListboxModule} from 'primeng/listbox';
 
 
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
@@ -118,7 +118,7 @@ import {RippleModule} from 'primeng/ripple';
     OverlayPanelModule,
     ChartModule,PanelModule,
     DataViewModule,RatingModule,
-    InputTextModule,RippleModule,ProgressSpinnerModule
+    InputTextModule,RippleModule,ProgressSpinnerModule,ListboxModule
     
     
     

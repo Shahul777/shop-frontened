@@ -131,9 +131,15 @@
                position="right"
                [baseZIndex]="10000"
                position="right"
-               [style]="{ width: '40em' }">
+               [fullScreen]="true"
+               >
       <app-housespends *ngIf="showHouseSpends"></app-housespends>
     </p-sidebar>
+
+
+
+
+
     <p-sidebar [(visible)]="showNetCalculation"
                position="right"
                [baseZIndex]="10000"
