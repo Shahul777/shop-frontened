@@ -5,7 +5,7 @@
 <!-- *ngIf="!loginDetail && mainDetail" -->
 <div >
   <p-table #dt1 [value]="customers" dataKey="id"
-           [rows]="8"
+           [rows]="5"
            [(selection)]="selectedAccounts" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" [loading]="loading" styleClass="p-datatable-gridlines"
            [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
            [globalFilterFields]="['Date','country.name','representative.name','status']">
@@ -65,7 +65,7 @@
             Day
           </div>
         </th>
-        <th>
+        <!-- <th>
           <div class="flex justify-content-center align-items-center">
             Black1
 
@@ -75,25 +75,25 @@
           <div class="flex justify-content-center align-items-center">
             Day
           </div>
-        </th>
+        </th> -->
 
-        <th *ngIf="adminAccess" style="width: 3rem">
+        <!-- <th *ngIf="adminAccess" style="width: 3rem">
           <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
         </th>
         <th *ngIf="!adminAccess" style="width: 3rem">
           Colour
-        </th>
+        </th> -->
         <th>
           <div class="flex justify-content-center align-items-center">
             Paper
           </div>
         </th>
-        <th>
+        <!-- <th>
           <div class="flex justify-content-center align-items-center">
             Date
             <p-columnFilter type="date" field="Date" display="menu"></p-columnFilter>
           </div>
-        </th>
+        </th> -->
         <th>
           <div class="flex justify-content-center align-items-center">
             Print
@@ -134,29 +134,28 @@
         <td>
           {{customer.Day}}
         </td>
-        <td>
+        <!-- <td>
           <span class="image-text">{{customer.BlackMachineReading1}}</span>
         </td>
         <td>
           {{customer.Day}}
-        </td>
+        </td> -->
 
-        <td *ngIf="adminAccess">
-          <!-- <p-tableCheckbox (click)="checkBoxx()" [value]="tableCheckBox"></p-tableCheckbox> -->
+        <!-- <td *ngIf="adminAccess">
           <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
         </td>
         <td *ngIf="!adminAccess">
 
           {{customer.ColourCopies}}
-        </td>
+        </td> -->
 
         <td>
           {{customer.PaperSoldToday }}
         </td>
-
+<!-- 
         <td>
           {{customer.Date | date: 'dd/MM/yyyy'}}
-        </td>
+        </td> -->
         <td>
           <button pButton pRipple (click)="editAccount2(customer.id)" type="button" icon="pi pi-print" class="p-button-rounded p-button-info"></button>
         </td>

@@ -109,22 +109,22 @@
     <p-sidebar [(visible)]="showkodambakkam"
                position="right"
                [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
+               [fullScreen]="true">
       <app-kodambakkam [adminAccess]="adminKodambakkam" (saveClicked)="kodambakkamSaved()" *ngIf="showkodambakkam"></app-kodambakkam>
     </p-sidebar>
     <p-sidebar [(visible)]="showTrustpuram"
                position="right"
                [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
+               [fullScreen]="true"
+           >
+           <!-- position="right"
+           [style]="{ width: '40em' }" -->
       <app-trustpuram [adminAccess]="adminTrustpuram" (saveClicked)="trustpuramSaved()" *ngIf="showTrustpuram"></app-trustpuram>
     </p-sidebar>
     <p-sidebar [(visible)]="showAdmin"
                position="right"
                [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
+               [fullScreen]="true">
       <app-admin *ngIf="showAdmin"></app-admin>
     </p-sidebar>
     <p-sidebar [(visible)]="showHouseSpends"
@@ -143,8 +143,7 @@
     <p-sidebar [(visible)]="showNetCalculation"
                position="right"
                [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
+               [fullScreen]="true">
       <app-netcalculate *ngIf="showNetCalculation"></app-netcalculate>
     </p-sidebar>
 

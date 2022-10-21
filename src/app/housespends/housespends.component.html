@@ -3,31 +3,65 @@
   </div>
 
 
-  <p-table #dt1 [value]="houseData" dataKey="id"
-           [rows]="8"
-           responsiveLayout="scroll"    styleClass="p-datatable-gridlines"
-           [paginator]="true" 
-           [globalFilterFields]="['name','country.name','representative.name','status']">
+  <p-table #dt1 [value]="houseData"   dataKey="id"
+  [rows]="5"
+  responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"  styleClass="p-datatable-gridlines"
+  [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [globalFilterFields]="['Date','country.name','representative.name','status']">
+
+           <!-- <ng-template pTemplate="caption">
+            <div class="table-header">
+                List of Customers
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (change)="dt1.filterGlobal($event.target, 'contains')" placeholder="Global Search" />
+                </span>
+            </div>
+        </ng-template> -->
+
+
     <ng-template pTemplate="header">
         <tr>
-            <th>Date</th>
+            <th>         
+                
+                <div class="flex justify-content-center align-items-center">
+                Date
+                <p-columnFilter type="date" field="Date" display="menu">
+
+                    
+                </p-columnFilter>
+              </div>
+            </th>
             <th>Grocerry</th>
             <th>Entertainment</th>
             <th>Maintanence</th>
             <th>Deposit</th>
-            <th>Expense</th>
+
+
+
+
+
+            <th>Cash Expense</th>
+            <th>Paytm Expense</th>
+            <th>Total Expense</th>
             <!-- <th>Expand</th> -->
     
 
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product let-i="rowIndex" >
+    <ng-template pTemplate="body" let-product >
         <tr>
             <td>{{product.Date| date: 'dd/MM/yyyy'}}</td>
             <td>{{product.Grocerry}}</td>
             <td>{{product.Entertainment}}</td>
             <td>{{product.Maintanence}}</td>
             <td>{{product.MoneyDeposit}}</td>
+
+
+            <td>{{product.CashExpense}}</td>
+            <td>{{product.PaytmExpense}}</td>
+
+
             <td>{{product.TotalExpense}}</td>
 
             <!-- <td>
