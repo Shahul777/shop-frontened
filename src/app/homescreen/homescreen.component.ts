@@ -96,6 +96,86 @@ currentBillTpm : any;
   adminTrustpuram: boolean = false
   dateShow: any;
   dateStr: any='';
+
+  leftMenu: any[]=[
+    {
+      label: 'Kodambakkam',
+      tooltipOptions: {
+          tooltipLabel: "Kodambakkam",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/kodambakkam2.png",
+      command: () => {
+          // this.displayTerminal = true;
+          // this.editClicked("Black-Printout")
+          this.showkodambakkamFunc('labour');
+      }
+  }
+,
+  {
+    label: 'Trustpuram',
+    tooltipOptions: {
+        tooltipLabel: "Trustpuram",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/trustpuram2.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        this.showTrustpuramFunc('labour');
+     
+    }
+}
+
+
+
+  ]
+  tempMenu4: any[]=[
+    {
+      label: 'House-Spends',
+      tooltipOptions: {
+          tooltipLabel: "House-Spends",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/house.png",
+      command: () => {
+          // this.displayTerminal = true;
+          // this.editClicked("Black-Printout")
+         
+          this.housespendsFunc()
+      }
+  }
+,
+  {
+    label: 'Net-Calculations',
+    tooltipOptions: {
+        tooltipLabel: "Net-Calculations",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/rupee.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        this.netcalculateFunc();
+     
+    }
+}
+
+
+
+  ]
+
+
+
+
   tempMenu3 : any[]=[    {
     label: 'Grocerry',
     tooltipOptions: {
@@ -828,6 +908,13 @@ this.houseAccountDetail.TotalProfit =0
 this.initializeHouseAccount()
 this.initializeHouseAmt()
 
+if(this.spendShow){
+this.spendPage()
+
+}
+
+
+
     this.totalValue=0
     this.stateOptions = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
     this.moneyOptions=  [{label: 'Cash', value: 'cash'}, {label: 'Paytm', value: 'paytm'}];
@@ -935,37 +1022,37 @@ this.initializeHouseAmt()
 
          
       },
-      {
-        label: 'Kodambakkam',
-        icon: 'pi pi-refresh', 
-        command: () => {
-          console.log("wdwd")
-          this.showkodambakkamFunc('labour');
-        }
-      },
-      {
-         label: 'Trustpuram',
-        icon: 'pi pi-times', command: () => {
-          this.showTrustpuramFunc('labour');
-        }
-      },
-      {
-        label: 'Net-Calculation',
-        icon: 'pi pi-external-link'
-        , command: () => {
-          this.netcalculateFunc();
-        }
-      },
-      {
-        label: 'House-Spends',
-        icon: 'pi pi-upload', command: () => {
-          this.housespendsFunc();
-        }
-      }
+   
   ];
 
 
-
+  // {
+  //   label: 'Kodambakkam',
+  //   icon: 'pi pi-refresh', 
+  //   command: () => {
+  //     console.log("wdwd")
+  //     this.showkodambakkamFunc('labour');
+  //   }
+  // },
+  // {
+  //    label: 'Trustpuram',
+  //   icon: 'pi pi-times', command: () => {
+  //     this.showTrustpuramFunc('labour');
+  //   }
+  // },
+  // {
+  //   label: 'Net-Calculation',
+  //   icon: 'pi pi-external-link'
+  //   , command: () => {
+  //     this.netcalculateFunc();
+  //   }
+  // },
+  // {
+  //   label: 'House-Spends',
+  //   icon: 'pi pi-upload', command: () => {
+  //     this.housespendsFunc();
+  //   }
+  // }
 
   this.dockItems = [
     {
@@ -1531,7 +1618,7 @@ for(let i=1 ; i < this.tempMenu2.length ; i++){
 this.dockItemsSpents=[]
 this.dockItemsSpents=temp
   }
-  
+  dataEntry: boolean =true
   spendPage(){
 
     if(!this.spendShow){
@@ -1541,11 +1628,17 @@ this.dockItemsSpents=temp
       this.dockItemsSpents.push(this.tempMenu3[0])
       this.dockItemsSpents.push(this.tempMenu[0])
       this.dockItemsSpents.push(this.tempMenu2[0])
+      this.dockItemsSpents.push(this.tempMenu4[0])
+      this.dockItemsSpents.push(this.tempMenu4[1])
+
+this.dataEntry=false
+
       this.deleteHouseEntry=false
       this.calendarClicked=false
     }
     else{
       this.dockItemsSpents=[]
+      this.dataEntry=true
       this.spendShow=false
       this.calendarShow=false
       this.dateSpend=new Date()
@@ -1939,6 +2032,8 @@ resetAll(){
   this.sourceProducts.forEach((source: any)=>{
     source.price=0
   })
+
+  this.ngOnInit()
 }
 editClicked(event : any){
 

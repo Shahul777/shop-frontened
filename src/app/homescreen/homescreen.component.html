@@ -98,6 +98,14 @@
     </ng-template>
   </p-dock>
 
+
+  <p-dock *ngIf="dataEntry" [model]="leftMenu" position="left">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%">
+    </ng-template>
+  </p-dock>
+
+
   <p-dock *ngIf="spendShow" [model]="dockItemsSpents" position="right">
     <ng-template pTemplate="item" let-item>
         <img [src]="item.icon" [alt]="item.label" width="100%">
