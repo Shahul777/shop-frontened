@@ -1,1 +1,27 @@
-<p>housespends works!</p>
+<div class="loading-indicator" *ngIf="showProgress">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+<p-table [value]="houseData" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Date</th>
+            <th>Grocerry</th>
+            <th>Entertainment</th>
+            <th>Maintanence</th>
+            <th>Deposit</th>
+            <th>Expense</th>
+    
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>{{product.Date| date: 'dd/MM/yyyy'}}</td>
+            <td>{{product.Grocerry}}</td>
+            <td>{{product.Entertainment}}</td>
+            <td>{{product.Maintanence}}</td>
+            <td>{{product.MoneyDeposit}}</td>
+            <td>{{product.TotalExpense}}</td>
+        </tr>
+    </ng-template>
+</p-table>

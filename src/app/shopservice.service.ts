@@ -82,4 +82,43 @@ deleteTpmLabourById(id: any):Observable<any[]>{
 getRateSheet():Observable<any[]>{
   return this.http.get<any[]>(this.APIUrl + '/kodambakkam/rate/')
 }
+
+
+
+
+
+getHouseAccounts():Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/house/accounts3/')
+}
+getHouseAccountsById(id : any):Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/house/accounts3/' + id)
+}
+
+addHouseAccounts(accounts: any):Observable<any[]>{
+return this.http.post<any[]>(this.APIUrl + '/house/accounts3/', accounts)
+}
+editHouseAccountsById(accounts: any, id: any):Observable<any[]>{
+  return this.http.put<any[]>(this.APIUrl + '/house/accounts3/' + id + '/', accounts)
+}
+deleteHouseAccountsById(id: any):Observable<any[]>{
+  return this.http.delete<any[]>(this.APIUrl + '/house/accounts3/' + id + '/')
+}
+
+
+getHouseRateSheet():Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/house/rate3/')
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -2,13 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShopserviceService } from '../shopservice.service';
 import { rentSheet } from '../kodambakkam/kdmDataModel';
-
+import { houseAccount,rateSheet } from '../housespends/houseDataModel';
 @Component({
   selector: 'app-homescreen',
   templateUrl: './homescreen.component.html',
   styleUrls: ['./homescreen.component.css']
 })
 export class HomescreenComponent implements OnInit {
+
+  houseData : houseAccount = <houseAccount>{};
+houseAccountDetail: houseAccount = <houseAccount>{};
+houseRentSheet: rateSheet = <rateSheet>{};
+
+
   showkodambakkam: boolean = false;
   showTrustpuram: boolean = false;
   showCalculator: boolean = false;
@@ -49,6 +55,7 @@ laminationRate : any;
 totalValue : number=0;
 value1: string = "off";
 value2 : string ="off"
+houseValue : string ="cash"
 stateOptions: any
 rentSheet: rentSheet = <rentSheet>{};
 
@@ -89,6 +96,21 @@ currentBillTpm : any;
   adminTrustpuram: boolean = false
   dateShow: any;
   dateStr: any='';
+  tempMenu3 : any[]=[    {
+    label: 'Grocerry',
+    tooltipOptions: {
+        tooltipLabel: "Grocerry",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/grocerry.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        this.houseSpendSave("grocerry")
+    }
+}]
   tempMenu : any[]=[
     {
         label: 'Calendar',
@@ -119,6 +141,7 @@ currentBillTpm : any;
         command: () => {
             // this.displayTerminal = true;
             // this.editClicked("Black-Printout")
+            this.houseSpendSave("grocerry")
         }
     },
     {
@@ -131,6 +154,7 @@ currentBillTpm : any;
         },
         icon: "assets/showcase/maintanence.png",
         command: () => {
+          this.houseSpendSave("maintanence")
           // this.editClicked("Colour-Xerox")
             // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
         }
@@ -145,6 +169,7 @@ currentBillTpm : any;
         },
         icon: "assets/showcase/entertainment.png",
         command: () => {
+          this.houseSpendSave("entertainment")
           // this.editClicked("Colour-Printout")
             // this.messageService.add({severity: 'warn', summary: 'Safari has stopped working'});
         }
@@ -159,18 +184,653 @@ currentBillTpm : any;
         },
         icon: "assets/showcase/deposit.png",
         command: () => {
+          this.houseSpendSave("deposit")
             // this.displayGalleria = true
             // this.editClicked("Bindings")
         }
     },
+    {
+      label: 'Delete Values',
+      tooltipOptions: {
+          tooltipLabel: "Delete Values",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/delete.png",
+      command: () => {
+        this.houseSpendSave("delete")
+          // this.displayGalleria = true
+          // this.editClicked("Bindings")
+      }
+  },
   
   ];
-  
-  ngOnInit() {
+displayHouseSpend: boolean =false
+grocerryClicked: boolean =false;
+maintanenceClicked: boolean =false;
+entertainmentClicked: boolean =false;
+depositClicked: boolean =false;
+deleteClicked: boolean =false;
 
+grocerryAmt: number=0;
+maintanenceAmt: number=0;
+entertainmentAmt: number=0;
+depositAmt: number=0;
+deleteAmt: number=0;
+
+
+
+cancelHouse(){
+
+
+
+  this.grocerryClicked=false;
+  this.maintanenceClicked=false;
+  this.entertainmentClicked =false;
+  this.depositClicked =false;
+  this.deleteClicked=false
+  
+  this.displayHouseSpend=false
+  this.initializeHouseAmt()
+}
+
+
+saveGrocerry(){
+
+  this.displayHouseSpend=false
+  this.dateSelected(new Date())
+console.log(this.houseData)
+
+// this.grocerryClicked=false;
+// this.maintanenceClicked=false;
+// this.entertainmentClicked =false;
+// this.depositClicked =false;
+// this.deleteClicked=false
+
+// this.displayHouseSpend=false
+// this.initializeHouseAmt()
+// this.spendPage()
+}
+
+
+
+saveHouse(){
+
+
+
+  if(this.grocerryClicked){
+
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense+=this.grocerryAmt
+    }
+    else{
+      this.houseData.PaytmExpense+= this.grocerryAmt
+    }
+
+this.houseData.Grocerry+=this.grocerryAmt
+console.log(this.houseValue)
+this.showProgress=true
+this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+
+  console.log("EDITEDD HOUSE")
+  this.showProgress=false
+},
+error=>{
+  this.showProgress=false
+  console.log("NOT EDITTED")
+})
+
+  }
+  else if(this.maintanenceClicked){
+
+    if(this.shopCurrentAmt){
+this.houseData.ShopCurrentBill+= this.shopCurrentAmt
+
+
+
+
+    }
+   if(this.houseCurrentAmt){
+    this.houseData.HomeCurrentBill+= this.houseCurrentAmt
+    }
+    if(this.paperAmt){
+      this.houseData.PaperCost+= this.paperAmt
+    }
+    if(this.blackTonerAmt){
+      this.houseData.BlackTonerCost+= this.blackTonerAmt
+    }
+    if(this.colourTonerAmt){
+      this.houseData.ColourTonerCost+= this.colourTonerAmt
+    }
+    if(this.blackMaintainAmt){
+      this.houseData.BlackMachineMaintanence+= this.blackMaintainAmt
+    }
+    if(this.colourMaintainAmt){
+      this.houseData.ColourMachineMaintanence+= this.colourMaintainAmt
+    }
+    if(this.bindingAmt ){
+      // this.houseData.+= this.bindingAmt 
+      this.houseData.Bindings+= this.bindingAmt
+    }
+    if(this.otherAmt ){
+      this.houseData.Others+= this.otherAmt 
+    }
+
+
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense+=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+        this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+        this.bindingAmt+this.otherAmt )
+
+        this.houseData.Maintanence+=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+          this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+          this.bindingAmt+this.otherAmt )
+    }
+    else{
+      this.houseData.PaytmExpense+=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+        this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+        this.bindingAmt+this.otherAmt )
+
+        
+        this.houseData.Maintanence+=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+          this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+          this.bindingAmt+this.otherAmt )
+    }
+    
+    this.showProgress=true
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+    
+      console.log("EDITEDD HOUSE")
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      console.log("NOT EDITTED")
+    })
+    
+  }
+  else if(this.entertainmentClicked){
+    this.houseData.Entertainment+=this.entertainmentAmt
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense+=this.entertainmentAmt
+    }
+    else{
+      this.houseData.PaytmExpense+= this.entertainmentAmt
+    }
+    this.showProgress=true
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+    
+      console.log("EDITEDD HOUSE")
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      console.log("NOT EDITTED")
+    })
+    
+
+  }
+  else if(this.depositClicked){
+    this.houseData.MoneyDeposit+=this.depositAmt
+
+    this.showProgress=true
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+    
+      console.log("EDITEDD HOUSE")
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      console.log("NOT EDITTED")
+    })
+    
+
+  }
+
+//   else if(this.deleteClicked){
+// this.deleteHouseEntry=true
+
+// let len = this.dockItemsSpents.length
+// let index= len-1
+// if(index !== -1){
+//   this.dockItemsSpents.splice(index,1)
+// }
+
+// console.log(this.dockItemsSpents)
+//   }
+
+// if(!this.deleteClicked){
+
+  this.grocerryClicked=false;
+  this.maintanenceClicked=false;
+  this.entertainmentClicked =false;
+  this.depositClicked =false;
+  this.deleteClicked=false
+  
+  this.displayHouseSpend=false
+  this.initializeHouseAmt()
+  this.spendPage()
+
+
+}
+
+
+deleteHouseEntry:boolean =false
+deleteSaveHouse(){
+
+
+
+  if(this.grocerryClicked){
+
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense-=this.grocerryAmt
+      if(this.houseData.CashExpense<0){
+        this.houseData.CashExpense=0
+      }
+    }
+    else{
+
+      this.houseData.PaytmExpense-= this.grocerryAmt
+
+      if(this.houseData.PaytmExpense<0){
+        this.houseData.PaytmExpense=0
+      }
+
+
+    }
+
+this.houseData.Grocerry-=this.grocerryAmt
+
+
+if(this.houseData.Grocerry<0){
+  this.houseData.Grocerry=0
+}
+
+
+
+console.log(this.houseValue)
+this.showProgress=true
+this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+
+  console.log("EDITEDD HOUSE")
+  this.showProgress=false
+},
+error=>{
+  this.showProgress=false
+  console.log("NOT EDITTED")
+})
+
+  }
+  else if(this.maintanenceClicked){
+
+    if(this.shopCurrentAmt){
+this.houseData.ShopCurrentBill-= this.shopCurrentAmt
+
+if(this.houseData.ShopCurrentBill<0){
+  this.houseData.ShopCurrentBill=0
+}
+
+
+
+    }
+   if(this.houseCurrentAmt){
+    this.houseData.HomeCurrentBill-= this.houseCurrentAmt
+
+    if(this.houseData.HomeCurrentBill<0){
+      this.houseData.HomeCurrentBill=0
+    }
+    
+
+
+    }
+    if(this.paperAmt){
+      this.houseData.PaperCost-= this.paperAmt
+
+      if(this.houseData.PaperCost<0){
+        this.houseData.PaperCost=0
+      }
+      
+
+    }
+    if(this.blackTonerAmt){
+      this.houseData.BlackTonerCost-= this.blackTonerAmt
+      if(this.houseData.BlackTonerCost<0){
+        this.houseData.BlackTonerCost=0
+      }
+      
+    }
+    if(this.colourTonerAmt){
+      this.houseData.ColourTonerCost-= this.colourTonerAmt
+
+      if(this.houseData.ColourTonerCost<0){
+        this.houseData.ColourTonerCost=0
+      }
+      
+
+
+    }
+    if(this.blackMaintainAmt){
+      this.houseData.BlackMachineMaintanence-= this.blackMaintainAmt
+      if(this.houseData.BlackMachineMaintanence<0){
+        this.houseData.BlackMachineMaintanence=0
+      }
+      
+
+    }
+    if(this.colourMaintainAmt){
+      this.houseData.ColourMachineMaintanence-= this.colourMaintainAmt
+
+      if(this.houseData.ColourMachineMaintanence<0){
+        this.houseData.ColourMachineMaintanence=0
+      }
+      
+    }
+    if(this.bindingAmt ){
+      // this.houseData.+= this.bindingAmt 
+      this.houseData.Bindings-= this.bindingAmt
+
+      if(this.houseData.Bindings<0){
+        this.houseData.Bindings=0
+      }
+      
+
+
+    }
+    if(this.otherAmt ){
+      this.houseData.Others-= this.otherAmt 
+
+      if(this.houseData.Others<0){
+        this.houseData.Others=0
+      }
+      
+
+
+
+    }
+
+
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense-=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+        this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+        this.bindingAmt+this.otherAmt )
+
+        this.houseData.Maintanence-=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+          this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+          this.bindingAmt+this.otherAmt )
+
+
+          if(this.houseData.CashExpense<0){
+            this.houseData.CashExpense=0
+          }
+          if(this.houseData.Maintanence<0){
+            this.houseData.Maintanence=0
+          }
+              
+
+
+
+    }
+    else{
+      this.houseData.PaytmExpense-=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+        this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+        this.bindingAmt+this.otherAmt )
+
+        
+        this.houseData.Maintanence-=(this.shopCurrentAmt+this.houseCurrentAmt+this.paperAmt+
+          this.blackTonerAmt+this.colourTonerAmt+this.blackMaintainAmt+this.colourMaintainAmt+
+          this.bindingAmt+this.otherAmt )
+
+          if(this.houseData.PaytmExpense<0){
+            this.houseData.PaytmExpense=0
+          }
+          if(this.houseData.Maintanence<0){
+            this.houseData.Maintanence=0
+          }
+              
+
+
+    }
+    this.showProgress=true
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+    
+      console.log("EDITEDD HOUSE")
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      console.log("NOT EDITTED")
+    })
+    
+
+  }
+  else if(this.entertainmentClicked){
+    this.houseData.Entertainment-=this.entertainmentAmt
+
+    if(this.houseData.Entertainment<0){
+      this.houseData.Entertainment=0
+    }
+        
+
+
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense-=this.entertainmentAmt
+      if(this.houseData.CashExpense<0){
+        this.houseData.CashExpense=0
+      }
+          
+  
+    }
+    else{
+      this.houseData.PaytmExpense-= this.entertainmentAmt
+
+      if(this.houseData.PaytmExpense<0){
+        this.houseData.PaytmExpense=0
+      }
+          
+  
+
+
+    }
+    this.showProgress=true
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+    
+      console.log("EDITEDD HOUSE")
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      console.log("NOT EDITTED")
+    })
+    
+
+  }
+  else if(this.depositClicked){
+    this.houseData.MoneyDeposit-=this.depositAmt
+
+    if(this.houseData.MoneyDeposit<0){
+      this.houseData.MoneyDeposit=0
+    }
+        
+
+    this.showProgress=true
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+    
+      console.log("EDITEDD HOUSE")
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      console.log("NOT EDITTED")
+    })
+    
+
+  }
+
+  // else if(this.deleteClicked){
+
+
+  // }
+
+// if(!this.deleteClicked){
+
+  this.grocerryClicked=false;
+  this.maintanenceClicked=false;
+  this.entertainmentClicked =false;
+  this.depositClicked =false;
+  this.deleteClicked=false
+  
+  this.displayHouseSpend=false
+  this.initializeHouseAmt()
+  this.spendPage()
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  houseSpendSave(value : string){
+    if(!this.calendarClicked){
+      this.grocerryClicked=true;
+      this.maintanenceClicked=false;
+      this.entertainmentClicked =false;
+      this.depositClicked =false;
+      this.deleteClicked=false
+  
+  
+      this.displayHouseSpend=true
+
+
+    }
+else{
+  if(value==="grocerry"){
+
+    this.grocerryClicked=true;
+    this.maintanenceClicked=false;
+    this.entertainmentClicked =false;
+    this.depositClicked =false;
+    this.deleteClicked=false
+
+
+    this.displayHouseSpend=true
+
+  }
+  else if( value==="maintanence"){
+
+    this.grocerryClicked=false;
+    this.maintanenceClicked=true;
+    this.entertainmentClicked =false;
+    this.depositClicked =false;
+    this.deleteClicked=false
+
+
+
+
+    this.displayHouseSpend=true
+  }
+  else if( value==="entertainment"){
+
+    this.grocerryClicked=false;
+    this.maintanenceClicked=false;
+    this.entertainmentClicked =true;
+    this.depositClicked =false;
+    this.deleteClicked=false
+
+
+
+    this.displayHouseSpend=true
+  }
+  else if( value==="deposit"){
+
+    this.grocerryClicked=false;
+    this.maintanenceClicked=false;
+    this.entertainmentClicked =false;
+    this.depositClicked =true;
+    this.deleteClicked=false
+
+
+
+    this.displayHouseSpend=true
+  }
+
+  else if( value==="delete"){
+
+    this.grocerryClicked=false;
+    this.maintanenceClicked=false;
+    this.entertainmentClicked =false;
+    this.depositClicked =false;
+    this.deleteClicked=false;
+
+
+    this.deleteHouseEntry=true
+
+    let len = this.dockItemsSpents.length
+    let index= len-1
+    if(index !== -1){
+      this.dockItemsSpents.splice(index,1)
+    }
+    
+    console.log(this.dockItemsSpents)
+
+
+
+
+    // this.displayHouseSpend=true
+  }
+
+
+}
+
+
+  }
+  initializeHouseAccount(){
+
+   
+    this.houseAccountDetail.Date = new Date()
+this.houseAccountDetail.DateString =""
+this.houseAccountDetail.MonthString =""
+this.houseAccountDetail.YearString =""
+this.houseAccountDetail.Grocerry =0
+this.houseAccountDetail.Entertainment=0
+this.houseAccountDetail.Maintanence =0
+this.houseAccountDetail.ShopCurrentBill=0
+this.houseAccountDetail.HomeCurrentBill =0
+this.houseAccountDetail.PaperCost =0
+this.houseAccountDetail.BlackTonerCost =0
+this.houseAccountDetail.ColourTonerCost =0
+this.houseAccountDetail.Bindings =0
+this.houseAccountDetail.Others =0
+this.houseAccountDetail.BlackMachineMaintanence =0
+this.houseAccountDetail.ColourMachineMaintanence =0
+this.houseAccountDetail.MoneyDeposit =0
+this.houseAccountDetail.PaytmExpense =0
+this.houseAccountDetail.CashExpense=0
+this.houseAccountDetail.TotalExpense =0
+this.houseAccountDetail.TotalProfit =0
+
+  }
+  moneyOptions : any
+  ngOnInit() {
+    this.deleteHouseEntry=false
+this.initializeHouseAccount()
+this.initializeHouseAmt()
 
     this.totalValue=0
     this.stateOptions = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
+    this.moneyOptions=  [{label: 'Cash', value: 'cash'}, {label: 'Paytm', value: 'paytm'}];
     this.sourceProducts=[{'name': 'Black-Xerox','price':0,'image':'blackxerox'},{
       'name': 'Black-Printout','price':0,'image':'blackxerox'
     },{'name': 'Colour-Xerox','price':0,'image':'colour'},
@@ -542,22 +1202,198 @@ currentBillTpm : any;
   spendShow: boolean =false;
   dateSpend: any
   calendarShow : boolean=false
+shopCurrentAmt : number =0
+houseCurrentAmt : number =0
+paperAmt : number =0
+blackTonerAmt : number =0
+colourTonerAmt : number =0
+blackMaintainAmt : number =0
+colourMaintainAmt : number =0
+bindingAmt : number =0
+otherAmt : number =0
+
+
+
+  initializeHouseAmt(){
+    this.shopCurrentAmt =0
+    this.houseCurrentAmt  =0
+    this.paperAmt  =0
+    this.blackTonerAmt  =0
+    this.colourTonerAmt  =0
+    this.blackMaintainAmt  =0
+    this.colourMaintainAmt  =0
+    this.bindingAmt  =0
+    this.otherAmt =0
+
+
+    
+    this.grocerryAmt=0;
+    this.maintanenceAmt=0;
+    this.entertainmentAmt=0;
+    this.depositAmt=0;
+    this.deleteAmt=0;
+  }
+
 
   calendarOn(){
+
     this.calendarShow=true
+    this.calendarClicked=true
   }
+  showProgress: boolean =false
+  houseId : any;
+  // houseIdPresent : boolean =false
+calendarClicked: boolean =false
   dateSelected(event:any){
-console.log(event)
-let temp=[]
-for(let i=1 ; i < this.tempMenu.length ; i++){
+
   
-  temp.push(this.tempMenu[i])
+
+
+this.showProgress=true
+
+console.log(event)
+
+if(this.calendarClicked){
+  this.houseValue ="cash"
+  this.initializeHouseAmt()
+  let temp=[]
+  for(let i=1 ; i < this.tempMenu.length ; i++){
+    
+    temp.push(this.tempMenu[i])
+  }
+  this.dockItemsSpents=[]
+  this.dockItemsSpents=temp
 }
-this.dockItemsSpents=[]
-this.dockItemsSpents=temp
 
 
-this.calendarShow=false
+
+let dateString = event
+let month = '' + (dateString.getMonth() + 1);
+let day = '' + dateString.getDate();
+let year = '' + dateString.getFullYear();
+
+if (month.length < 2) {
+  month = '0' + month;
+}
+if (day.length < 2) {
+  day = '0' + day;
+}
+let dateSend = [year, month, day].join('-');
+
+this.initializeHouseAccount()
+this.houseAccountDetail.MonthString= month
+this.houseAccountDetail.YearString=year
+this.houseAccountDetail.Date=dateSend
+this.houseAccountDetail.DateString= day
+this.service.getHouseAccounts().subscribe((account: any)=>{
+
+  if(!account.length){
+
+    this.service.addHouseAccounts(this.houseAccountDetail).subscribe((event: any)=>{
+
+
+      this.addedHouseGetThat(day, month, year)
+      console.log("ADDDED HOUSE ACCOUNT")
+    },error=>{
+      this.calendarShow=false
+      console.log("CANT ADD HOUSE ACCOUNT")
+      this.showProgress=false
+    })
+
+
+
+
+
+ 
+
+  }
+
+  else{
+
+
+this.service.getHouseAccounts().subscribe((account: any)=>{
+
+let accountCheck = false
+account.forEach((ele : any)=>{
+
+  if(ele.MonthString===month && ele.YearString===year){
+    this.houseData=ele
+    accountCheck=true
+    console.log(this.houseData)
+this.houseId= ele.id
+
+
+if(!this.calendarClicked){
+
+  this.houseData.Grocerry+=this.grocerryAmt
+  
+if(this.houseValue==="cash"){
+this.houseData.CashExpense+=this.grocerryAmt
+}
+else{
+this.houseData.PaytmExpense+= this.grocerryAmt
+}
+this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+
+console.log("EDITEDD HOUSE")
+this.spendPage()
+this.showProgress=false
+},
+error=>{
+this.showProgress=false
+this.spendPage()
+console.log("NOT EDITTED")
+})
+
+
+}
+    else{
+      this.calendarShow=false
+      this.showProgress=false
+    }
+
+  }
+
+
+})
+
+if(!accountCheck){
+  this.service.addHouseAccounts(this.houseAccountDetail).subscribe((event: any)=>{
+
+
+    this.addedHouseGetThat(day, month, year)
+    console.log("ADDDED HOUSE ACCOUNT")
+  },error=>{
+
+    console.log("CANT ADD HOUSE ACCOUNT")
+    this.calendarShow=false
+    
+    this.showProgress=false
+  })
+
+
+
+}
+
+},error=>{
+  this.calendarShow=false
+    
+    this.showProgress=false
+})
+
+
+  }
+},
+error=>{
+  console.log(error)
+  this.calendarShow=false
+  this.showProgress=false
+}
+)
+
+
+
+
   }
 
   tempMenu2: any=[
@@ -612,7 +1448,71 @@ this.calendarShow=false
 
   
   ];
+  addedHouseGetThat(day : string , month : string , year : string){
+  this.service.getHouseAccounts().subscribe((account: any)=>{
 
+
+    if(account.length){
+
+      account.forEach((ele : any)=>{
+
+        if(ele.MonthString===month && ele.YearString===year){
+          this.houseData=ele
+
+          this.houseId= ele.id
+
+          if(!this.calendarClicked){
+
+            this.houseData.Grocerry+=this.grocerryAmt
+            
+    if(this.houseValue==="cash"){
+      this.houseData.CashExpense+=this.grocerryAmt
+    }
+    else{
+      this.houseData.PaytmExpense+= this.grocerryAmt
+    }
+    this.service.editHouseAccountsById(this.houseData, this.houseId).subscribe((event: any)=>{
+
+      console.log("EDITEDD HOUSE")
+      this.spendPage()
+      this.showProgress=false
+    },
+    error=>{
+      this.showProgress=false
+      this.spendPage()
+      console.log("NOT EDITTED")
+    })
+
+
+          }
+
+          console.log(this.houseData)
+        }
+
+
+      })
+
+if(this.calendarClicked){
+  this.calendarShow=false
+
+      this.showProgress=false
+}
+    
+
+    }
+    else{
+      this.calendarShow=false
+
+
+      this.showProgress=false
+    }
+  },
+  error=>{
+
+    this.showProgress=false
+  })
+  
+  }
   kodambakkamAdmin(){
     this.showkodambakkam=true
     this.adminKodambakkam=true
@@ -638,15 +1538,21 @@ this.dockItemsSpents=temp
       this.spendShow=true
       this.dockItemsSpents=[]
       this.dateSpend=new Date()
+      this.dockItemsSpents.push(this.tempMenu3[0])
       this.dockItemsSpents.push(this.tempMenu[0])
       this.dockItemsSpents.push(this.tempMenu2[0])
-      
+      this.deleteHouseEntry=false
+      this.calendarClicked=false
     }
     else{
       this.dockItemsSpents=[]
       this.spendShow=false
       this.calendarShow=false
       this.dateSpend=new Date()
+      this.deleteHouseEntry=false
+      this.calendarClicked=false
+
+
     }
 
   }
@@ -1023,6 +1929,7 @@ initialize(){
   // this.totalValue =0
   this.value1 = "off";
   this.value2  ="off"
+this.houseValue ="cash"
 
 }
 

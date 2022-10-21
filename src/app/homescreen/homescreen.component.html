@@ -74,7 +74,9 @@
   <router-outlet></router-outlet>
 </div> -->
 
-
+<div class="loading-indicator" *ngIf="showProgress">
+  <p-progressSpinner></p-progressSpinner>
+</div>
 <p-menubar [model]="menubarItems">
   <ng-template pTemplate="start">
       <i class="pi pi-slack"></i>
@@ -159,10 +161,6 @@
 
   </div>
 
-
-
-
-  
 </div>
 
 <p-dialog header='title' [closable]="false" [(visible)]="displayEditDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
@@ -289,7 +287,7 @@
 
 <div style="display:grid; grid-template-columns: 1fr 1fr">
 <div style="margin-right:40% ;">
-<button pButton pRipple type="button" icon="pi pi-times" (click)="cancelCalc()" label="Cancel" class="p-button-raised p-button-success"></button>
+<button pButton pRipple type="button" icon="pi pi-times" (click)="cancelCalc()" label="Cancel" class="p-button-raised p-button-danger"></button>
 </div>
 
 <div style="margin-right:20% ;">
@@ -297,6 +295,174 @@
 
 </div>
 
+</div>
+</ng-template>
+</p-dialog>
+
+
+
+<p-dialog header='title' [closable]="false" [(visible)]="displayHouseSpend" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+[draggable]="false" [resizable]="false">
+<ng-template pTemplate="header">
+{{title}}
+<div *ngIf="displayHouseSpend">
+<p-selectButton [options]="moneyOptions" [(ngModel)]="houseValue" optionLabel="label" optionValue="value"></p-selectButton>
+
+</div>
+
+
+</ng-template>
+<div *ngIf="grocerryClicked">
+  <div class="field col-12 md:col-3">
+  <label for="minmax-buttons">Grocerry Rate: &nbsp;</label>
+  <p-inputNumber [(ngModel)]="grocerryAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+  </p-inputNumber>
+  </div>
+  </div>
+
+
+  <div *ngIf="entertainmentClicked">
+    <div class="field col-12 md:col-3">
+    <label for="minmax-buttons">Entertainment Spent: &nbsp;</label>
+    <p-inputNumber [(ngModel)]="entertainmentAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+    </p-inputNumber>
+    </div>
+    </div>
+
+    <div *ngIf="depositClicked">
+      <div class="field col-12 md:col-3">
+      <label for="minmax-buttons">Deposit Amount: &nbsp;</label>
+      <p-inputNumber [(ngModel)]="entertainmentAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+      </p-inputNumber>
+      </div>
+      </div>
+  
+
+      <div *ngIf="maintanenceClicked">
+        <div class="field col-12 md:col-3" style="display: grid; grid-template-rows: 1fr 1fr 1fr fr;">
+        <label for="minmax-buttons">Shop Current Bill: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="shopCurrentAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">House Current Bill: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="houseCurrentAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Paper Amount: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="paperAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Black Toner: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="blackTonerAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Colour Toner: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="colourTonerAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Black Maintanence: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="blackMaintainAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Colour Maintanence: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="colourMaintainAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+
+        <label for="minmax-buttons">Binding: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="bindingAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+      
+        
+        <label for="minmax-buttons">Others: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="otherAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+     
+        <!-- ShopCurrentBill : number
+        HomeCurrentBill : number
+        PaperCost : number
+        BlackTonerCost : number
+        ColourTonerCost : number
+        BlackMachineMaintanence : number
+        ColourMachineMaintanence : number -->
+
+
+        </div>
+        </div>
+
+
+
+
+
+
+<!-- 
+<div *ngIf="isBlackPrintout">
+<div *ngIf="value2=='off'">
+<div class="field col-12 md:col-3">
+<label for="minmax-buttons">Copies: &nbsp;</label>
+<p-inputNumber [(ngModel)]="blackPrintCopies" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+</p-inputNumber>
+</div>
+<br>
+<div class="field-radiobutton">
+<p-radioButton name="copy2" (click)="copySelected=true" value="Single-Side" [(ngModel)]="copy2" inputId="city1"></p-radioButton>
+<label for="city1">Single-Side</label>
+</div>
+<br>
+<div class="field-radiobutton">
+<p-radioButton name="copy2" (click)="copySelected=true" value="Front-&-Back" [(ngModel)]="copy2" inputId="city2"></p-radioButton>
+<label for="city2">Front-&-Back</label>
+</div>
+<br>
+<div style="display: grid; grid-template-columns: 1fr 1fr">
+<div class="field-checkbox">
+<p-checkbox [(ngModel)]="isNetCharge" [binary]="true" inputId="binary2"></p-checkbox>
+<label (click)="isNetCharge=!isNetCharge" for="binary2">Net Charge</label>
+</div>
+<div class="field-checkbox">
+<p-checkbox [(ngModel)]="isFreshCustomer" [binary]="true" inputId="binary"></p-checkbox>
+<label (click)="isFreshCustomer=!isFreshCustomer" for="binary">10-copies-2rupees</label>
+</div>
+</div>
+</div>
+
+</div> -->
+
+
+
+
+<!-- <div *ngIf="isLamination">
+<div class="field col-12 md:col-3">
+<label for="minmax-buttons">Lamination Rate: &nbsp;</label>
+<p-inputNumber [(ngModel)]="laminationRate" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+</p-inputNumber>
+</div>
+</div> -->
+
+<ng-template pTemplate="footer">
+
+<div style="display:grid; grid-template-columns: 1fr 1fr">
+<div style="margin-right:40% ;">
+<button pButton pRipple type="button" icon="pi pi-times" (click)="cancelHouse()" label="Cancel" class="p-button-raised p-button-danger"></button>
+</div>
+
+
+<div *ngIf="deleteHouseEntry && calendarClicked" style="margin-right:20% ;">
+  <button pButton pRipple type="button" icon="pi pi-file" (click)="deleteSaveHouse()" label="Success" class="p-button-raised p-button-success"></button>
+  
+  </div>
+
+
+<div *ngIf="!deleteHouseEntry && calendarClicked" style="margin-right:20% ;">
+<button pButton pRipple type="button" icon="pi pi-file" (click)="saveHouse()" label="Success" class="p-button-raised p-button-success"></button>
+
+</div>
+<div *ngIf="!calendarClicked" style="margin-right:20% ;">
+  <button pButton pRipple type="button" icon="pi pi-file" (click)="saveGrocerry()" label="Success" class="p-button-raised p-button-success"></button>
+  
+  </div>
 </div>
 </ng-template>
 </p-dialog>
