@@ -77,27 +77,30 @@
 <div class="loading-indicator" *ngIf="showProgress">
   <p-progressSpinner></p-progressSpinner>
 </div>
-<p-menubar [model]="menubarItems">
+<p-menubar >
+
+  <!-- [model]="menubarItems" -->
   <ng-template pTemplate="start">
       <i class="pi pi-slack"></i>
   </ng-template>
   <ng-template pTemplate="end">
-      <!-- <i class="pi pi-video"></i>
-      <i class="pi pi-wifi"></i>
-      <i class="pi pi-volume-up"></i> -->
+
       <span (click)="spendPage()" style="font-style: italic; color: black; cursor: pointer;    font-family: ui-rounded;"> <h4 style="color: black;">TOTAL:  ₹ {{totalValue}}</h4>  Students Park Xerox   {{dateStr}}</span>
-      <!-- <i class="pi pi-search"></i>
-      <i class="pi pi-bars"></i> -->
+  
   </ng-template>
 </p-menubar>
 
 <div class="dock-window">
-  <p-dock [model]="dockItems" position="bottom">
+  <p-dock *ngIf="!passwordClick"  [model]="dockItems" position="bottom">
     <ng-template pTemplate="item" let-item>
         <img [src]="item.icon" [alt]="item.label" width="100%">
     </ng-template>
   </p-dock>
-
+  <p-dock *ngIf="passwordClick"  [model]="dockItemsPass" position="bottom">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.icon" [alt]="item.label" width="100%">
+    </ng-template>
+  </p-dock>
 
   <p-dock *ngIf="dataEntry" [model]="leftMenu" position="left">
     <ng-template pTemplate="item" let-item>

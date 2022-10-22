@@ -903,7 +903,9 @@ this.houseAccountDetail.TotalProfit =0
 
   }
   moneyOptions : any
+  passwordClick : boolean = false
   ngOnInit() {
+    this.passwordClick= false
     this.deleteHouseEntry=false
 this.initializeHouseAccount()
 this.initializeHouseAmt()
@@ -1055,6 +1057,25 @@ this.spendPage()
   // }
 
   this.dockItems = [
+
+    {
+      label: 'Reset',
+      tooltipOptions: {
+          tooltipLabel: "reset",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/reset.png",
+      command: () => {
+          // this.displayFinder = true;
+       this.resetAll()
+      }
+  },
+
+
+
+
     {
         label: 'Black Xerox',
         tooltipOptions: {
@@ -1323,7 +1344,7 @@ otherAmt : number =0
 
 
   calendarOn(){
-
+    this.spendShow=false
     this.calendarShow=true
     this.calendarClicked=true
   }
@@ -1332,7 +1353,9 @@ otherAmt : number =0
   // houseIdPresent : boolean =false
 calendarClicked: boolean =false
   dateSelected(event:any){
-
+    if(this.calendarClicked){
+      this.spendShow=true
+    }
   
 
 
@@ -1619,17 +1642,338 @@ this.dockItemsSpents=[]
 this.dockItemsSpents=temp
   }
   dataEntry: boolean =true
+
+itemPassTemp : any[]=[ 
+  {
+    label: 'zero',
+    tooltipOptions: {
+        tooltipLabel: "zero",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/0.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("0","zero")
+    }
+  },
+  {
+    label: 'five',
+    tooltipOptions: {
+        tooltipLabel: "five",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/5.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("5","five")
+    }
+  },
+  {
+    label: 'eight',
+    tooltipOptions: {
+        tooltipLabel: "eight",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/8.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("8","eight")
+    }
+  },
+  {
+    label: 'seven',
+    tooltipOptions: {
+        tooltipLabel: "seven",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/7.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("7" ,"seven")
+    }
+  },
+  {
+    label: 'six',
+    tooltipOptions: {
+        tooltipLabel: "six",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/6.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("6" , "six")
+    }
+  }]
+
+
+
+  dockItemsPass: any[]=[ 
+{
+  label: 'zero',
+  tooltipOptions: {
+      tooltipLabel: "zero",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/0.png",
+  command: () => {
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+      // this.houseSpendSave("grocerry")
+      this.passValidate("0" ,"zero")
+  }
+},
+{
+  label: 'five',
+  tooltipOptions: {
+      tooltipLabel: "five",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/5.png",
+  command: () => {
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+      // this.houseSpendSave("grocerry")
+      this.passValidate("5","five")
+  }
+},
+{
+  label: 'eight',
+  tooltipOptions: {
+      tooltipLabel: "eight",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/8.png",
+  command: () => {
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+      // this.houseSpendSave("grocerry")
+      this.passValidate("8","eight")
+  }
+},
+{
+  label: 'seven',
+  tooltipOptions: {
+      tooltipLabel: "seven",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/7.png",
+  command: () => {
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+      // this.houseSpendSave("grocerry")
+      this.passValidate("7", "seven")
+  }
+},
+{
+  label: 'six',
+  tooltipOptions: {
+      tooltipLabel: "six",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/6.png",
+  command: () => {
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+      // this.houseSpendSave("grocerry")
+      this.passValidate("6","six")
+  }
+}]
+
+password : string = "786"
+counter: number =0
+passEnter: string=""
+passValidate(number: string, word: string){
+  this.counter+=1
+
+  this.passEnter+=number
+
+
+  if(this.counter===5 && this.passEnter!==this.password ){
+    this.counter=0
+      this.passEnter=""
+      this.spendPage()
+
+  }
+  else if(this.counter===3 && this.passEnter==this.password ){
+
+
+
+this.dockItemsSpents=[]
+
+
+    this.dockItemsSpents.push(this.tempMenu3[0])
+         this.dockItemsSpents.push(this.tempMenu[0])
+      this.dockItemsSpents.push(this.tempMenu2[0])
+      this.dockItemsSpents.push(this.tempMenu4[0])
+      this.dockItemsSpents.push(this.tempMenu4[1])
+
+      this.passwordClick=false
+this.spendShow=true
+
+
+
+  }
+  else{
+
+    this.dockItemsSpents=[]
+    this.spendShow=false
+
+    if(this.dockItemsPass.length){
+
+      for(let i=0 ; i< this.dockItemsPass.length;i++){
+        if(this.dockItemsPass[i].label===word){
+        
+          let index = i
+          if(index !== -1){
+          this.dockItemsPass.splice(index,1)
+        
+          break
+        }
+        }
+        
+        
+        
+            }
+        
+    }
+
+
+// let len = this.dockItemsSpents.length
+// let index= len-1
+// if(index !== -1){
+//   this.dockItemsSpents.splice(index,1)
+// }
+
+  }
+
+  // }
+
+}
   spendPage(){
 
     if(!this.spendShow){
+      this.counter=0
+      this.passEnter=""
+      this.dockItemsPass=[ 
+  {
+    label: 'zero',
+    tooltipOptions: {
+        tooltipLabel: "zero",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/0.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("0","zero")
+    }
+  },
+  {
+    label: 'five',
+    tooltipOptions: {
+        tooltipLabel: "five",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/5.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("5","five")
+    }
+  },
+  {
+    label: 'eight',
+    tooltipOptions: {
+        tooltipLabel: "eight",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/8.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("8","eight")
+    }
+  },
+  {
+    label: 'seven',
+    tooltipOptions: {
+        tooltipLabel: "seven",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/7.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("7" ,"seven")
+    }
+  },
+  {
+    label: 'six',
+    tooltipOptions: {
+        tooltipLabel: "six",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/6.png",
+    command: () => {
+        // this.displayTerminal = true;
+        // this.editClicked("Black-Printout")
+        // this.houseSpendSave("grocerry")
+        this.passValidate("6" , "six")
+    }
+  }]
+      this.passwordClick=true
       this.spendShow=true
       this.dockItemsSpents=[]
       this.dateSpend=new Date()
       this.dockItemsSpents.push(this.tempMenu3[0])
-      this.dockItemsSpents.push(this.tempMenu[0])
-      this.dockItemsSpents.push(this.tempMenu2[0])
-      this.dockItemsSpents.push(this.tempMenu4[0])
-      this.dockItemsSpents.push(this.tempMenu4[1])
+      // this.dockItemsSpents.push(this.tempMenu[0])
+      // this.dockItemsSpents.push(this.tempMenu2[0])
+      // this.dockItemsSpents.push(this.tempMenu4[0])
+      // this.dockItemsSpents.push(this.tempMenu4[1])
 
 this.dataEntry=false
 
@@ -1637,7 +1981,95 @@ this.dataEntry=false
       this.calendarClicked=false
     }
     else{
+
+      this.counter=0
+      this.passEnter=""
+
+
+      this.passwordClick=false
       this.dockItemsSpents=[]
+
+      this.dockItemsPass=[ 
+        {
+          label: 'zero',
+          tooltipOptions: {
+              tooltipLabel: "zero",
+              tooltipPosition: 'top',
+              positionTop: -15,
+              positionLeft: 15
+          },
+          icon: "assets/showcase/0.png",
+          command: () => {
+              // this.displayTerminal = true;
+              // this.editClicked("Black-Printout")
+              // this.houseSpendSave("grocerry")
+              this.passValidate("0","zero")
+          }
+        },
+        {
+          label: 'five',
+          tooltipOptions: {
+              tooltipLabel: "five",
+              tooltipPosition: 'top',
+              positionTop: -15,
+              positionLeft: 15
+          },
+          icon: "assets/showcase/5.png",
+          command: () => {
+              // this.displayTerminal = true;
+              // this.editClicked("Black-Printout")
+              // this.houseSpendSave("grocerry")
+              this.passValidate("5","five")
+          }
+        },
+        {
+          label: 'eight',
+          tooltipOptions: {
+              tooltipLabel: "eight",
+              tooltipPosition: 'top',
+              positionTop: -15,
+              positionLeft: 15
+          },
+          icon: "assets/showcase/8.png",
+          command: () => {
+              // this.displayTerminal = true;
+              // this.editClicked("Black-Printout")
+              // this.houseSpendSave("grocerry")
+              this.passValidate("8","eight")
+          }
+        },
+        {
+          label: 'seven',
+          tooltipOptions: {
+              tooltipLabel: "seven",
+              tooltipPosition: 'top',
+              positionTop: -15,
+              positionLeft: 15
+          },
+          icon: "assets/showcase/7.png",
+          command: () => {
+              // this.displayTerminal = true;
+              // this.editClicked("Black-Printout")
+              // this.houseSpendSave("grocerry")
+              this.passValidate("7" ,"seven")
+          }
+        },
+        {
+          label: 'six',
+          tooltipOptions: {
+              tooltipLabel: "six",
+              tooltipPosition: 'top',
+              positionTop: -15,
+              positionLeft: 15
+          },
+          icon: "assets/showcase/6.png",
+          command: () => {
+              // this.displayTerminal = true;
+              // this.editClicked("Black-Printout")
+              // this.houseSpendSave("grocerry")
+              this.passValidate("6" , "six")
+          }
+        }]
       this.dataEntry=true
       this.spendShow=false
       this.calendarShow=false
