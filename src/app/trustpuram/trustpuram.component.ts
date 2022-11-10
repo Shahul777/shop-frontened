@@ -1447,6 +1447,19 @@ tonerCameDate: any;
   bindingPerDay: number = 0
   blackPerDay: number = 0
   paperPerDay: number = 0
+
+
+  singleAnalysis(customer : any){
+    this.selectedAccounts=[]
+    this.selectedAccounts.push(customer)
+  
+    
+    this.showAllStatics()
+  
+  
+  }
+
+
 showAllStatics(){
   
 
@@ -1578,7 +1591,7 @@ console.log("🚀 ~ file: kodamours.forEach ~ account.Expenses", account.Expense
   let sunday_exp= 0
   sunday_exp= labour.AssanExpense + labour.RasheedExpense + labour.ManiExpense 
   //this.allAccountDetail.Expenses += sunday_exp
-  this.allAccountDetail.Expenses += this.tpmRent
+  // this.allAccountDetail.Expenses += this.tpmRent
   this.allAccountDetail.Expenses += this.currentBillTpm
 
   this.allAccountDetail.NetProfit +=0
@@ -1589,7 +1602,7 @@ console.log("🚀 ~ file: kodamours.forEach ~ account.Expenses", account.Expense
 else{
   //this.allAccountDetail.Expenses += account.Expenses
   this.allAccountDetail.Expenses += this.currentBillTpm
-  this.allAccountDetail.Expenses += this.tpmRent
+  // this.allAccountDetail.Expenses += this.tpmRent
   this.allAccountDetail.NetProfit +=account.NetProfit
   this.allAccountDetail.TotalIncome += account.TotalIncome
 
@@ -1678,27 +1691,39 @@ this.wholePaperCount+=account.PaperSoldToday
 })
 
   this.totalDays = accountLength
+  let rent =0
   if (accountLength === 31 || accountLength === 30) {
     this.monthlySalaryMani = (30 - absentMani) * this.maniSalary
     this.monthlySalaryAssan = (30 - absentAssan) * this.assanSalary
     this.monthlySalaryRasheed = (30 - absentRasheed) * this.rasheedSalary
+
+    this.allAccountDetail.Expenses +=  2000
+
+    this.allLabourDetail.AssanPresent=30 - absentAssan
+    this.allLabourDetail.RasheedPresent=30 - absentRasheed
+    this.allLabourDetail.ManiPresent=30 - absentMani
+
+    rent = Math.ceil(30 * this.tpmRent)
   }
   else {
     this.monthlySalaryMani = this.allLabourDetail.ManiPresent * this.maniSalary
     this.monthlySalaryAssan = this.allLabourDetail.AssanPresent * this.assanSalary
     this.monthlySalaryRasheed = this.allLabourDetail.RasheedPresent * this.rasheedSalary
+
+
+    rent = Math.ceil(accountLength * this.tpmRent)
   }
  
 
-  let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 70) / 100)
+  let colourCommission = Math.ceil(((this.allAccountDetail.ColourCopies*10) * 40) / 100)
   let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 70 / 100))
   let salary = Math.ceil(this.monthlySalaryMani + this.monthlySalaryAssan + this.monthlySalaryRasheed)
   let commision = colourCommission + bindingCommision
   let tonerCost = Math.ceil(this.tonerCost * this.allAccountDetail.BlackCopies)
-  let rent = Math.ceil(accountLength * this.tpmRent)
+  // let rent = Math.ceil(accountLength * this.tpmRent)
   this.allAccountDetail.Expenses += commision
   this.allAccountDetail.Expenses += salary
-
+  this.allAccountDetail.Expenses += rent
   let paperAmount = Math.ceil(this.allAccountDetail.PaperSoldToday * this.paperRate)
   this.allAccountDetail.Expenses += paperAmount
   this.allAccountDetail.Expenses += tonerCost

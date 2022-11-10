@@ -101,7 +101,12 @@
           </div>
         </th>
 
+        <th *ngIf="adminAccess">
+          <div class="flex justify-content-center align-items-center">
+            Analysis
 
+          </div>
+        </th>
         <th>
           <div class="flex justify-content-center align-items-center">
             Income
@@ -159,6 +164,11 @@
         <td>
           <button pButton pRipple (click)="editAccount2(customer.id)" type="button" icon="pi pi-print" class="p-button-rounded p-button-info"></button>
         </td>
+        <td *ngIf="adminAccess">
+          <button pButton pRipple (click)="singleAnalysis(customer)" type="button" icon="pi pi-chart-bar" class="p-button-rounded p-button-info"></button>
+        </td>
+
+
         <td>
           {{customer.TotalIncome }}
         </td>
