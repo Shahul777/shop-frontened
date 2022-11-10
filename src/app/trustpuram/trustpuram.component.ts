@@ -1690,8 +1690,8 @@ this.wholePaperCount+=account.PaperSoldToday
   }
  
 
-  let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 30) / 100)
-  let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 20 / 100))
+  let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 70) / 100)
+  let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 70 / 100))
   let salary = Math.ceil(this.monthlySalaryMani + this.monthlySalaryAssan + this.monthlySalaryRasheed)
   let commision = colourCommission + bindingCommision
   let tonerCost = Math.ceil(this.tonerCost * this.allAccountDetail.BlackCopies)

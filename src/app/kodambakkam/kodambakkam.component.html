@@ -168,8 +168,12 @@
         </td> -->
         <td class="text-center">
           <div style="display: grid; grid-template-columns: 1fr 1fr;">
-            <button pButton pRipple (click)="deleteAccount(customer.id,customer.GetTime)" type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+            <button pButton pRipple type="button" (click)="deleteConfirm(customer.id,customer.GetTime)"  icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+            <!-- (click)="deleteAccount(customer.id,customer.GetTime)"  -->
+          
           </div>
+
+
 
         </td>
       </tr>
@@ -180,7 +184,27 @@
       </tr>
     </ng-template>
   </p-table>
+  <p-dialog header="Sure Delete" [closable]="true" [(visible)]="deleteCheck" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+            [draggable]="true" [resizable]="true">
 
+            <ng-template pTemplate="footer">
+              <div style="display:grid; grid-template-columns:1fr 1fr;">
+
+                <div>
+                  <p-button icon="pi pi-times" (click)="cancelDelete()" label="Canel" class="p-button-raised p-button-danger"></p-button>
+
+                </div>
+
+
+                <div>
+                  <p-button icon="pi pi-check" (click)="sureDelete()" label="Save" class="p-button-raised p-button-success"></p-button>
+
+                </div>
+
+              </div>
+            </ng-template>
+
+  </p-dialog>
   <p-dialog header="Account Details" [closable]="false" [(visible)]="isViewAccountDetail" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
             [draggable]="true" [resizable]="true">
 

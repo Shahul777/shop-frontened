@@ -386,6 +386,24 @@ export class KodambakkamComponent implements OnInit {
     this.isViewAccountDetail = true
 
   }
+
+  deleteId : any;
+  deleteTime: any;
+deleteCheck: boolean =false
+deleteConfirm(id: any, time: any){
+this.deleteId=id
+this.deleteTime= time
+this.deleteCheck=true
+}
+cancelDelete(){
+  this.deleteCheck=false
+
+  
+}
+sureDelete(){
+  this.deleteAccount(this.deleteId, this.deleteTime) 
+  this.deleteCheck=false
+}
   deleteAccount(id: any, time: any) {
     this.showProgress = true
     this.service.deleteKdmAccountsById(id).subscribe((event: any) => {
@@ -713,8 +731,8 @@ export class KodambakkamComponent implements OnInit {
 
     console.log(this.allAccountDetail.PaperSoldToday * this.paperRate)
   
-    let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 30) / 100)
-    let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 20 / 100))
+    let colourCommission = Math.ceil((this.allAccountDetail.ColourCopies * 70) / 100)
+    let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 70 / 100))
     let salary = Math.ceil( this.monthlySalaryTaj + this.monthlySalaryNoor)
     let commision = colourCommission + bindingCommision
     let tonerCost = Math.ceil( this.tonerCost * this.allAccountDetail.BlackCopies)
