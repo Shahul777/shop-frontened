@@ -5,3 +5,77 @@
     height: 5px;
 }
 
+:host ::ng-deep.grid-nogutter {
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 0;
+}
+:host ::ng-deep.grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 0;
+    background: none;
+  
+}
+
+:host ::ng-deep .p-dataview .p-dataview-content {
+    background: #ffffff;
+    color: white;
+    border: 0 none;
+    padding: 0;
+    background: none;
+}
+.card2{
+    height: 200%;
+}
+:host ::ng-deep .p-dataview .p-dataview-header {
+    display: flex;
+    flex-wrap: wrap;
+    background: #f8f9fa;
+    color: #343a40;
+    border: 1px
+px
+ solid #dee2e6;
+    border-width: 1px 0 1px 0;
+    padding: 1rem 1rem;
+    font-weight: 700;
+}
+
+:host ::ng-deep  .layout-wrapper .layout-content .card {
+    background: var(--surface-card);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+:host ::ng-deep .product-grid-item {
+    margin: 0.5em;
+    border: 1px solid var(--surface-border);
+}
+
+/* :host ::ng-deep @media screen and (min-width: 768px)
+.md\:col-4 {
+    flex: 0 0 auto;
+    padding: 1rem;
+    width: 33.3333%;
+} */
+
+.col-4 {
+    flex: 0 0 auto;
+    /* padding: 1rem; */
+    width: 33.3333%;
+    box-sizing: border-box;
+}
+:host ::ng-deep  .p-paginator {
+    /* background: #ffffff; */
+    color: #6c757d;
+    border: solid #e9ecef;
+    border-width: 0;
+    padding: 0.5rem
+rem
+ 1rem;
+    border-radius: 3px;
+    background: none;
+}

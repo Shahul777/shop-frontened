@@ -434,7 +434,61 @@ this.deleteCheck2=false
 
 
 
+dateCalc: any
+showCal : boolean =false
 
+calClicked(){
+this.showCal=true
+}
+dateSelected(event : any){
+  console.log(event)
+  let dateString1 =event
+  let month1 = '' + (dateString1.getMonth() + 1);
+  let day1 = '' + dateString1.getDate();
+  let year1 = '' + dateString1.getFullYear();
+
+  if (month1.length < 2) {
+    month1 = '0' + month1;
+  }
+  if (day1.length < 2) {
+    day1 = '0' + day1;
+  }
+  let dateSend = [year1, month1, day1].join('-');
+console.log(dateSend)
+
+
+this.selectedAccounts=[]
+this.customers.forEach((customer: any)=>{
+  let dateString =customer.Date
+  let month = '' + (dateString.getMonth() + 1);
+  let day = '' + dateString.getDate();
+  let year = '' + dateString.getFullYear();
+
+  if (month.length < 2) {
+    month = '0' + month;
+  }
+  if (day.length < 2) {
+    day = '0' + day;
+  }
+  let dateSend = [year, month, day].join('-');
+
+if(month===month1 && year===year1){
+
+this.selectedAccounts.push(customer)
+
+}
+
+})
+console.log(this.selectedAccounts)
+
+
+
+this.showAllStatics()
+
+  // this.showCal=false
+
+
+}
 
 
 deleteAccount(id: any, time: any){
@@ -802,7 +856,13 @@ this.mainDetail=true
 }
 
 items3:any
+
+showButton: boolean =false
+nameClicked(){
+this.showButton=true
+}
   ngOnInit(): void {
+    this.showCal=false
     this.showProgress=true
     if(this.adminAccess){
       this.loginDetail=true
@@ -1509,7 +1569,8 @@ tonerCameDate: any;
   
   
   }
-
+startDate: any;
+endDate: any;
 
 showAllStatics(){
   
@@ -1551,6 +1612,13 @@ showAllStatics(){
   let paperSentCount = 0
   let leaveCount =0
   let accountLength = this.selectedAccounts.length
+  console.log(this.selectedAccounts)
+
+  if(this.selectedAccounts.length){
+    this.startDate=this.selectedAccounts[accountLength-1].Date
+    this.endDate= this.selectedAccounts[0].Date
+  }
+
   let absentRasheed = 0
   let absentMani = 0
   let absentAssan=0

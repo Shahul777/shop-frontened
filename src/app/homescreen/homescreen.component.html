@@ -115,7 +115,7 @@
     </ng-template>
 </p-dock>
 
-<p-calendar *ngIf="calendarShow"  (onSelect)="dateSelected($event)"  [(ngModel)]="dateSpend" [inline]="true" [showWeek]="true"></p-calendar>
+<p-calendar *ngIf="calendarShow"  (onSelect)="dateSelected($event)"  [(ngModel)]="dateSpend" [inline]="true" [showWeek]="false"></p-calendar>
   <div class="child-component">
     <p-sidebar [(visible)]="showkodambakkam"
                position="right"
