@@ -5,6 +5,7 @@ import { kdmAccounts, kdmLabourDetails } from '../kodambakkam/kdmDataModel';
 import { tpmAccounts,tpmLabourDetails } from '../trustpuram/tpmDataModel';
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+import { CatalogUtilsService } from './catalog-utils.service';
 @Component({
   selector: 'app-netcalculate',
   templateUrl: './netcalculate.component.html',
@@ -19,31 +20,45 @@ export class NetcalculateComponent implements OnInit {
 
   sortField: any;
   sortKey: any
+  searchBoxPlaceholder = 'Search';
+  searchText: any;
 
-  constructor(private service : ShopserviceService, private primengConfig: PrimeNGConfig) { }
+  searchParameters = ['name'];
+  listOfConnections: any[] = [];
 
+
+  constructor(private service : ShopserviceService, private primengConfig: PrimeNGConfig,
+    
+    private utilsService : CatalogUtilsService) { }
+  filterConnectionEntities(): void {
+    this.products = this.utilsService.filterEntities(
+      this.searchText,
+      this.listOfConnections,
+      this.searchParameters
+    );
+  }
   ngOnInit(): void {
 
-  this.products=[{name:"ajdh",price: "32",description : "sdjh",category: "adj"},
+  this.products=[{name:"a",price: "32",description : "sdjh",category: "adj"},
   
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"},
-  {name:"ajdh",price: "32",description : "sdjh",category: "adj"}]
-
+  {name:"b",price: "32",description : "sdjh",category: "adj"},
+  {name:"c",price: "32",description : "sdjh",category: "adj"},
+  {name:"d",price: "32",description : "sdjh",category: "adj"},
+  {name:"e",price: "32",description : "sdjh",category: "adj"},
+  {name:"f",price: "32",description : "sdjh",category: "adj"},
+  {name:"g",price: "32",description : "sdjh",category: "adj"},
+  {name:"h",price: "32",description : "sdjh",category: "adj"},
+  {name:"i",price: "32",description : "sdjh",category: "adj"},
+  {name:"j",price: "32",description : "sdjh",category: "adj"},
+  {name:"k",price: "32",description : "sdjh",category: "adj"},
+  {name:"l",price: "32",description : "sdjh",category: "adj"},
+  {name:"m",price: "32",description : "sdjh",category: "adj"},
+  {name:"n",price: "32",description : "sdjh",category: "adj"},
+  {name:"o",price: "32",description : "sdjh",category: "adj"},
+  {name:"p",price: "32",description : "sdjh",category: "adj"},
+  {name:"q",price: "32",description : "sdjh",category: "adj"},
+  {name:"r",price: "32",description : "sdjh",category: "adj"}]
+  this.listOfConnections=this.products
     this.sortOptions = [
         {label: 'Price High to Low', value: '!price'},
         {label: 'Price Low to High', value: 'price'}
