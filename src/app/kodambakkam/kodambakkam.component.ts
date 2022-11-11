@@ -404,6 +404,34 @@ sureDelete(){
   this.deleteAccount(this.deleteId, this.deleteTime) 
   this.deleteCheck=false
 }
+
+
+
+deleteCheck2: boolean =false
+deleteAllEntryConfirm(){
+
+this.deleteCheck2=true
+}
+cancelDelete2(){
+this.deleteCheck2=false
+
+
+}
+sureDelete2(){
+this.deleteAllEntry() 
+this.deleteCheck2=false
+}
+
+
+
+
+
+
+
+
+
+
+
   deleteAccount(id: any, time: any) {
     this.showProgress = true
     this.service.deleteKdmAccountsById(id).subscribe((event: any) => {

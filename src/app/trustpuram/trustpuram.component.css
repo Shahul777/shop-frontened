@@ -98,25 +98,25 @@ grid-gap: 28px;
 
 :host ::ng-deep  .p-datatable .p-datatable-thead > tr > th {
     color: #16ff9e;
-    background: black;
+    background: #060b23;
     font-size: medium;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: cursive;
 }
 
 :host ::ng-deep  .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
     border-width: 1px;
-    font-family: ui-sans-serif;
+    font-family: cursive;
     font-style: initial;
     font-weight: 300;
     font-size: medium;
-    background: black;
+    background: #060b23;
     color: #c6e22b;
 }
 
 :host ::ng-deep .p-datatable .p-paginator-bottom {
     border-width: 0 0 1px 0;
     border-radius: 0;
-    background: black;
+    background: #060b23;
     /* color: #dce3f5; */
 }
 
@@ -127,3 +127,16 @@ grid-gap: 28px;
     overflow-x: scroll;
     overflow-y: scroll;
 }
+
+:host ::ng-deep  .p-inputtext {
+    height: 30px;
+    font-size: medium;
+    width: 12rem;
+    background: none;
+
+    font-family: emoji;
+    outline: none;
+    color: #fbeb2d;
+    border: 2px solid #77ff00;
+}
+

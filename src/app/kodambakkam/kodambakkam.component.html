@@ -21,8 +21,29 @@
              <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
         </span> -->
         <div style="margin-left: 50%" *ngIf="wholeDeleteShow">
-          <button (click)="deleteAllEntry()" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+          <button (click)="deleteAllEntryConfirm()" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
 
+          <p-dialog header="Sure Delete" [closable]="true" [(visible)]="deleteCheck2" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+          [draggable]="true" [resizable]="true">
+        
+          <ng-template pTemplate="footer">
+            <div style="display:grid; grid-template-columns:1fr 1fr;">
+        
+              <div>
+                <p-button icon="pi pi-times" (click)="cancelDelete2()" label="Canel" class="p-button-raised p-button-danger"></p-button>
+        
+              </div>
+        
+        
+              <div>
+                <p-button icon="pi pi-check" (click)="sureDelete2()" label="Save" class="p-button-raised p-button-success"></p-button>
+        
+              </div>
+        
+            </div>
+          </ng-template>
+        
+        </p-dialog>
         </div>
         <div style="margin-left: 30%" *ngIf="wholeInfoShow && adminAccess">
           <button (click)="showAllStatics()" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-warning"></button>
@@ -589,11 +610,11 @@
                 <div class="oneRow">
                   <span *ngIf="adminAccess" class="p-float-label">
                     <p-calendar (click)="calenderSelected()" inputId="calendar" [(ngModel)]="date"></p-calendar>
-                    <label style="color: red; font-size: 15px;" for="calendar">Date</label>
+                    <label style="color: white; font-size: 15px;" for="calendar">Date</label>
                   </span>
                   <span *ngIf="!adminAccess" class="p-float-label">
                     <p-calendar (click)="calenderSelected2()" inputId="calendar" [(ngModel)]="date"></p-calendar>
-                    <label style="color: red; font-size: 15px;" for="calendar">Date</label>
+                    <label style="color: white; font-size: 15px;" for="calendar">Date</label>
                   </span>
 
                   <div *ngIf="showEntryInput || isEditAccount">
@@ -640,7 +661,7 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" (onInput)="machineblack1($event)" autocomplete="off" [(ngModel)]="blackMachineReading1"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">
+                      <label style="color: white; font-size: 15px;" for="inputnumber">
                         Black Machine 1
                       </label>
                     </span>
@@ -648,20 +669,20 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" (onInput)="machineblack2($event)" autocomplete="off" [(ngModel)]="blackMachineReading2"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Black Machine 2</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Black Machine 2</label>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" (onInput)="machinecolour1($event)" autocomplete="off" [(ngModel)]="colourMachineReading1"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Colour Machine 1</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Colour Machine 1</label>
                     </span>
                   </div>
 
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber [disabled]="!isTrustpuram" inputId="inputnumber" (onInput)="machinecolour2($event)" autocomplete="off" [(ngModel)]="colourMachineReading2"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Colour Machine 2</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Colour Machine 2</label>
                     </span>
                   </div>
                   <!-- <div class="field col-12 md:col-4">
@@ -676,20 +697,20 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="b2bCopies"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">B2B Copies</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">B2B Copies</label>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" [readonly]="false" (onInput)="tpmCopiesGone($event)" [disabled]="false" [(ngModel)]="blackCopies"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Total Black Copies</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Total Black Copies</label>
                     </span>
                   </div>
 
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" [readonly]="true" [disabled]="true" [(ngModel)]="colourCopies"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Total Colour Copies</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Total Colour Copies</label>
                     </span>
                   </div>
                 </div>
@@ -697,13 +718,13 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="bindings"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">பைண்டிங்</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">பைண்டிங்</label>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="expenses"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">செலவு</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">செலவு</label>
                     </span>
                   </div>
 
@@ -711,14 +732,14 @@
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="paperCheck($event)" [(ngModel)]="paperPresentToday"></p-inputNumber>
                       <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Paper Packets</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Paper Packets</label>
                     </span>
                   </div>
 
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber [disabled]="waitingForPacketEntry" inputId="inputnumber" (onInput)="sheetCheck($event)" [(ngModel)]="paperSheet"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Paper Sheets</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Paper Sheets</label>
                     </span>
                   </div>
                   <p-dialog [closable]="true" header="How Many Copies and Paper sheet Gone ?" [(visible)]="showTpmCopies" [style]="{width: '100vw'}">
@@ -858,20 +879,20 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="totalCountCash($event)" [(ngModel)]="cashIncome"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Cash</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Cash</label>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" (onInput)="totalCountPaytm($event)" [(ngModel)]="paytmIncome"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Gpay</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Gpay</label>
                     </span>
                   </div>
 
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="openingBalance"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Opening Balance</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Opening Balance</label>
                     </span>
                   </div>
                 </div>
@@ -880,7 +901,7 @@
                     <span class="p-float-label">
                       <!-- <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="notesToday"></p-inputNumber> -->
                       <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="notesToday">
-                      <label style="color: red; font-size: 15px;" for="inputnumber">Notes</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber">Notes</label>
                     </span>
                   </div>
                   <!-- <div class="field col-12 md:col-4">
@@ -892,7 +913,7 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber2" (onInput)="tonerCame($event)" autocomplete="off" [(ngModel)]="toner"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber2">Toner Packet</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber2">Toner Packet</label>
                     </span>
                   </div>
                   <!--
@@ -903,7 +924,7 @@
                   <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                       <p-inputNumber inputId="inputnumber2" [readonly]="true" [disabled]="true" autocomplete="off" [(ngModel)]="totalIncome"></p-inputNumber>
-                      <label style="color: red; font-size: 15px;" for="inputnumber2">Total Income</label>
+                      <label style="color: white; font-size: 15px;" for="inputnumber2">Total Income</label>
                     </span>
                   </div>
                 </div>

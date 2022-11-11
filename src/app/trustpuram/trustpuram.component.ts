@@ -386,6 +386,57 @@ this.updateChartOptions();
 this.isViewAccountDetail=true
 
 }
+
+
+
+
+
+
+
+
+deleteId : any;
+deleteTime: any;
+deleteCheck: boolean =false
+deleteConfirm(id: any, time: any){
+this.deleteId=id
+this.deleteTime= time
+this.deleteCheck=true
+}
+cancelDelete(){
+this.deleteCheck=false
+
+
+}
+sureDelete(){
+this.deleteAccount(this.deleteId, this.deleteTime) 
+this.deleteCheck=false
+}
+
+
+
+
+
+deleteCheck2: boolean =false
+deleteAllEntryConfirm(){
+
+this.deleteCheck2=true
+}
+cancelDelete2(){
+this.deleteCheck2=false
+
+
+}
+sureDelete2(){
+this.deleteAllEntry() 
+this.deleteCheck2=false
+}
+
+
+
+
+
+
+
 deleteAccount(id: any, time: any){
   this.showProgress=true
    this.service.deleteTpmAccountsById(id).subscribe((event: any)=>{

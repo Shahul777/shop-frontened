@@ -6,7 +6,7 @@
     color: blue; 
     text-align:center;
     /* font-style: italic; */
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: cursive;
     /* background-color: yellow; */
     background-color: #2dfbb4;
 }
@@ -15,6 +15,7 @@
     /* grid-template-rows: 0.4fr 2fr; */
     grid-template-rows: 0.4fr ;
     overflow: hidden;
+
 
 }
 :host ::ng-deep .p-toolbar, .p-toolbar-group-left, .p-toolbar-group-right {
@@ -40,12 +41,31 @@
 1rem
 
  0;
-    background-color: #000000;
+    background-color: #060b23;
     
     /* #6d5100 */
 }
+
+
+/* :host ::ng-deep  .p-inputtext {
+    height: 30px;
+    font-size: 12px;
+    width: 12rem;
+    background: none;
+
+    font-family: emoji;
+    outline: none;
+    color: #fbeb2d;
+    border: 2px solid #e1e5ee;
+} */
+
+:host ::ng-deep .p-float-label {
+    display: block;
+    position: relative;
+    font-family: cursive;
+}
 .child-component{
-    color : black;
+    color : #060b23;
     background-color: gainsboro;
     overflow: hidden;
 }
@@ -56,7 +76,7 @@
 }
 :host ::ng-deep.p-panel .p-panel-header {
     border: 1px solid grey;
-    color: black;
+    color: #060b23;
     height: 5px;
 }
 :host ::ng-deep .p-sidebar-right {
@@ -64,13 +84,13 @@
     right: 0;
     width: 20rem;
     height: 100%;
-    background: black;
+    background: #060b23;
 }
 
 :host ::ng-deep .p-datatable .p-datatable-header {
     background: #f4f4f4;
     color: white;
-    background: black;
+    background: #060b23;
     border: 1px solid #c8c8c8;
 }
 
@@ -156,7 +176,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.53);
+    background-color: #060b23(0, 0, 0, 0.53);
   }
   :host ::ng-deep .p-sidebar-full {
     width: 100%;
@@ -164,5 +184,5 @@
     top: 0;
     left: 0;
     transition: none;
-    background: black;
+    background: #060b23;
 }
