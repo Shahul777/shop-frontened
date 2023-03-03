@@ -111,7 +111,7 @@ currentBillTpm : any;
       command: () => {
 
           this.paytmNavigate();
-          console.log("Hello")
+    
       }
   },
 
@@ -925,7 +925,7 @@ this.houseAccountDetail.TotalProfit =0
   passwordClick : boolean = false
 
   paytmNavigate(){
-    window.location.href = "paytmmp://business";
+    window.location.href = "paytm://";
   }
   ngOnInit() {
     this.passwordClick= false
