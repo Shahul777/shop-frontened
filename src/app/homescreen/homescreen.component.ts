@@ -122,7 +122,7 @@ currentBillTpm : any;
         positionTop: -15,
         positionLeft: 15
     },
-    icon: "assets/showcase/camera.png",
+    icon: "assets/showcase/hikconnect.png",
     command: () => {
 
         this.hikCamera();
@@ -947,7 +947,7 @@ this.houseAccountDetail.TotalProfit =0
   hikCamera(){
     // window.location.href = "hikconnect://"
 
-    window.open('https://www.hik-connect.com/views/qrcode/hc/hc.html/', '_self');
+    window.open('https://play.google.com/store/apps/details?id=com.connect.enduser&hl=en_IN&gl=US', '_blank');
   }
   ngOnInit() {
     this.passwordClick= false
