@@ -114,7 +114,21 @@ currentBillTpm : any;
     
       }
   },
+  {
+    label: 'Camera',
+    tooltipOptions: {
+        tooltipLabel: "camera",
+        tooltipPosition: 'top',
+        positionTop: -15,
+        positionLeft: 15
+    },
+    icon: "assets/showcase/camera.png",
+    command: () => {
 
+        this.hikCamera();
+  
+    }
+},
 
 
     {
@@ -926,6 +940,9 @@ this.houseAccountDetail.TotalProfit =0
 
   paytmNavigate(){
     window.location.href = "paytm://";
+  }
+  hikCamera(){
+    window.location.href = "hikconnect://"
   }
   ngOnInit() {
     this.passwordClick= false
