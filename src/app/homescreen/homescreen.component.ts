@@ -109,9 +109,9 @@ currentBillTpm : any;
       },
       icon: "assets/showcase/paytm.png",
       command: () => {
-          // this.displayTerminal = true;
-          // this.editClicked("Black-Printout")
+
           this.paytmNavigate();
+          console.log("Hello")
       }
   },
 
