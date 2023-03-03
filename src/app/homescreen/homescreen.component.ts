@@ -98,6 +98,25 @@ currentBillTpm : any;
   dateStr: any='';
 
   leftMenu: any[]=[
+
+    {
+      label: 'Paytm',
+      tooltipOptions: {
+          tooltipLabel: "Paytm",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/paytm.png",
+      command: () => {
+          // this.displayTerminal = true;
+          // this.editClicked("Black-Printout")
+          this.paytmNavigate();
+      }
+  },
+
+
+
     {
       label: 'Kodambakkam',
       tooltipOptions: {
@@ -904,6 +923,10 @@ this.houseAccountDetail.TotalProfit =0
   }
   moneyOptions : any
   passwordClick : boolean = false
+
+  paytmNavigate(){
+    window.location.href = "paytmmp://business";
+  }
   ngOnInit() {
     this.passwordClick= false
     this.deleteHouseEntry=false
