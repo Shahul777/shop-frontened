@@ -939,10 +939,15 @@ this.houseAccountDetail.TotalProfit =0
   passwordClick : boolean = false
 
   paytmNavigate(){
-    window.location.href = "paytm://";
+    // window.location.href = "paytm://";
+    
+
+    window.open('https://play.google.com/store/apps/details?id=com.paytm.business&hl=en_IN&gl=US&pli=1', '_blank');
   }
   hikCamera(){
-    window.location.href = "hikconnect://"
+    // window.location.href = "hikconnect://"
+
+    window.open('https://www.hik-connect.com/views/qrcode/hc/hc.html/', '_self');
   }
   ngOnInit() {
     this.passwordClick= false
