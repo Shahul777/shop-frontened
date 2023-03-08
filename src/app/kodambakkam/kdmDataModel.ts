@@ -87,3 +87,52 @@ export interface rentSheet{
     currentBillKdm: number;
     currentBillTpm : number;
 }
+
+export interface kdmMonth{
+
+
+    Month : any;
+    Year : any;
+    TotalIncome : any;
+    NetProfit : any;
+    TotalExpense : any;
+    BlackReading : any;
+    ColourReading: any;
+    TajPresent : any;
+    NoorPresent : any;
+    LabourSalary : any;
+    Rent : any;
+    CurrentBill : any;
+    Expenses : any;
+    ExpenseCalculated : any;
+    ExpensePercentCalculate : any;
+    PaperDay1 : any;
+    PaperLast : any;
+    PaperArrivedTotal : any;
+    PaperUsed : any;
+    PaperCost : any;
+    PaperSent : any;
+    isEdited : any;
+    isExecuted: any;
+}
+
+export interface combinedMonth{
+
+    Month : any;
+    Year: any;
+    TotalIncome: any;
+    NetProfit : any;
+    TotalExpense : any;
+    BlackReading : any;
+    ColourReading : any;
+    
+    PaperUsed : any;
+    PaperCost : any;
+    Rent : any;
+    CurrentBill : any;
+    LabourSalary : any;
+    ExpenseCalculated : any;
+    isExecuted : any;
+    isEdited : any;
+
+}

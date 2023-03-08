@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ShopserviceService } from '../shopservice.service';
 import { rentSheet } from '../kodambakkam/kdmDataModel';
 import { houseAccount,rateSheet } from '../housespends/houseDataModel';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-homescreen',
   templateUrl: './homescreen.component.html',
@@ -77,7 +79,7 @@ currentBillKdm: any;
 currentBillTpm : any;
   // subscription: Subscription;
   // private galleriaService: PhotoService, private nodeService: NodeService, private messageService: MessageService, private terminalService: TerminalService
-  constructor(private router: Router , private service : ShopserviceService) { }
+  constructor(private router: Router , private service : ShopserviceService ,private http : HttpClient) { }
 
   items: any;
   trustpuramSaved() {
@@ -129,7 +131,23 @@ currentBillTpm : any;
   
     }
 },
-
+{
+  label: 'Net-Calculations',
+  tooltipOptions: {
+      tooltipLabel: "Net-Calculations",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/rupee.png",
+  command: () => {
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+      this.netcalculateFunc();
+   
+  }
+}
+,
 
     {
       label: 'Kodambakkam',
@@ -2597,7 +2615,49 @@ item =event
   }
   this.displayEditDialog=true
 }
+public file: File | null = null;
+public text: string | null = null;
+public onFileSelected(event: any): void {
+
+  console.log(event)
+  this.file = event.target.files[0];
+console.log(this.file)
+}
+
+public onSubmit(): void {
+  if (this.file) {
+
+    console.log("HHGU")
+    const formData = new FormData();
+    formData.append('image', this.file, this.file.name);
 
 
+    this.service.getText(formData).subscribe((event: any)=>{
+      this.text = event.text;
+      console.log(this.text)
+   
+    },
+    error=>{
+ 
+      console.log("NOT EDITTED")
+    })
+
+
+
+
+
+//     this.http.post<any>('http://127.0.0.1:8000/extract_text/', formData).subscribe(
+//       (response) => {
+//         this.text = response.text;
+
+// console.log("HG")
+        
+//       },
+//       (error) => {
+//         console.log(error);
+//       }
+//     );
+  }
+}
 
 }

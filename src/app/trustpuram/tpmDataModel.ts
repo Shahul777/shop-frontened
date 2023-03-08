@@ -114,3 +114,40 @@ export interface tpmLabourDetails{
     isAssanHalfDay: number ;
     isManiHalfDay: number ;
 }
+
+export interface tpmMonth{
+
+
+    Month : any;
+    Year : any;
+    TotalIncome : any;
+    NetProfit : any;
+    TotalExpense : any;
+    BlackReading : any;
+    ColourReading: any;
+
+
+    AssanPresent : any;
+    ManiPresent : any;
+    RasheedPresent : any;
+    
+    
+    LabourSalary : any;
+    Rent : any;
+    CurrentBill : any;
+    Expenses : any;
+    ExpenseCalculated : any;
+    ExpensePercentCalculate : any;
+
+
+    PaperDay1 : any;
+    PaperLast : any;
+    PaperArrivedTotal : any;
+    PaperUsed : any;
+    PaperCost : any;
+    PaperSent : any;
+
+    isEdited: any;
+
+    isExecuted: any;
+}

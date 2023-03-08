@@ -527,8 +527,47 @@
     <ng-template pTemplate="footer">
 
 
+      <div style="display: grid; grid-template-columns:1fr 1fr 1fr;">
 
 
+        <div *ngIf="checkWholeSave()">
+          <button (click)="saveWholeMonth()" pButton icon="pi pi-save" pRipple type="button" label="Save" class="p-button-rounded"></button>
+        </div>
+  
+        <div *ngIf="checkMonthSaved()">
+          <button (click)="deleteWholeMonth()" pButton icon="pi pi-trash" pRipple type="button" label="Delete" class="p-button-rounded"></button>
+        </div>
+  
+        <div *ngIf="allDetailIndex==0">
+  
+          <button (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+        </div>
+        <div *ngIf="allDetailIndex==1" style="display: grid; grid-template-columns:1fr 1fr;">
+          <div>
+            <button (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+          </div>
+  
+          <div>
+            <button (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
+          </div>
+  
+  
+        </div>
+        <div *ngIf="allDetailIndex==2">
+          <div>
+            <button (click)="staticBackClicked()" pButton icon="pi pi-check" pRipple type="button" label="Back" class="p-button-rounded"></button>
+          </div>
+  
+  
+  
+        </div>
+  <!-- <div *ngIf="allDetailIndex==0 || allDetailIndex==1 ||  allDetailIndex==2"> -->
+  
+  
+  <!-- </div> -->
+  </div>
+
+<!-- 
       <div *ngIf="allDetailIndex==0">
 
         <button (click)="staticNextClicked()" pButton icon="pi pi-check" pRipple type="button" label="Next" class="p-button-rounded"></button>
@@ -551,7 +590,11 @@
 
 
 
-      </div>
+      </div> -->
+
+
+
+
     </ng-template>
   </p-dialog>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit ,Output,EventEmitter ,Input} from '@angular/core';
 import { ShopserviceService } from '../shopservice.service';
-import { kdmAccounts,rentSheet } from './kdmDataModel';
+import { combinedMonth, kdmAccounts,kdmMonth,rentSheet } from './kdmDataModel';
 import { ConfirmationService, MessageService ,} from 'primeng/api';
 import { kdmLabourDetails } from './kdmDataModel';
 import { Validators,FormControl,FormGroup } from '@angular/forms';
@@ -24,6 +24,7 @@ export class KodambakkamComponent implements OnInit {
   saveKdmAccount: kdmAccounts = <kdmAccounts>{};
   saveLabourAccount: kdmAccounts = <kdmAccounts>{};
   customers: any;
+  tpmDatas : any;
   items: any;
   representatives: any;
 
@@ -318,7 +319,7 @@ export class KodambakkamComponent implements OnInit {
       this.kdmAccountDetail.NetProfit -= bindingCommision
       // let excessReach = Math.ceil(this.kdmAccountDetail.BlackCopies * this.paperRate)
       let excessReach = Math.ceil(this.kdmAccountDetail.PaperSoldToday * this.singleRate)
-      this.excessReach1 = excessReach
+      this.excessReach1 = excessReach.toFixed(2)
       this.dataIncome = {
         labels: ['Total Income', 'Expenses', 'NetProfit', 'Excess Criteria'],
         datasets: [
@@ -435,55 +436,8 @@ showCal : boolean =false
 calClicked(){
 this.showCal=true
 }
-dateSelected(event : any){
-  console.log(event)
-  let dateString1 =event
-  let month1 = '' + (dateString1.getMonth() + 1);
-  let day1 = '' + dateString1.getDate();
-  let year1 = '' + dateString1.getFullYear();
-
-  if (month1.length < 2) {
-    month1 = '0' + month1;
-  }
-  if (day1.length < 2) {
-    day1 = '0' + day1;
-  }
-  let dateSend = [year1, month1, day1].join('-');
-console.log(dateSend)
 
 
-this.selectedAccounts=[]
-this.customers.forEach((customer: any)=>{
-  let dateString =customer.Date
-  let month = '' + (dateString.getMonth() + 1);
-  let day = '' + dateString.getDate();
-  let year = '' + dateString.getFullYear();
-
-  if (month.length < 2) {
-    month = '0' + month;
-  }
-  if (day.length < 2) {
-    day = '0' + day;
-  }
-  let dateSend = [year, month, day].join('-');
-
-if(month===month1 && year===year1){
-
-this.selectedAccounts.push(customer)
-
-}
-
-})
-console.log(this.selectedAccounts)
-
-
-
-this.showAllStatics()
-
-  // this.showCal=false
-
-
-}
 
   deleteAccount(id: any, time: any) {
     this.showProgress = true
@@ -598,12 +552,284 @@ singleAnalysis(customer : any){
 }
 startDate: any;
 endDate : any;
+
+
+getMonthName(month: number): string {
+  return new Date(2000, month - 1, 1).toLocaleString('default', { month: 'long' });
+}
+monthSelected: string =""
+monthNumber : number = 0
+yearSelected : number = 0
+
+previousDate : any
+isPreviousDatePresent : boolean =false
+indexPrevious : number = 0
+
+totalDaysInMonth: number =0
+isEntryPresent : boolean =false
+
+dateSelected(event : any){
+  this.isPreviousDatePresent=false;
+  this.isEntryPresent=false
+ 
+  let dateString1 =event
+  let month1 = '' + (dateString1.getMonth() + 1);
+  let day1 = '' + dateString1.getDate();
+  let year1 = '' + dateString1.getFullYear();
+
+  if (month1.length < 2) {
+    month1 = '0' + month1;
+  }
+  if (day1.length < 2) {
+    day1 = '0' + day1;
+  }
+  let dateSend = [year1, month1, day1].join('-');
+
+
+
+this.selectedAccounts=[]
+this.customers.forEach((customer: any)=>{
+  let dateString =customer.Date
+  let month = '' + (dateString.getMonth() + 1);
+  let day = '' + dateString.getDate();
+  let year = '' + dateString.getFullYear();
+
+  if (month.length < 2) {
+    month = '0' + month;
+  }
+  if (day.length < 2) {
+    day = '0' + day;
+  }
+  let dateSend = [year, month, day].join('-');
+
+if(month===month1 && year===year1){
+
+this.selectedAccounts.push(customer)
+
+}
+
+})
+
+
+
+const year = dateString1.getFullYear();
+
+this.yearSelected= year
+const month = dateString1.getMonth() + 1; // add 1 to get the correct month number
+this.monthNumber= month
+this.monthSelected= this.getMonthName(month)
+
+const daysInMonth = this.getDaysInMonth(this.yearSelected, this.monthNumber);
+// console.log(daysInMonth);
+this.totalDaysInMonth=daysInMonth
+if(this.selectedAccounts.length === this.totalDaysInMonth){
+
+  
+const reversedArray=[]
+
+for (let i = this.selectedAccounts.length - 1; i >= 0; i--) {
+  reversedArray.push(this.selectedAccounts[i]);
+}
+  let startDate = reversedArray[0]
+  console.log(startDate)
+  console.log(this.customers)
+  let index = 0
+  this.customers.forEach((entry : any)=>{
+
+    if(entry.id === startDate.id){
+      index = this.customers.indexOf(entry);
+      this.indexPrevious=index
+
+
+    }
+  })
+  console.log("INDEX =", index)
+if(index!=0){
+  if(index+1 < this.customers.length){
+    this.previousDate = this.customers[index+1]
+    this.isPreviousDatePresent= true
+  }
+  else{
+    this.isPreviousDatePresent=false
+  }
+
+  
+}
+else{
+  this.isPreviousDatePresent=false
+}
+
+
+
+}
+this.checkEntryPresent()
+ 
+
+ 
+
+}
+
+paperPredict : boolean =false
+prices : any =[]
+
+excessDemo : any
+checkPaperRemaining(){
+const demo =  predictPacketPrice(this.paperCurrent, this.excessCurrent *100);
+this.excessDemo= demo
+this.prices=[]
+
+function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
+  // const sheetsPerPacket = 500;
+  // const totalSheets = remainingPackets * sheetsPerPacket;
+  const pricePerPacket = remainingPackets * pricePerSheet / 100;
+  return pricePerPacket.toFixed(2);
+}
+
+for (let price = 125; price <= 175; price += 5) {
+  const packetPrice2 = predictPacketPrice(this.paperCurrent, price);
+  console.log("Remaianing Packets", this.paperCurrent/500)
+  console.log(`At ${price / 100} paisa per sheet, the remaining packets will sell for Rs. ${packetPrice2}`);
+this.prices.push({sheetPrice : price/100, packetPrice : packetPrice2 })
+
+}
+
+this.paperPredict=true
+
+}
+checkEntryPresent(){
+  //*****// isEntryPresent
+  // isEntryPresent
+this.service.getKdmMonth().subscribe((event: any) => {
+console.log(event)
+event.forEach((data: any)=>{
+
+  if(data.Month=== this.monthSelected && data.Year === this.yearSelected){
+    this.isEntryPresent=true
+  }
+
+
+})
+
+
+this.showAllStatics()
+
+},
+  error => {
+    console.log(error);
+
+  })
+  
+}
+getDaysInMonth(year: number, month: number): number {
+  return new Date(year, month, 0).getDate();
+}
+
+checkWholeSave(){
+  
+if(this.selectedAccounts.length ===this.totalDaysInMonth && this.isPreviousDatePresent  && !this.isEntryPresent ){
+
+  return true
+}
+else{
+  return false
+}
+
+
+
+}
+
+checkMonthSaved(){
+  if(this.selectedAccounts.length ===this.totalDaysInMonth && this.isPreviousDatePresent  && this.isEntryPresent ){
+
+    return true
+  }
+  else{
+    return false
+  }
+  
+
+}
+deleteWholeMonth(){
+
+
+}
+// monthlyObj : 
+monthlyObj: kdmMonth = <kdmMonth>{};
+combinedObj : combinedMonth =<combinedMonth>{};
+saveWholeMonth(){
+console.log(this.yearSelected)
+console.log(this.monthSelected)
+console.log(this.totalDaysInMonth);
+console.log(this.selectedAccounts)
+console.log(this.customers)
+console.log(this.previousDate)
+console.log(this.isPreviousDatePresent)
+
+this.monthlyObj.Month= this.monthSelected
+this.monthlyObj.Year= this.yearSelected
+this.monthlyObj.BlackReading= this.allAccountDetail.BlackCopies
+this.monthlyObj.ColourReading= this.allAccountDetail.ColourCopies
+this.monthlyObj.TotalIncome=this.allAccountDetail.TotalIncome
+
+this.monthlyObj.TajPresent= this.allLabourDetail.TajPresent
+this.monthlyObj.NoorPresent = this.allLabourDetail.NoorPresent
+this.monthlyObj.PaperDay1 = this.customers[this.indexPrevious].PaperPresentToday
+this.monthlyObj.PaperLast = this.selectedAccounts[this.selectedAccounts.length-1].PaperPresentToday
+this.monthlyObj.PaperUsed=Math.ceil( this.wholePaperCount )
+this.monthlyObj.PaperCost= Math.ceil( this.wholePaperCount * 500 * this.paperRate)
+this.monthlyObj.PaperSent= this.paperSentTotal
+console.log(this.paperArrivedTotal)
+
+this.monthlyObj.PaperArrivedTotal = this.paperArrivedTotal
+this.monthlyObj.Expenses =0
+this.monthlyObj.ExpenseCalculated = 0
+this.monthlyObj.ExpensePercentCalculate = 0
+this.monthlyObj.NetProfit = 0
+this.monthlyObj.TotalExpense = 0
+this.monthlyObj.isExecuted=0
+this.monthlyObj.isEdited=0
+this.monthlyObj.CurrentBill= 4000
+this.monthlyObj.Rent= this.kdmRentMonth
+
+this.monthlyObj.LabourSalary= this.laboursSalary
+// LabourSalary : any;
+
+this.service.addKdmMonth(this.monthlyObj).subscribe((event: any)=>{
+  
+  
+//   this.isAddAccounts=false
+// console.log("edfgerg")
+  
+//       this.saveClicked.emit()
+this.showAllStaticDetail=false
+      this.ngOnInit();
+
+}, error=>{
+ 
+console.log(error)
+})
+
+
+}
+
+paperSentTotal : number =0
+paperArrivedTotal : number =0
+kdmRentMonth : number =0
+laboursSalary : number =0
   showAllStatics() {
     this.showProgress = true
+
+    this.kdmRentMonth=0
     this.paperCameDate = ""
+    this.paperArrivedTotal = 0
+    this.laboursSalary=0
+
+this.paperSentTotal=0
+
+
     this.tonerCameDate = ""
     this.totalItemCameDetail = ""
-    console.log("SELECTED ACCOUNT", this.selectedAccounts)
+    // console.log("SELECTED ACCOUNT", this.selectedAccounts)
     this.wholePaperCount = 0
     this.allAccountDetail.Date = new Date()
     this.allAccountDetail.BlackCopies = 0
@@ -641,7 +867,7 @@ endDate : any;
 
     let accountList: any;
     accountList = this.selectedAccounts.reverse()
-    console.log("🚀 ~ file: kodambakkam.cot ~ showAllStatics ~ accountList", accountList)
+  
 
     accountList.forEach((account: any) => {
 
@@ -654,10 +880,8 @@ endDate : any;
         this.labours.forEach((labour: any) => {
           // console.log(labour.GetTime, account.GetTime)
 
-          console.log(account.GetTime)
-          console.log(labour.GetTime)
           if (labour.GetTime === account.GetTime) {
-            console.log(labour)
+         
             labourDetail = labour
             if (labour.TajPresent) {
               if (labour.isTajHalfDay) {
@@ -703,7 +927,7 @@ endDate : any;
 
             // account.TotalIncome+=account.OpeningBalance
 
-            console.log("🚀 ~ file: kodambakkam.component.ts ~ line 526 ~ KodambakkamComponent ~ this.labours.forEach ~ account.GoneMoneyPast", account.GoneMoneyPast)
+            // console.log("🚀 ~ file: kodambakkam.component.ts ~ line 526 ~ KodambakkamComponent ~ this.labours.forEach ~ account.GoneMoneyPast", account.GoneMoneyPast)
 
  
 
@@ -730,7 +954,6 @@ endDate : any;
 
               if (accountLength === counter) {
                 this.allAccountDetail.TotalIncome += account.TodayStayingMoney + account.OldStayingMoney
-                console.log("stay", account.TodayStayingMoney, account.OldStayingMoney)
               }
 
               if(accountLength===1){
@@ -743,7 +966,9 @@ endDate : any;
             }
             this.allAccountDetail.B2bCopies += account.B2bCopies
 
-
+            console.log(account.PaperQuantitySent)
+              
+            this.paperSentTotal += account.PaperQuantitySent
             if (account.isPaperCame) {
               let dateString = account.Date
               let month = '' + (dateString.getMonth() + 1);
@@ -759,6 +984,12 @@ endDate : any;
               let dateSend = [year, month, day].join('-');
 
               this.paperCameDate += " | " + dateSend + "-->" + account.PaperQuantityCame + " | "
+              this.paperArrivedTotal+=account.PaperQuantityCame
+
+           
+              console.log(this.paperArrivedTotal)
+
+
             }
             if (account.isTonerCame) {
 
@@ -817,9 +1048,7 @@ endDate : any;
 let rent =0
     if (accountLength === 31 || accountLength === 30) {
       this.monthlySalaryTaj = (30 - absentTaj) * this.tajSalary
-      console.log("🚀 ~ file: kodambakkam.component.ts ~ line 725 ~ KodambakkamComponent ~ showAllStatics ~     this.monthlySalaryTaj",     this.monthlySalaryTaj)
       this.monthlySalaryNoor = (30 - absentNoor) * this.noorSalary
-      console.log("🚀 ~ file: kodambakkam.component.ts ~ line 727 ~ KodambakkamComponent ~ showAllStatics ~  this.monthlySalaryNoor",  this.monthlySalaryNoor)
       this.allLabourDetail.TajPresent=30 - absentTaj
       this.allLabourDetail.NoorPresent= 30 - absentNoor
       this.allAccountDetail.Expenses +=  2000
@@ -836,11 +1065,12 @@ let rent =0
 
     }
 
-    console.log(this.allAccountDetail.PaperSoldToday * this.paperRate)
   
     let colourCommission = Math.ceil(((this.allAccountDetail.ColourCopies*10) * 40) / 100)
     let bindingCommision = Math.ceil((this.allAccountDetail.Bindings * 70 / 100))
     let salary = Math.ceil( this.monthlySalaryTaj + this.monthlySalaryNoor)
+
+    this.laboursSalary= salary
     let commision = colourCommission + bindingCommision
     let tonerCost = Math.ceil( this.tonerCost * this.allAccountDetail.BlackCopies)
     // let rent = Math.ceil( accountLength * this.kdmRent)
@@ -851,6 +1081,10 @@ let rent =0
     let paperAmount = Math.ceil( this.allAccountDetail.PaperSoldToday * this.paperRate)
     this.allAccountDetail.Expenses += paperAmount
     this.allAccountDetail.Expenses += tonerCost
+
+    this.kdmRentMonth = rent
+
+
     this.expenseSplit += 'Rent:' + rent + "|| " + 'Salary :' + salary + "|| " + 'Paper Cost:' + paperAmount + "|| " + 'Binding & colour:' + commision + "|| " + 'Toner Cost :' + tonerCost
     this.allAccountDetail.NetProfit = this.allAccountDetail.TotalIncome - this.allAccountDetail.Expenses
 
@@ -869,7 +1103,7 @@ let rent =0
   this.allAccountDetail.Expenses= Math.ceil(this.allAccountDetail.Expenses/1)
     this.averageIncome = Math.ceil(this.averageIncome)
     this.averageProfit = Math.ceil(this.averageProfit)
-    this.excessreach2 = this.allAccountDetail.TotalIncome / this.wholePaperCount
+    this.excessreach2 = (this.allAccountDetail.TotalIncome / this.wholePaperCount).toFixed(2)
     this.wholePaperCount = this.wholePaperCount / 500
     this.paperPerDay = this.wholePaperCount / (this.totalDays - leaveCount)
 
@@ -1480,7 +1714,19 @@ this.sortArrayLabour()
   ,error=>{
     this.showProgress=false
   })
-    this.service.getKdmAccounts().subscribe((account: any)=>{
+
+
+  this.service.getTpmAccounts().subscribe((account: any)=>{
+   
+    this.tpmDatas = account;
+    this.tpmDatas.sort((a: any,b: any)=>{
+
+
+      return b.GetTime-a.GetTime
+     })
+
+
+     this.service.getKdmAccounts().subscribe((account: any)=>{
    
       this.customers = account;
    if(!this.customers.length){
@@ -1563,18 +1809,135 @@ this.tonerYesterday=toners
   }
 }
 
+this.paperCurrent= (this.customers[0].PaperPresentToday * 500) + this.customers[0].PaperSheet +
+
+(this.tpmDatas[0].PaperPresentToday * 500) + this.tpmDatas[0].PaperSheet
+
+
+const dayOfMonth = this.customers[0].Date.getDate();
+this.currentDoneDate=dayOfMonth
+let totalincome =0
+let paperSoldToday=0
+for(let i =0 ; i < dayOfMonth ; i ++){
+
+totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
+paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
+
+}
+this.excessCurrent= (totalincome/paperSoldToday).toFixed(2);
+
+function getDaysInMonth(date: Date): number {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  const daysInMonth = [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let totalDays = 0;
+  
+  for (let i = 1; i <= daysInMonth[month]; i++) {
+    const dayOfWeek = new Date(year, month, i).getDay();
+    if (dayOfWeek !== 0) { // omit Sundays
+      totalDays++;
+    }
+  }
+
+  return totalDays;
+}
+
+const date = this.customers[0].Date
+const totalDaysInMonth = getDaysInMonth(date);
+this.totalWorkingDay=totalDaysInMonth
+// dayOfMonth
+// totalWorkingDay : any;
+// balanceWorkingDay :any;
+// averagePacketUsed : any;
+
+let completedDay = 0
+let holiday =0
+let paperUsed =0
+let sunday =0
+for(let i =0 ; i < dayOfMonth ; i ++){
+
+if(!this.customers[i].isSunday){
+  completedDay+=1
+}
+if(this.customers[i].isSunday){
+  sunday+=1
+}
+if(this.customers[i].isHoliday){
+  holiday+=1
+}
+  
+  }
+
+this.doneDay = completedDay + holiday
+this.balanceWorkingDay= this.totalWorkingDay - completedDay
+let packet = paperSoldToday/500
+this.averagePacketUsed = (packet/ (dayOfMonth - sunday - holiday)).toFixed(2)
+
+this.packetFuture = this.balanceWorkingDay * this.averagePacketUsed
+
+// if((paperSoldToday/500) <= this.packetFuture){
+
+
+// }
+this.shortDay=(this.paperCurrent/500 - this.packetFuture).toFixed(2)
+
+console.log(`There are ${totalDaysInMonth} days in the month of ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}.`);
+
+this.balanceDays = ((this.paperCurrent/500)/this.averagePacketUsed).toFixed(2)
+
+
+function getDateAfterDays(numberOfDays: number, currentDate: string): string {
+  // Convert the current date string to a Date object
+  const currentDateTime = new Date(currentDate);
+
+  // Add the number of days to the current date
+  const dateAfterDays = new Date(currentDateTime.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
+
+  // Convert the date after days back to an ISO string format
+  return dateAfterDays.toISOString();
+}
+console.log(getDateAfterDays(this.balanceDays,this.customers[0].Date)); // Output: "2023-03-16T18:30:00.000Z"
+this.dayExact=getDateAfterDays(this.balanceDays,this.customers[0].Date)
+console.log(dayOfMonth)
+console.log(this.excessCurrent)
+console.log(this.paperCurrent)
+console.log(this.customers)
+console.log(this.tpmDatas)
 },
 error=>{
   this.showProgress=false
 })
 
 
+
+
+
+  },
+  (error : any)=>{
+    console.log(error)
+  })
+
+
+
+
+
 }
 tonerYesterday: number=0;
 paperPresentYesterday:number =0;
 sheetYesterday : number =0
-
-
+paperCurrent : number=0;
+excessCurrent : any
+totalWorkingDay : any;
+balanceWorkingDay :any;
+averagePacketUsed : any;
+currentDoneDate : any;
+packetFuture : any;
+doneDay: any;
+messageStr : any
+shortDay : any;
+balanceDays : any;
+dayExact : any;
 confirm(key: string, message: string, header1: string) {
   // this.confirmationService.confirm({
 
@@ -1607,7 +1970,7 @@ sortArray(){
 
   return b.GetTime-a.GetTime
  })
- 
+
 }
 labourShow : boolean =false;
 labourTable(){

@@ -17,6 +17,7 @@
     margin-left: 0;
     margin-top: 0;
     background: none;
+    overflow: auto;
     /* gap:2px; */
   
 }
@@ -31,8 +32,40 @@
     font-weight: 700;
 }
 
+.listbox{
+    display: grid;
+    grid-template-columns : 1fr 1fr;
+}
+.threeCon{
 
-
+    display: flex;
+    flex-direction: row;
+    width: 100%
+}
+.flex-content{
+    gap:8px;
+    min-width: 50%;
+    max-width: 50%;
+    padding-left: 36px;
+    cursor: pointer;
+    display: flex;
+    flex-direction : column;
+    justify-content: space-between;
+    
+}
+.pi.p-disabled {
+    color: black; /* Change this to the desired color */
+  }
+  .pi:not(.p-disabled) {
+    color: white; /* Change this to the desired color */
+  }
+.flex-content2{
+    min-width: 50%;
+    max-width: 50%;
+    display: flex;
+    flex-direction: row;
+    
+}
 :host ::ng-deep .p-dataview .p-dataview-content {
     background: #ffffff;
     color: white;
@@ -46,7 +79,7 @@
 :host ::ng-deep .p-dataview .p-dataview-header {
     display: flex;
     flex-wrap: wrap;
-    background: #f8f9fa;
+    background: #8e2323;
     color: #343a40;
     border: 1px
 px

@@ -6,7 +6,40 @@
 <div >
   <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
 
+  <p-dialog header="Predict Packet Price " [(visible)]="paperPredict" [style]="{width: '50vw'}">
+   
+<p >Number of remaining packets: {{paperCurrent/500}}</p>
+<p style="font-weight: bold;">Current Month Excess Criteria: {{excessCurrent}}paisa</p>
+<p style="font-weight: bold; color: red;">Preditcable for {{excessCurrent}}paisa is : Rs.{{excessDemo}}</p>
+<p style="font-weight: bold;"> Average Packets Used in {{doneDay}}days is {{averagePacketUsed}}packets | 
 
+  Balance Working Day in this Month is {{balanceWorkingDay}}days X {{averagePacketUsed}}packets = {{packetFuture}}packets
+</p>
+<p style="font-weight: bold;">Shortage/OverTage Packets: {{shortDay}}packets</p>
+<p style="font-weight: bold;">Approximate End Date of {{paperCurrent/500}}packets is {{balanceDays}}days </p>
+<p style="font-weight: bold;">DEADLINE OF PAPER ENDING : {{dayExact | date}} </p>
+<p-table [rows]="20"
+ responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true"  [loading]="loading" styleClass="p-datatable-gridlines"
+[paginator]="true" 
+ [value]="prices">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Price per sheet (paisa)</th>
+      <th>price-remaining packets (Rs.)</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-price>
+    <tr>
+      <td>{{ price.sheetPrice }} paisa</td>
+      <td>Rs. {{ price.packetPrice }}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+    <ng-template pTemplate="footer">
+        <!-- <p-button icon="pi pi-check" (click)="displayBasic=false" label="Ok" styleClass="p-button-text"></p-button> -->
+    </ng-template>
+</p-dialog>
 
   <p-table  *ngIf="!showCal" #dt1 [value]="customers" dataKey="id"
            [rows]="5"
@@ -22,6 +55,7 @@
         <div class="title-class"><h3 (click)="nameClicked()" >KODAMBAKKAM</h3>
 
           <button *ngIf="showButton"  pButton pRipple (click)="calClicked()" type="button" icon="pi pi-calendar" class="p-button-rounded"></button>
+          <button *ngIf="showButton"  pButton pRipple type="button" (click)="checkPaperRemaining()" icon="pi pi-qrcode" class="p-button-rounded p-button-success"></button>
 
         </div>
         <!-- <span class="p-input-icon-left ml-auto">
@@ -68,7 +102,6 @@
               Kodambakkam
             </label>
           </span> -->
-  
         
         
         </div>
@@ -406,6 +439,16 @@
     </div>
     <ng-template pTemplate="footer">
 
+      <div style="display: grid; grid-template-columns:1fr 1fr 1fr;">
+
+
+      <div *ngIf="checkWholeSave()">
+        <button (click)="saveWholeMonth()" pButton icon="pi pi-save" pRipple type="button" label="Save" class="p-button-rounded"></button>
+      </div>
+
+      <div *ngIf="checkMonthSaved()">
+        <button (click)="deleteWholeMonth()" pButton icon="pi pi-trash" pRipple type="button" label="Delete" class="p-button-rounded"></button>
+      </div>
 
       <div *ngIf="allDetailIndex==0">
 
@@ -430,8 +473,11 @@
 
 
       </div>
+<!-- <div *ngIf="allDetailIndex==0 || allDetailIndex==1 ||  allDetailIndex==2"> -->
 
 
+<!-- </div> -->
+</div>
     </ng-template>
   </p-dialog>
 
@@ -1426,45 +1472,3 @@
   </p-dialog>
 </div>
 
-<!-- 
-<div *ngIf="loginDetail && !mainDetail" class="login-class">
-  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-    <p-panel header="Admin">
-      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px ; display: grid; margin-left: 65%;">
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-2">
-            Login:
-          </div>
-          <div class="ui-grid-col-6">
-            <input pInputText type="text" formControlName="login" class="form-control" name="login">
-          </div>
-          <div class="ui-grid-col-4">
-            <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty" class="alert alert-danger">
-              Login is required
-            </div>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-2">
-            Password:
-          </div>
-          <div class="ui-grid-col-6">
-            <input pInputText type="password" formControlName="password" class="form-control" name="password">
-          </div>
-          <div class="ui-grid-col-4">
-            <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty" class="alert alert-danger">
-              Password is required
-            </div>
-          </div>
-        </div>
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-2"></div>
-          <div class="ui-grid-col-6">
-            <button pButton type="submit" label="Submit" [disabled]="!loginForm.valid"></button>
-          </div>
-          <div class="ui-grid-col-4"></div>
-        </div>
-      </div>
-    </p-panel>
-  </form>
-</div>  -->

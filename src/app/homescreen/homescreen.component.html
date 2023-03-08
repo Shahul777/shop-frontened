@@ -1,85 +1,11 @@
-<!-- <div class="container-main">
-  <div class="card-component">
-    <p-card>
-      <div class="title-class" style="font-style: italic; color: black;    font-family: ui-rounded;"><h1>S T U D E N T S    &nbsp;&nbsp; P A R K  &nbsp;&nbsp;</h1></div>
-      <p-toolbar>
-        <div class="p-toolbar-group-left">
-  
-          <div>
-            <p-splitButton label="Entry" (onClick)="adminfunc('info')" icon="pi pi-cog" [model]="items" styleClass="p-button-warning"></p-splitButton>
-          </div>
 
-
-        </div>
-
-        <div class="p-toolbar-group-right">
-
-          <p-button icon="pi pi-percentage"  (click)="showAdminFunc()" styleClass="p-button-success"></p-button>
-        </div>
-      </p-toolbar>
-    </p-card>
-  </div>
-
-  <div class="child-component">
-    <p-sidebar [(visible)]="showkodambakkam"
-               position="right"
-               [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
-      <app-kodambakkam [adminAccess]="adminKodambakkam" (saveClicked)="kodambakkamSaved()" *ngIf="showkodambakkam"></app-kodambakkam>
-    </p-sidebar>
-    <p-sidebar [(visible)]="showTrustpuram"
-               position="right"
-               [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
-      <app-trustpuram [adminAccess]="adminTrustpuram" (saveClicked)="trustpuramSaved()" *ngIf="showTrustpuram"></app-trustpuram>
-    </p-sidebar>
-    <p-sidebar [(visible)]="showAdmin"
-               position="right"
-               [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
-      <app-admin *ngIf="showAdmin"></app-admin>
-    </p-sidebar>
-    <p-sidebar [(visible)]="showHouseSpends"
-               position="right"
-               [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
-      <app-housespends *ngIf="showHouseSpends"></app-housespends>
-    </p-sidebar>
-    <p-sidebar [(visible)]="showNetCalculation"
-               position="right"
-               [baseZIndex]="10000"
-               position="right"
-               [style]="{ width: '40em' }">
-      <app-netcalculate *ngIf="showNetCalculation"></app-netcalculate>
-    </p-sidebar>
-
-    <app-calculator></app-calculator>
-
-  </div>
-
-
-
-  
-
-
-
-
-
-
-
-  <router-outlet></router-outlet>
-</div> -->
 
 <div class="loading-indicator" *ngIf="showProgress">
   <p-progressSpinner></p-progressSpinner>
 </div>
 <p-menubar >
 
-  <!-- [model]="menubarItems" -->
+
   <ng-template pTemplate="start">
       <i class="pi pi-slack"></i>
   </ng-template>
@@ -128,8 +54,7 @@
                [baseZIndex]="10000"
                [fullScreen]="true"
            >
-           <!-- position="right"
-           [style]="{ width: '40em' }" -->
+        
       <app-trustpuram [adminAccess]="adminTrustpuram" (saveClicked)="trustpuramSaved()" *ngIf="showTrustpuram"></app-trustpuram>
     </p-sidebar>
     <p-sidebar [(visible)]="showAdmin"
@@ -158,7 +83,6 @@
       <app-netcalculate *ngIf="showNetCalculation"></app-netcalculate>
     </p-sidebar>
 
-    <!-- <app-calculator></app-calculator> -->
 
 
    
@@ -178,6 +102,27 @@
   </div>
 
 </div>
+
+
+
+
+<!-- 
+<form>
+  <div>
+    <input type="file" (change)="onFileSelected($event)">
+  </div>
+  <div>
+    <button type="submit" (click)="onSubmit()">Upload</button>
+  </div>
+</form>
+<div>
+  <label for="text">Extracted Text:</label>
+  <input type="text" id="text" [(ngModel)]="text">
+</div> -->
+
+
+
+
 
 <p-dialog header='title' [closable]="false" [(visible)]="displayEditDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
 [draggable]="false" [resizable]="false">
@@ -395,15 +340,6 @@
         <p-inputNumber [(ngModel)]="otherAmt" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
         </p-inputNumber>
 
-     
-        <!-- ShopCurrentBill : number
-        HomeCurrentBill : number
-        PaperCost : number
-        BlackTonerCost : number
-        ColourTonerCost : number
-        BlackMachineMaintanence : number
-        ColourMachineMaintanence : number -->
-
 
         </div>
         </div>
@@ -413,49 +349,7 @@
 
 
 
-<!-- 
-<div *ngIf="isBlackPrintout">
-<div *ngIf="value2=='off'">
-<div class="field col-12 md:col-3">
-<label for="minmax-buttons">Copies: &nbsp;</label>
-<p-inputNumber [(ngModel)]="blackPrintCopies" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
-</p-inputNumber>
-</div>
-<br>
-<div class="field-radiobutton">
-<p-radioButton name="copy2" (click)="copySelected=true" value="Single-Side" [(ngModel)]="copy2" inputId="city1"></p-radioButton>
-<label for="city1">Single-Side</label>
-</div>
-<br>
-<div class="field-radiobutton">
-<p-radioButton name="copy2" (click)="copySelected=true" value="Front-&-Back" [(ngModel)]="copy2" inputId="city2"></p-radioButton>
-<label for="city2">Front-&-Back</label>
-</div>
-<br>
-<div style="display: grid; grid-template-columns: 1fr 1fr">
-<div class="field-checkbox">
-<p-checkbox [(ngModel)]="isNetCharge" [binary]="true" inputId="binary2"></p-checkbox>
-<label (click)="isNetCharge=!isNetCharge" for="binary2">Net Charge</label>
-</div>
-<div class="field-checkbox">
-<p-checkbox [(ngModel)]="isFreshCustomer" [binary]="true" inputId="binary"></p-checkbox>
-<label (click)="isFreshCustomer=!isFreshCustomer" for="binary">10-copies-2rupees</label>
-</div>
-</div>
-</div>
 
-</div> -->
-
-
-
-
-<!-- <div *ngIf="isLamination">
-<div class="field col-12 md:col-3">
-<label for="minmax-buttons">Lamination Rate: &nbsp;</label>
-<p-inputNumber [(ngModel)]="laminationRate" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
-</p-inputNumber>
-</div>
-</div> -->
 
 <ng-template pTemplate="footer">
 

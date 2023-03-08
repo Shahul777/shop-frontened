@@ -7,19 +7,22 @@ import { kdmAccounts } from './kodambakkam/kdmDataModel';
 })
 export class ShopserviceService {
    //readonly APIUrl ="http://127.0.0.1:8000";
-   //readonly adminUrl ="http://127.0.0.1:8000/admin/"
+  // readonly adminUrl ="http://127.0.0.1:8000/admin/"
 
 
-  // readonly APIUrl ="https://shop-new-backened.herokuapp.com";
-  // readonly adminUrl = "https://shop-new-backened.herokuapp.com/admin/"
 
 
-  readonly APIUrl ="https://shopbackened.up.railway.app";
-  readonly adminUrl = "https://shopbackened.up.railway.app/admin/"
 
+   readonly APIUrl ="https://shopbackened.up.railway.app";
+   readonly adminUrl = "https://shopbackened.up.railway.app/admin/"
+
+  readonly imageText ="http://127.0.0.1:8000/extract_text/"
+ 
   constructor(private http : HttpClient) { }
 
-
+getText(formdata : any):Observable<any[]>{
+  return this.http.post<any[]>(this.imageText , formdata)
+}
   getKdmAccounts():Observable<any[]>{
     return this.http.get<any[]>(this.APIUrl + '/kodambakkam/accounts/')
   }
@@ -51,6 +54,66 @@ editKdmLaboursById(accounts: any, id: any):Observable<any[]>{
 deleteKdmLabourById(id: any):Observable<any[]>{
   return this.http.delete<any[]>(this.APIUrl + '/kodambakkam/labours/' + id + '/')
 }
+
+
+getKdmMonth():Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/kodambakkam/kdmMonth/')
+}
+getKdmMonthById(id : any):Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/kodambakkam/kdmMonth/' + id)
+}
+addKdmMonth(accounts: any):Observable<any[]>{
+  return this.http.post<any[]>(this.APIUrl + '/kodambakkam/kdmMonth/', accounts)
+}
+editKdmMonthById(accounts: any, id: any):Observable<any[]>{
+  return this.http.put<any[]>(this.APIUrl + '/kodambakkam/kdmMonth/' + id + '/', accounts)
+}
+deleteKdmMonthById(id: any):Observable<any[]>{
+  return this.http.delete<any[]>(this.APIUrl + '/kodambakkam/kdmMonth/' + id + '/')
+}
+
+
+getCombinedMonth():Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/kodambakkam/combinedEntry/')
+}
+getCombinedMonthById(id : any):Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/kodambakkam/combinedEntry/' + id)
+}
+addCombinedMonth(accounts: any):Observable<any[]>{
+  return this.http.post<any[]>(this.APIUrl + '/kodambakkam/combinedEntry/', accounts)
+}
+editCombinedMonthById(accounts: any, id: any):Observable<any[]>{
+  return this.http.put<any[]>(this.APIUrl + '/kodambakkam/combinedEntry/' + id + '/', accounts)
+}
+deleteCombinedMonthById(id: any):Observable<any[]>{
+  return this.http.delete<any[]>(this.APIUrl + '/kodambakkam/combinedEntry/' + id + '/')
+}
+
+
+
+getTpmMonth():Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/trustpuram/tpmMonth/')
+}
+getTpmMonthById(id : any):Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/trustpuram/tpmMonth/' + id)
+}
+addTpmMonth(accounts: any):Observable<any[]>{
+  return this.http.post<any[]>(this.APIUrl + '/trustpuram/tpmMonth/', accounts)
+}
+editTpmMonthById(accounts: any, id: any):Observable<any[]>{
+  return this.http.put<any[]>(this.APIUrl + '/trustpuram/tpmMonth/' + id + '/', accounts)
+}
+deleteTpmMonthById(id: any):Observable<any[]>{
+  return this.http.delete<any[]>(this.APIUrl + '/trustpuram/tpmMonth/' + id + '/')
+}
+
+
+
+
+
+
+
+
 
 getTpmAccounts():Observable<any[]>{
   return this.http.get<any[]>(this.APIUrl + '/trustpuram/accounts2/')

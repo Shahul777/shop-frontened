@@ -1,75 +1,206 @@
 
-
-<div class="card2">
-    <p-dataView #dv [value]="products" [paginator]="true" [rows]="12" filterBy="name"
+<div class="loading-indicator" *ngIf="showProgress">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <div class="loading-indicator" *ngIf="executeSpin">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
+<div *ngIf="display1" class="card2">
+    <p-dataView [value]="combinedMonth" [paginator]="true" [rows]="12" filterBy="Year"
         [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
         <ng-template pTemplate="header">
 <div>
 
     <span class="p-input-icon-left">
         <i class="pi pi-search global-search-icon clickable-wrapper"></i>
-        <input type="text" pInputText [(ngModel)]="searchText" size="50" placeholder="{{searchBoxPlaceholder}}"
+        <input type="number" pInputText [(ngModel)]="searchText" size="50" placeholder="{{searchBoxPlaceholder}}"
             (input)="filterConnectionEntities()" style="width: 200px" />
     </span>
 
-<!-- 
-    <span class="p-input-icon-left" style="margin-left: 70%;" >
-        <i class="pi pi-search"></i>
-        <input pInputText type="text"  [(ngModel)]="searchText" placeholder="" (input)="filterConnectionEntities()"/>
-    </span> -->
-
-
 </div>
 
+<div>
+  
+    <button   pButton pRipple tooltipPosition="left" pTooltip="Add Entries"(click)="addClicked()" type="button" icon="pi pi-plus" class="p-button-rounded"></button>
+    <!-- <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar> -->
+</div>
 
-
-            <!-- <div class="flex flex-column md:flex-row md:justify-content-between">
-                <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0"></p-dropdown>
-                <span class="p-input-icon-left mb-2 md:mb-0">
-                    <i class="pi pi-search"></i>
-                    <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-                </span>
-                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-            </div> -->
+<div>
+  
+    <button   pButton pRipple tooltipPosition="left" pTooltip="Summary"(click)="summaryYear()" type="button" icon="pi pi-chart-bar" class="p-button-rounded"></button>
+    <!-- <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar> -->
+</div>
         </ng-template>
-        <ng-template let-product pTemplate="listItem">
+
+
+
+        <!-- <ng-template let-product pTemplate="listItem">
             <div class="col-12">
                 <div class="product-list-item">
-                    <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name"/> -->
                     <div class="product-list-detail">
                         <div class="product-name">{{product.name}}</div>
                         <div class="product-description">{{product.description}}</div>
-                        <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
                         <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.category}}</span>
                     </div>
                     <div class="product-list-action">
                         <span class="product-price">${{product.price}}</span>
-                        <!-- <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button> -->
-                        <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
                     </div>
                 </div>
             </div>
-        </ng-template>
-        <ng-template let-product pTemplate="gridItem">
-            <!-- <div class="col-12 md:col-4"> -->
+        </ng-template> -->
+        <ng-template let-product pTemplate="gridItem" let-index="rowIndex">
                 <div class="col-4">
                 <div class="product-grid-item card">
-                    <div class="product-grid-item-top">
-                        <div>
-                            <i class="pi pi-tag product-category-icon"></i>
-                            <span class="product-category">{{product.category}}</span>
+
+
+                    <div class="product-grid-item-top" style="border-bottom: 1px solid white; background: orange;">
+
+                        <div class="threeCon">
+
+                            <div class="flex-content2" >
+                                <span style="    color: black;
+                                font-size: large;
+                                font-weight: 600px;
+                                font-style: italic;
+                                font-weight: bold;"   >   {{product.Month+" "+"|"+" "+ product.Year }}</span>
+                             
+                                <!-- <span style="min-width: 50%; max-width: 50%;">  {{combinedMonth[index].Year}}</span> -->
+
+                                <div style ="justify-content: flex-end;"  >
+                                    <button pButton pRipple type="button" icon="pi pi-trash" (click)="deleteEdit(product)"  class="p-button-raised p-button-danger"></button>
+                                    </div>
+                            
+                            </div>
+
+                         
+                    
+                            <div class="flex-content">
+                     
+    
+                            </div>
+
+
                         </div>
-                        <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                  
+
+
                     </div>
-                    <div class="product-grid-item-content">
-                        <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name"/> -->
-                        <div class="product-name">{{product.name}}</div>
-                        <div class="product-description">{{product.description}}</div>
-                        <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+
+
+                    <div class="product-grid-item-top" style="border-bottom: 1px solid white;
+                    background: #ff7f97;
+                    color: black;">
+
+                        <div class="threeCon">
+
+                            <div class="flex-content2" >
+                                <span >   {{combinedName}}</span>
+                             
+                                <!-- <span style="min-width: 50%; max-width: 50%;">  {{combinedMonth[index].Year}}</span> -->
+
+                            </div>
+
+                         
+                    
+                            <div class="flex-content">
+                                <span >
+                                    <i style="font-size: 1rem"  [class.p-disabled]="combinedEditCheck(product)" (click)="combinedEdit(product)"class="pi pi-pencil product-category-icon"></i>
+                                </span>
+                               
+
+                                <span >
+                                    <i   [class.p-disabled]="true" class="pi  pi-angle-down product-category-icon"></i>
+                                </span>
+                                <span>
+                                    <i style="font-size: 1rem"  [class.p-disabled]="combinedExecuteCheck(product)" (click)="combinedExecute(product)" class="pi pi-cog product-category-icon"></i>
+                                </span>
+                                <span >
+                                    <i   [class.p-disabled]="true" class="pi  pi-angle-down product-category-icon"></i>
+                                </span>
+                                <span>
+                                    <i style="font-size: 1rem"  [class.p-disabled]="combinedOutputCheck(product)" (click)="combinedOutput(product)" class="pi pi-chart-line product-category-icon"></i>
+                                </span>
+    
+                            </div>
+
+
+                        </div>
+                  
+
+
                     </div>
-                    <div class="product-grid-item-bottom">
-                        <span class="product-price">${{product.price}}</span>
-                        <!-- <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button> -->
+                    <div class="product-grid-item-content"  style="
+                    border-bottom: 1px solid white;
+                        background: #36b027;
+                        color: white;">
+                        <div class="threeCon">
+
+                            <div class="flex-content2">
+                                <span > {{kdmName }}</span>
+                             
+                                <!-- <span style="min-width: 50%; max-width: 50%;">  {{kdmMonth[index].Year}}</span> -->
+
+                            </div>
+
+                         
+                   
+                            <div class="flex-content">
+                                <span >
+                                    <i style="font-size: 1rem"  [class.p-disabled]="kdmEditCheck(product)"  (click)="kdmEdit(product)" class="pi pi-pencil product-category-icon"></i>
+                                </span>
+                                <span >
+                                    <i   [class.p-disabled]="true" class="pi  pi-angle-down product-category-icon"></i>
+                                </span>
+                                <span>
+                                    <i style="font-size: 1rem"  [class.p-disabled]="kdmExecuteCheck(product)" (click)="kdmExecute(product)"  class="pi pi-cog product-category-icon"></i>
+                                </span>
+                                <span >
+                                    <i   [class.p-disabled]="true" class="pi  pi-angle-down product-category-icon"></i>
+                                </span>
+                                <span>
+                                    <i style="font-size: 1rem"  [class.p-disabled]="kdmOutputCheck(product)" (click)="kdmOutput(product)"  class="pi pi-chart-line product-category-icon"></i>
+                                </span>
+    
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="product-grid-item-bottom" style="background: blueviolet">
+                        <div class="threeCon">
+
+                            <div class="flex-content2" >
+                                <span > {{ tpmName  }}</span>
+                             
+                                <!-- <span style="min-width: 50%; max-width: 50%;">  {{tpmMonth[index].Year}}</span> -->
+
+                            </div>
+
+                         
+                       
+         
+                            <div class="flex-content">
+                                <span >
+                                    <i style="font-size: 1rem"  [class.p-disabled]="tpmEditCheck(product)" (click)="tpmEdit(product)" class="pi pi-pencil product-category-icon"></i>
+                                </span>
+                                <span >
+                                    <i   [class.p-disabled]="true" class="pi  pi-angle-down product-category-icon"></i>
+                                </span>
+                                <span>
+                                    <i style="font-size: 1rem"  [class.p-disabled]="tpmExecuteCheck(product)" (click)="tpmExecute(product)" class="pi pi-cog product-category-icon"></i>
+                                </span>
+                                <span >
+                                    <i   [class.p-disabled]="true" class="pi  pi-angle-down product-category-icon"></i>
+                                </span>
+                                <span>
+                                    <i style="font-size: 1rem"  [class.p-disabled]="tpmOutputCheck(product)" (click)="tpmOutput(product)" class="pi pi-chart-line product-category-icon"></i>
+                                </span>
+    
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,6 +211,344 @@
 
 
 
+
+<p-dialog header='title' [closable]="false" [(visible)]="isTpmEdit || isCombinedEdit || isKdmEdit" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+[draggable]="false" [resizable]="false">
+<ng-template pTemplate="header">
+{{title}}
+
+
+</ng-template>
+
+  
+
+      <div *ngIf="isKdmEdit ">
+        <div class="field col-12 md:col-3" style="display: grid; grid-template-rows: 1fr 1fr 1fr fr;">
+        <label for="minmax-buttons">Total Income: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.TotalIncome" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Total Expense: &nbsp;</label>
+        <p-inputNumber [disabled]="true" [(ngModel)]="editKdmObj.TotalExpense" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber> 
+
+        <label for="minmax-buttons">Profit For Month: &nbsp;</label>
+        <p-inputNumber [disabled]="true" [(ngModel)]="editKdmObj.NetProfit" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber> 
+
+
+        <label for="minmax-buttons">Total Black Reading: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.BlackReading" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Total Colour Reading: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.ColourReading" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Taj Present Days (enter 0 and enter Labour Salary for System Calculation): &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.TajPresent" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1" inputId="minmax-buttons" >
+        </p-inputNumber>
+
+
+
+
+
+        <label for="minmax-buttons">Noor Present Days (enter 0 and enter Labour Salary for System Calculation): &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.NoorPresent" mode="decimal" inputId="minmax-buttons"  [minFractionDigits]="1" [maxFractionDigits]="1">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Total Labour Salary (enter 0 and enter present day above for Machine Calculation): &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.LabourSalary" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Shop Rent Amount: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.Rent" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+
+        <label for="minmax-buttons">Shop Current Bill: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.CurrentBill" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+      
+        
+        <label for="minmax-buttons">Binding/colour/maintanence Expense: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.Expenses" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+
+        <label for="minmax-buttons">Percent To Calculate For Expense (1-100) [0 for Machine Calculation]: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.ExpensePercentCalculate" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Machine Calculated Expense Based on Percentage: &nbsp;</label>
+        <p-inputNumber [disabled]="true" [(ngModel)]="editKdmObj.ExpenseCalculated" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Total Paper Cost:[enter 0 and enter SENT, ARRIVED, START, END for Machine Calculation ] &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.PaperCost" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Total Paper Used in a Month:[enter 0 and enter SENT, ARRIVED, START, END for Machine Calculation ] &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.PaperUsed" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Paper On Day 1: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.PaperDay1" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Paper on Last Day: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.PaperLast" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+        <label for="minmax-buttons">Total Paper Arrived in a Month: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.PaperArrivedTotal" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+   
+        <label for="minmax-buttons">Total Paper Sent To other Shop: &nbsp;</label>
+        <p-inputNumber [(ngModel)]="editKdmObj.PaperSent" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+        </p-inputNumber>
+
+ 
+
+        </div>
+        </div>
+
+
+        <div *ngIf="isTpmEdit ">
+            <div class="field col-12 md:col-3" style="display: grid; grid-template-rows: 1fr 1fr 1fr fr;">
+            <label for="minmax-buttons">Total Income: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.TotalIncome" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Total Expense: &nbsp;</label>
+            <p-inputNumber [disabled]="true" [(ngModel)]="editTpmObj.TotalExpense" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber> 
+    
+            <label for="minmax-buttons">Profit For Month: &nbsp;</label>
+            <p-inputNumber [disabled]="true" [(ngModel)]="editTpmObj.NetProfit" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber> 
+    
+    
+            <label for="minmax-buttons">Total Black Reading: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.BlackReading" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Total Colour Reading: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.ColourReading" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Assan Present Days (enter 0 and enter Labour Salary for System Calculation): &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.AssanPresent" mode="decimal" inputId="minmax-buttons"  [minFractionDigits]="1" [maxFractionDigits]="1">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Mani Present Days (enter 0 and enter Labour Salary for System Calculation): &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.ManiPresent" mode="decimal" inputId="minmax-buttons"  [minFractionDigits]="1" [maxFractionDigits]="1">
+            </p-inputNumber>
+        
+            <label for="minmax-buttons">Rasheed Present Days (enter 0 and enter Labour Salary for System Calculation): &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.RasheedPresent" mode="decimal" inputId="minmax-buttons"  [minFractionDigits]="1" [maxFractionDigits]="1">
+            </p-inputNumber>
+
+            <label for="minmax-buttons">Total Labour Salary (enter 0 and enter present day above for Machine Calculation): &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.LabourSalary" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Shop Rent Amount: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.Rent" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+    
+            <label for="minmax-buttons">Shop Current Bill: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.CurrentBill" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+          
+            
+            <label for="minmax-buttons">Binding/colour/maintanence Expense: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.Expenses" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+    
+            <label for="minmax-buttons">Percent To Calculate For Expense (1-100) [0 for Machine Calculation]: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.ExpensePercentCalculate" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Machine Calculated Expense Based on Percentage: &nbsp;</label>
+            <p-inputNumber [disabled]="true" [(ngModel)]="editTpmObj.ExpenseCalculated" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+
+            <label for="minmax-buttons">Total Paper Cost: [enter 0 and enter SENT, ARRIVED, START, END for Machine Calculation ] &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.PaperCost" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+            <label for="minmax-buttons">Total Paper Used in a Month: [enter 0 and enter SENT, ARRIVED, START, END for Machine Calculation ] &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.PaperUsed" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+
+    
+            <label for="minmax-buttons">Paper On Day 1: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.PaperDay1" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Paper on Last Day: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.PaperLast" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+    
+            <label for="minmax-buttons">Total Paper Arrived in a Month: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.PaperArrivedTotal" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+            <label for="minmax-buttons">Total Paper Sent To other Shop: &nbsp;</label>
+            <p-inputNumber [(ngModel)]="editTpmObj.PaperSent" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+            </p-inputNumber>
+
+     
+        
+    
+     
+    
+            </div>
+            </div>
+
+
+            <div *ngIf="isCombinedEdit">
+                <div class="field col-12 md:col-3" style="display: grid; grid-template-rows: 1fr 1fr 1fr fr;">
+                <label for="minmax-buttons">Total Income: &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.TotalIncome" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+        
+                <label for="minmax-buttons">Total Expense: &nbsp;</label>
+                <p-inputNumber [disabled]="true" [(ngModel)]="editCombinedObj.TotalExpense" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber> 
+        
+                <label for="minmax-buttons">Profit For Month: &nbsp;</label>
+                <p-inputNumber [disabled]="true" [(ngModel)]="editCombinedObj.NetProfit" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber> 
+        
+        
+                <label for="minmax-buttons">Total Black Reading: &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.BlackReading" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+        
+                <label for="minmax-buttons">Total Colour Reading: &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.ColourReading" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+
+    
+                <label for="minmax-buttons">Total Labour Salary : &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.LabourSalary" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+        
+                <label for="minmax-buttons">Shop Rent Amount: &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.Rent" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+        
+        
+                <label for="minmax-buttons">Shop Current Bill: &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.CurrentBill" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+        
+                <label for="minmax-buttons">Machine Calculated Expense Based on Percentage: &nbsp;</label>
+                <p-inputNumber  [(ngModel)]="editCombinedObj.ExpenseCalculated" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+                
+              
+                <label for="minmax-buttons">Total Paper Cost : &nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.PaperCost" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+    
+    
+        
+             
+        
+                <label for="minmax-buttons">Total Paper Used in a Month:&nbsp;</label>
+                <p-inputNumber [(ngModel)]="editCombinedObj.PaperUsed" mode="decimal" inputId="minmax-buttons" [min]="0" [max]="1000000">
+                </p-inputNumber>
+              
+        
+                </div>
+                </div>
+
+
+
+
+<ng-template pTemplate="footer">
+
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr">
+<!-- 
+    <div *ngIf="isCombinedEdit" style="margin-right:60% ;">
+        <button pButton pRipple type="button" icon="pi pi-trash" (click)="deleteEdit()" label="Delete" class="p-button-raised p-button-danger"></button>
+        </div> -->
+
+
+<div style="margin-right:40% ;">
+<button pButton pRipple type="button" icon="pi pi-times" (click)="cancelEdit()" label="Cancel" class="p-button-raised p-button-danger"></button>
+</div>
+
+
+
+
+
+
+<div style="margin-right:20% ;">
+  <button pButton pRipple type="button" icon="pi pi-file" (click)="saveEdit()" label="Success" class="p-button-raised p-button-success"></button>
+  
+  </div>
+</div>
+</ng-template>
+</p-dialog>
+
+
+
+
+
+
+
+
+
+<div *ngIf="display2" class="listbox" >
+
+<div>
+    <h5 style="color: white;">SAVE ENTRIES FOR SHOP PROPERLY***</h5>
+    <p-listbox [options]="kdmMonth"  optionLabel="Month" [style]="{'width':'10rem'}">
+        <ng-template let-country pTemplate="item">
+            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <!-- <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" /> -->
+                <div>{{country.Month}}</div>
+                <div> {{country.Year}} </div>
+            </div>
+        </ng-template>
+        <ng-template let-country pTemplate="header">
+            <div >
+            Kodambakkam Data
+            </div>
+        </ng-template>
+    </p-listbox>
+</div>
+<div>
+    <h5 style="color: white;">SAVE ENTRIES FOR SHOP PROPERLY***</h5>
+    <p-listbox [options]="tpmMonth"  optionLabel="Month" [style]="{'width':'10rem'}">
+
+        <ng-template let-country pTemplate="item">
+            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <!-- <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" /> -->
+                <div>{{country.Month}}</div>
+                <div> {{country.Year}} </div>
+            </div>
+        </ng-template>
+
+
+        <ng-template let-country pTemplate="header">
+            <div >
+            Truspuram Data
+            </div>
+        </ng-template>
+
+
+    </p-listbox>
+</div>
+
+</div>
 
 
 
