@@ -111,7 +111,8 @@
 
   .dock-window {
     width: 100%;
-    height: 800px;
+max-height: calc(100vh - 64px);
+       min-height: calc(100vh - 64px);
     /* position: relative; */
     background-image: url(giphy.gif);
     background-repeat: no-repeat;
