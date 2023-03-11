@@ -131,23 +131,7 @@ currentBillTpm : any;
   
     }
 },
-{
-  label: 'Net-Calculations',
-  tooltipOptions: {
-      tooltipLabel: "Net-Calculations",
-      tooltipPosition: 'top',
-      positionTop: -15,
-      positionLeft: 15
-  },
-  icon: "assets/showcase/rupee.png",
-  command: () => {
-      // this.displayTerminal = true;
-      // this.editClicked("Black-Printout")
-      this.netcalculateFunc();
-   
-  }
-}
-,
+
 
     {
       label: 'Kodambakkam',
@@ -1237,7 +1221,24 @@ this.spendPage()
         // this.displayGalleria = true
         this.editClicked("Scanning")
     }
+    },
+    {
+      label: 'Net-Calculations',
+      tooltipOptions: {
+          tooltipLabel: "Net-Calculations",
+          tooltipPosition: 'top',
+          positionTop: -15,
+          positionLeft: 15
+      },
+      icon: "assets/showcase/rupee.png",
+      command: () => {
+          // this.displayTerminal = true;
+          // this.editClicked("Black-Printout")
+          this.netcalculateFunc();
+       
+      }
     }
+    ,
 ];
 
 

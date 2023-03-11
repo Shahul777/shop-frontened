@@ -6,11 +6,13 @@
 
   <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
 
+  <p-scrollPanel [style]="{ height: '800px' }">
 
+  
 
   <p-table *ngIf="!showCal" #dt1 [value]="customers" dataKey="id"
-           [rows]="5"
-           [(selection)]="selectedAccounts" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" [loading]="loading" styleClass="p-datatable-gridlines"
+           [rows]="100"
+           [(selection)]="selectedAccounts" responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[100,150,200]" [loading]="loading" styleClass="p-datatable-gridlines"
            [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
            [globalFilterFields]="['name','country.name','representative.name','status']">
     <ng-template pTemplate="caption">
@@ -231,50 +233,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-customer>
       <tr>
-        <!-- <td *ngIf="adminAccess" >
-            <p-tableHeaderCheckbox (click)="checkBoxx()"></p-tableHeaderCheckbox>
-        </td>
-        <td>
-            {{customer.Date | date: 'dd/MM/yyyy'}}
-        </td>
-        <td>
-            {{customer.Day}}
-        </td>
-        <td>
-            <span class="image-text">{{customer.BlackMachineReading1}}</span>
-        </td>
-        <td>
-            <span class="image-text">{{customer.BlackMachineReading2}}</span>
-        </td>
-        <td>
-            <span class="image-text">{{customer.ColourMachineReading1}}</span>
-        </td>
-        <td>
-            <span class="image-text">{{customer.ColourMachineReading2}}</span>
-        </td>
-
-        <td>
-            {{customer.PaperSoldToday }}
-        </td>
-        <td>
-            <span class="image-text">{{customer.BlackCopies}}</span>
-        </td>
-        <td>
-            <span class="image-text">{{customer.ColourCopies}}</span>
-        </td>
-
-        <td>
-            {{customer.TotalIncome }}
-        </td>
-
-
-        <td class="text-center">
-            <div style="display: grid; grid-template-columns: 1fr 1fr;">
-                <button pButton pRipple (click)="editAccount2(customer.id)" type="button" icon="pi pi-print" class="p-button-rounded p-button-info"></button>
-                <button pButton pRipple (click)="deleteAccount(customer.id,customer.GetTime)" type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
-            </div>
-
-        </td> -->
+     
 
         <td *ngIf="adminAccess">
           <!-- <p-tableCheckbox (click)="checkBoxx()" [value]="tableCheckBox"></p-tableCheckbox> -->
@@ -342,7 +301,7 @@
     </ng-template>
   </p-table>
 
-
+</p-scrollPanel>
 
   <p-dialog header="Sure Delete" [closable]="true" [(visible)]="deleteCheck" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
   [draggable]="true" [resizable]="true">

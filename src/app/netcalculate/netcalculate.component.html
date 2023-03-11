@@ -12,12 +12,22 @@
   <div *ngIf="display1" class="card2">
 
     <p-dialog [closable]="true" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="graphOutput" [style]="{width: '50vw'}">
-    
-        <p-chart type="bar" [data]="data" [options]="chartOptions"></p-chart>
+        <!-- <p-steps
+    [model]="items4"
+    [(activeIndex)]="activeIndex1"
+    [readonly]="false"
+  ></p-steps> -->
+
+        <p-chart  type="bar" [data]="data" [options]="chartOptions">
+        
+            <!-- <canvas width="630" height="315" style="box-sizing: border-box; display: block; height: 315px; width: 630px; background: black;"></canvas> -->
+        </p-chart>
         <p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
         <p-chart type="line" [data]="blackData" [options]="blackOptions"></p-chart>
 
-        <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+        <p-chart type="line" [data]="basicData"  [options]="basicOptions"></p-chart>
+
+
     </p-dialog>
 
 

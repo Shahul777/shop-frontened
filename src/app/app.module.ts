@@ -46,7 +46,7 @@ import {PickListModule} from 'primeng/picklist';
 import {SidebarModule} from 'primeng/sidebar';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {RadioButtonModule} from 'primeng/radiobutton';
-
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {CheckboxModule} from 'primeng/checkbox';
 import { ShopserviceService } from './shopservice.service';
 import{HttpClientModule} from '@angular/common/http'
@@ -97,7 +97,7 @@ import {RippleModule} from 'primeng/ripple';
     GalleriaModule,
     DialogModule,
     ToastModule,
-
+    ScrollPanelModule,
     TerminalModule,
     TreeModule,
     BrowserAnimationsModule,

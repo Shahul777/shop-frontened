@@ -946,14 +946,14 @@ let packetPrice2 : any
 packetPrice2 = predictPacketPrice(this.packetFuture*500, 100);
 
 let total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
-this.twopredict.push({sheetPrice : 100/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
+this.predictPrices.push({sheetPrice : 100/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
 
 incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
 
 packetPrice2 = predictPacketPrice(this.packetFuture*500, 110);
 
 total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
-this.twopredict.push({sheetPrice : 110/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
+this.predictPrices.push({sheetPrice : 110/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
 
 incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
 
@@ -963,7 +963,7 @@ for (let price = 125; price <= 175; price += 5) {
 
    let total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
 
-   if(price<=160){
+   if(true){
     this.predictPrices.push({sheetPrice : price/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
  
     incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })

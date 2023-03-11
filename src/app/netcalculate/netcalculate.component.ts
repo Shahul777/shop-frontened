@@ -96,9 +96,19 @@ showProgress : boolean=false
   display2: boolean =false
 showCal : boolean =false
 dateCalc : any
+items4 : any;
+activeIndex1: any
   ngOnInit(): void {
     this.showProgress=true
     this.showCal=false
+    this.items4 = [
+      {label: '1.25 to 1.75 paisa'},
+      {label: '1.65 to 1.75 paisa'},
+      {label: '1.65 to 1.75 paisa'},
+      {label: '1.65 to 1.75 paisa'},
+      
+  ];
+  this.activeIndex1=0
 this.display1=false
 this.display2=false
 this.combinedMonth=[]
@@ -1582,7 +1592,31 @@ summaryYear(){
         data: [
     
         ]
-    }, {
+    },
+
+    {
+      type: 'line',
+      label: 'KODAMBAKKAM PROFIT',
+      borderColor: '#FF0000',
+      borderWidth: 2,
+      fill: false,
+      data: [
+  
+      ]
+  },
+  {
+    type: 'line',
+    label: 'TRUSTPURAM PROFIT',
+    borderColor: '#0000FF',
+    borderWidth: 2,
+    fill: false,
+    data: [
+
+    ]
+},
+    
+    
+    {
         type: 'bar',
         label: 'INCOME',
         backgroundColor: '#66BB6A',
@@ -1604,6 +1638,7 @@ summaryYear(){
 
 this.summaryCombined.forEach((combined: any)=>{
   let date = ''
+  let index = this.summaryCombined.indexOf(combined)
   date = combined.Month + combined.Year
   this.data.labels.push(date)
 this.data.datasets.forEach((dataset : any)=>{
@@ -1619,6 +1654,14 @@ else if(dataset.label ==='EXPENSE'){
 
   dataset.data.push(combined.TotalExpense)
 }
+else if(dataset.label ==='KODAMBAKKAM PROFIT'){
+
+  dataset.data.push(this.summaryKdm[index].NetProfit)
+}
+else if(dataset.label ==='TRUSTPURAM PROFIT'){
+
+  dataset.data.push(this.summaryTpm[index].NetProfit)
+}
 })
 })
 
@@ -1629,7 +1672,7 @@ this.basicData = {
           label: 'Paper Used',
           data: [],
           fill: false,
-          borderColor: '#42A5F5',
+          borderColor: '#7CFC00',
           tension: .4
       },
       {
@@ -1638,13 +1681,35 @@ this.basicData = {
           fill: false,
           borderColor: '#FFA726',
           tension: .4
-      }
+      },
+      {
+        label: 'Trustpuram Color',
+        data: [],
+        fill: false,
+        borderColor: '#0000FF',
+        tension: .4
+    },
+    {
+      label: 'Kodambakkam Color',
+      data: [],
+      fill: false,
+      borderColor: '#FF0000',
+      tension: .4
+  },
+  {
+    label: 'Excess Criteria',
+    data: [],
+    fill: false,
+    borderColor: '#FFFF00',
+    tension: .4
+},
   ]
 };
 
 
 
 this.summaryCombined.forEach((combined: any)=>{
+  let index= this.summaryCombined.indexOf(combined)
   let date = ''
   date = combined.Month + combined.Year
   this.basicData.labels.push(date)
@@ -1656,6 +1721,18 @@ if(dataset.label==='Paper Used'){
 else if(dataset.label ==='Color Reading'){
 
   dataset.data.push(combined.ColourReading)
+}
+else if(dataset.label ==='Trustpuram Color'){
+
+  dataset.data.push(this.summaryTpm[index].ColourReading)
+}
+else if(dataset.label ==='Kodambakkam Color'){
+
+  dataset.data.push(this.summaryKdm[index].ColourReading)
+}
+else if(dataset.label ==='Excess Criteria'){
+
+  dataset.data.push((combined.TotalIncome/(combined.PaperUsed * 500)).toFixed(2))
 }
 // else if(dataset.label ==='EXPENSE'){
 
@@ -1677,6 +1754,12 @@ this.blackData = {
           label: 'Trustpuram Black Reading',
           backgroundColor: '#FFA726',
           data: []
+      },
+      {
+        type: 'line',
+          label: 'Total Black Reading',
+          backgroundColor: '#000000',
+          data: []
       }
   ]
 };
@@ -1693,6 +1776,10 @@ this.blackData.datasets.forEach((dataset : any)=>{
   else if(dataset.label ==='Trustpuram Black Reading'){
   
     dataset.data.push(this.summaryTpm[i].BlackReading)
+  }
+  else if(dataset.label ==='Total Black Reading'){
+  
+    dataset.data.push(this.summaryCombined[i].BlackReading)
   }
   // else if(dataset.label ==='EXPENSE'){
   
@@ -1728,7 +1815,26 @@ this.stackedData = {
       data: [
        
       ]
-  }, ]
+  }, 
+  // ,
+  //   {
+  //     type: 'line',
+  //     label: 'Kodambakkam Profit',
+  //     backgroundColor: '#42A5F5',
+  //     data: [
+       
+  //     ]
+  // }, 
+  // ,
+  //   {
+  //     type: 'line',
+  //     label: 'Trustpuram Profit',
+  //     backgroundColor: '#42A5F5',
+  //     data: [
+       
+  //     ]
+  // }, 
+]
 ,
   options: this.stackedOptions
 };
@@ -1752,10 +1858,15 @@ for(let i =0 ; i < this.summaryCombined.length; i++){
       dataset.data.push(this.summaryTpm[i].TotalIncome)
 
     }
-    // else if(dataset.label ==='EXPENSE'){
-    
-    //   dataset.data.push(combined.TotalExpense)
+    // else if(dataset.label ==='Kodambakkam Profit'){
+    //   dataset.data.push(this.summaryKdm[i].TotalExpense)
+
     // }
+    // else if(dataset.label ==='Trustpuram Profit'){
+    //   dataset.data.push(this.summaryTpm[i].TotalExpense)
+
+    // }
+      
     })
   
   

@@ -10,6 +10,16 @@
     margin-left: 0;
     margin-top: 0;
 }
+/* :host ::ng-deep .ui-chart {
+    background-color: black;
+  }
+   */
+
+   :host ::ng-deep .p-chart .p-chart-canvas {
+    background-color: black !important;
+  }
+
+
 :host ::ng-deep.grid {
     display: flex;
     flex-wrap: wrap;
