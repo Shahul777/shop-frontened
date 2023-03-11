@@ -6,6 +6,7 @@ import { tpmAccounts,tpmLabourDetails, tpmMonth } from '../trustpuram/tpmDataMod
 import {SelectItem} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { CatalogUtilsService } from './catalog-utils.service';
+
 import * as e from 'express';
 
 @Component({
@@ -62,7 +63,7 @@ kdmMonth : any=[]
 tpmMonth : any=[]
 combinedMonth : any=[]
 showProgress : boolean=false
-  constructor(private service : ShopserviceService, private primengConfig: PrimeNGConfig,
+  constructor( private service : ShopserviceService, private primengConfig: PrimeNGConfig,
     
     private utilsService : CatalogUtilsService) { }
   filterConnectionEntities(): void {
@@ -1339,8 +1340,7 @@ this.service.editKdmMonthById(kdmObj, kdmObj.id).subscribe((event : any)=>{
 
   
 }
-data: any;
-comboOptions : any
+
 
 graphOutput = false
 kdmOutput(index : any){
@@ -1530,7 +1530,14 @@ this.combinedMonth[index].ExpenseCalculated = this.kdmMonth[index].ExpenseCalcul
   
 
 }
+data: any;
+comboOptions : any
 
+
+chartOptions: any;
+
+
+// config: AppConfig;
 tpmOutput(entry : any){
 
 }
@@ -1538,6 +1545,12 @@ tpmOutput(entry : any){
 summaryCombined : any;
 summaryKdm : any;
 summaryTpm : any;
+basicOptions : any;
+basicData : any;
+blackOptions : any;
+blackData :any;
+stackedData: any;
+stackedOptions : any;
 summaryYear(){
   this.summaryCombined = JSON.parse(JSON.stringify(this.combinedMonth));
   this.summaryKdm = JSON.parse(JSON.stringify(this.kdmMonth));
@@ -1559,61 +1572,325 @@ summaryYear(){
 
   })
   this.data = {
-    labels: ['November', 'December', 'January', 'February'],
-    datasets: [
-      {
-        label: 'Total Income',
-        backgroundColor: '#42A5F5',
-        borderColor: '#1E88E5',
-        data: [247191, 221450, 203512, 188876]
-      },
-      {
-        label: 'Net Profit',
-        backgroundColor: '#9CCC65',
-        borderColor: '#7CB342',
-        data: [108091, 96423, 72165, 61542]
-      },
-      {
-        label: 'Total Expense',
-        backgroundColor: '#FFA726',
-        borderColor: '#FFA726',
-        data: [139100, 125027, 131347, 127334]
-      },
-      {
-        label: 'Black Reading',
+    labels: [],
+    datasets: [{
+        type: 'line',
+        label: 'PROFIT',
+        borderColor: '#000000',
+        borderWidth: 2,
+        fill: false,
+        data: [
+    
+        ]
+    }, {
+        type: 'bar',
+        label: 'INCOME',
         backgroundColor: '#66BB6A',
-        borderColor: '#66BB6A',
-        data: [181366, 164888, 167672, 165925]
+        data: [
+      
+        ],
+        borderColor: 'white',
+        borderWidth: 2
+    }, {
+        type: 'bar',
+        label: 'EXPENSE',
+        backgroundColor: '#FFA726',
+        data: [
+     
+        ]
+    }]
+};
+
+
+this.summaryCombined.forEach((combined: any)=>{
+  let date = ''
+  date = combined.Month + combined.Year
+  this.data.labels.push(date)
+this.data.datasets.forEach((dataset : any)=>{
+if(dataset.label==='PROFIT'){
+
+  dataset.data.push(combined.NetProfit)
+}
+else if(dataset.label ==='INCOME'){
+
+  dataset.data.push(combined.TotalIncome)
+}
+else if(dataset.label ==='EXPENSE'){
+
+  dataset.data.push(combined.TotalExpense)
+}
+})
+})
+
+this.basicData = {
+  labels: [],
+  datasets: [
+      {
+          label: 'Paper Used',
+          data: [],
+          fill: false,
+          borderColor: '#42A5F5',
+          tension: .4
       },
       {
-        label: 'Paper Used',
-        backgroundColor: '#EF5350',
-        borderColor: '#EF5350',
-        data: [260, 246, 258, 240]
+          label: 'Color Reading',
+          data: [],
+          fill: false,
+          borderColor: '#FFA726',
+          tension: .4
       }
+  ]
+};
+
+
+
+this.summaryCombined.forEach((combined: any)=>{
+  let date = ''
+  date = combined.Month + combined.Year
+  this.basicData.labels.push(date)
+this.basicData.datasets.forEach((dataset : any)=>{
+if(dataset.label==='Paper Used'){
+
+  dataset.data.push(combined.PaperUsed)
+}
+else if(dataset.label ==='Color Reading'){
+
+  dataset.data.push(combined.ColourReading)
+}
+// else if(dataset.label ==='EXPENSE'){
+
+//   dataset.data.push(combined.TotalExpense)
+// }
+})
+})
+this.blackData = {
+  labels: [],
+  datasets: [
+      {
+        type: 'bar',
+          label: 'Kodambakkam Black Reading',
+          backgroundColor: '#42A5F5',
+          data: []
+      },
+      {
+        type: 'bar',
+          label: 'Trustpuram Black Reading',
+          backgroundColor: '#FFA726',
+          data: []
+      }
+  ]
+};
+
+for(let i =0 ; i < this.summaryCombined.length; i++){
+this.blackData.labels=this.data.labels
+
+
+this.blackData.datasets.forEach((dataset : any)=>{
+  if(dataset.label==='Kodambakkam Black Reading'){
+  
+    dataset.data.push(this.summaryKdm[i].BlackReading)
+  }
+  else if(dataset.label ==='Trustpuram Black Reading'){
+  
+    dataset.data.push(this.summaryTpm[i].BlackReading)
+  }
+  // else if(dataset.label ==='EXPENSE'){
+  
+  //   dataset.data.push(combined.TotalExpense)
+  // }
+  })
+
+
+}
+this.stackedData = {
+  labels: [],
+  datasets: [
+    {
+      type: 'bar',
+      label: 'Kodambakkam Income',
+      backgroundColor: '#66BB6A',
+      data: [
+     
+      ]
+  },
+  {
+    type: 'bar',
+    label: 'Trustpuram Income',
+    backgroundColor: '#FFA726',
+    data: [
+
     ]
-  };
-
-  this.comboOptions = {
-    title: {
-      display: true,
-      text: 'Income, Profit, and Expenses'
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    },
-    legend: {
-      position: 'bottom'
-    },
-    responsive: true
-  };
+},
+    {
+      type: 'line',
+      label: 'Total Income',
+      backgroundColor: '#42A5F5',
+      data: [
+       
+      ]
+  }, ]
+,
+  options: this.stackedOptions
+};
 
 
-  this.graphOutput=true
+for(let i =0 ; i < this.summaryCombined.length; i++){
+  this.stackedData.labels=this.data.labels
+  
+  
+  this.stackedData.datasets.forEach((dataset : any)=>{
+    if(dataset.label==='Total Income'){
+    
+      dataset.data.push(this.summaryCombined[i].TotalIncome)
+    }
+    else if(dataset.label ==='Kodambakkam Income'){
+    
+      dataset.data.push(this.summaryKdm[i].TotalIncome)
+    }
+
+    else if(dataset.label ==='Trustpuram Income'){
+      dataset.data.push(this.summaryTpm[i].TotalIncome)
+
+    }
+    // else if(dataset.label ==='EXPENSE'){
+    
+    //   dataset.data.push(combined.TotalExpense)
+    // }
+    })
+  
+  
+  }
+
+
+
+
+this.stackedOptions = {
+
+    plugins: {
+      legend: {
+          labels: {
+              color: '#000000'
+          }
+      },
+      tooltips: {
+          mode: 'index',
+          intersect: false
+      }
+  },
+
+
+  // tooltips: {
+  //     mode: 'index',
+  //     intersect: false
+  // },
+
+
+  // responsive: true,
+  scales: {
+      x: {
+          stacked: true,
+      },
+      y: {
+          stacked: true
+      }
+  }
+};
+
+// this.stackedOptions = {
+//   plugins: {
+//       legend: {
+//           labels: {
+//               color: '#ebedef'
+//           }
+//       },
+//       tooltips: {
+//           mode: 'index',
+//           intersect: false
+//       }
+//   },
+//   scales: {
+//       x: {
+//           stacked: true,
+//           ticks: {
+//               color: '#ebedef'
+//           },
+//           grid: {
+//               color: 'rgba(255,255,255,0.2)'
+//           }
+//       },
+//       y: {
+//           stacked: true,
+//           ticks: {
+//               color: '#ebedef'
+//           },
+//           grid: {
+//               color: 'rgba(255,255,255,0.2)'
+//           }
+//       }
+//   }
+// };
+
+this.blackOptions= {
+  indexAxis: 'y',
+  plugins: {
+      legend: {
+          labels: {
+              color: '#495057'
+          }
+      }
+  },
+  scales: {
+      x: {
+       
+          ticks: {
+              color: '#495057'
+          },
+          grid: {
+              color: '#ebedef'
+          }
+      },
+      y: {
+       
+          ticks: {
+              color: '#495057'
+          },
+          grid: {
+              color: '#ebedef'
+          }
+      }
+  }
+};
+this.basicOptions=  {
+  scales: {
+    xAxes: [{
+      ticks: {
+        fontColor: '#000000' // change x-axis element color to red
+      }
+    }],
+    yAxes: [{
+      ticks: {
+        fontColor: '#000000' // change y-axis element color to red
+      }
+    }]
+  }
+};
+this.chartOptions = {
+  scales: {
+    xAxes: [{
+      ticks: {
+        fontColor: '#000000' // change x-axis element color to red
+      }
+    }],
+    yAxes: [{
+      ticks: {
+        fontColor: '#000000' // change y-axis element color to red
+      }
+    }]
+  }
+};
+
+// this.updateChartOptions();
+this.graphOutput=true
 
 
 let result =[]
@@ -1625,13 +1902,92 @@ console.log("array",result)
   console.log(this.summaryCombined)
   console.log(this.summaryKdm)
   console.log(this.summaryTpm)
+
+}
+
+
+// if (this.config.dark)
+   
+// else
+//     this.applyLightTheme();
+// }
+
+
+
+
+
+
+
+
+updateChartOptions() {
+   this.applyDarkTheme();
+
+}
+applyLightTheme() {
+  this.chartOptions = {
+      plugins: {
+          legend: {
+              labels: {
+                  color: '#495057'
+              }
+          }
+      },
+      scales: {
+          x: {
+              ticks: {
+                  color: '#495057'
+              },
+              grid: {
+                  color: '#ebedef'
+              }
+          },
+          y: {
+              ticks: {
+                  color: '#495057'
+              },
+              grid: {
+                  color: '#ebedef'
+              }
+          }
+      }
+  };
+}
+
+applyDarkTheme() {
+  this.chartOptions = {
+      plugins: {
+          legend: {
+              labels: {
+                  color: '#ebedef'
+              }
+          }
+      },
+      scales: {
+          x: {
+              ticks: {
+                  color: '#ebedef'
+              },
+              grid: {
+                  color: 'rgba(255,255,255,0.2)'
+              }
+          },
+          y: {
+              ticks: {
+                  color: '#ebedef'
+              },
+              grid: {
+                  color: 'rgba(255,255,255,0.2)'
+              }
+          }
+      }
+  };
 }
 
   onSubmit() { 
 
 
 
-}
+  }
     // alert(JSON.stringify(this.loginForm.value));
 }
 

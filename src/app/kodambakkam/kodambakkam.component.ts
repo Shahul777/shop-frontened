@@ -6,7 +6,7 @@ import { kdmLabourDetails } from './kdmDataModel';
 import { Validators,FormControl,FormGroup } from '@angular/forms';
 import { OverlayPanel } from 'primeng/overlaypanel';
 
-import { Subscription } from 'rxjs';
+
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { AnyMxRecord } from 'dns';
 @Component({
@@ -962,10 +962,20 @@ for (let price = 125; price <= 175; price += 5) {
    packetPrice2 = predictPacketPrice(this.packetFuture*500, price);
 
    let total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
- this.predictPrices.push({sheetPrice : price/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
- 
- incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
 
+   if(price<=160){
+    this.predictPrices.push({sheetPrice : price/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
+ 
+    incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
+   
+
+   }
+else{
+  this.twopredict.push({sheetPrice : price/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
+ 
+  incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
+ 
+}
 
 }
 
@@ -2060,7 +2070,7 @@ let val : number = + this.rentSheet.tajSalary
   ];
   this.items4 = [
     {label: '1.25 to 1.75 paisa'},
-    {label: '1 to 1.10 paisa'},
+    {label: '1.65 to 1.75 paisa'},
 
     
 ];
@@ -2234,10 +2244,31 @@ const dayOfMonth = this.customers[0].Date.getDate();
 this.currentDoneDate=dayOfMonth
 let totalincome =0
 let paperSoldToday = 0
+let paperSoldTotal =0 
+
+let paperArrived =0
+for(let i =0 ; i < dayOfMonth ; i ++){
+
+  paperArrived += this.customers[i].PaperQuantityCame 
+  }
+
+
+paperSoldToday= ((((this.customers[dayOfMonth].PaperPresentToday * 500)+this.customers[dayOfMonth].PaperSheet)
+
++paperArrived +((this.tpmDatas[dayOfMonth].PaperPresentToday * 500)+this.tpmDatas[dayOfMonth].PaperSheet))-(
+
+  ((this.customers[0].PaperPresentToday * 500)+this.customers[0].PaperSheet) +
+
+  ((this.tpmDatas[0].PaperPresentToday * 500)+this.tpmDatas[0].PaperSheet)
+)
+)
+
+
+
 for(let i =0 ; i < dayOfMonth ; i ++){
 
 totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
-paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
+// paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
 
 }
 
@@ -2299,7 +2330,7 @@ this.balanceWorkingDay= this.totalWorkingDay - completedDay
 let packet = paperSoldToday/500
 this.averagePacketUsed = (packet/ (dayOfMonth - sunday - holiday)).toFixed(2)
 
-this.packetFuture = this.balanceWorkingDay * this.averagePacketUsed
+this.packetFuture = (this.balanceWorkingDay * this.averagePacketUsed).toFixed(2)
 
 // if((paperSoldToday/500) <= this.packetFuture){
 
