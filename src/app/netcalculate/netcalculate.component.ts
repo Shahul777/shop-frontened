@@ -15,7 +15,7 @@ import * as e from 'express';
 })
 export class NetcalculateComponent implements OnInit {
 
-  bata1: any;
+  bata1: any
   bata2: any;
   food: any;
   tajSalary: any;
@@ -768,7 +768,7 @@ newTpmObj : tpmMonth =<tpmMonth>{
   "PaperUsed": 0,
   "PaperCost": 0,
   "PaperSent": 0,
-  "isEdited": 1,
+  "isEdited": 0,
   "isExecuted": 0
 }
 
@@ -1123,6 +1123,8 @@ tpmEditCheck(index : any){
 tpmExecuteCheck(index : any){
   index = this.combinedMonth.indexOf(index)
 
+
+  console.log(this.tpmMonth)
   if(!this.tpmMonth[index].isEdited){
     return true
   }
@@ -1197,10 +1199,7 @@ if(!kdmObj.PaperUsed|| !kdmObj.PaperCost ){
 
   }
   else{
-// PaperDay1 : any;
-// PaperLast : any;
-// PaperArrivedTotal : any;
-// PaperSent : any;
+
 let arrived = kdmObj.PaperArrivedTotal
 let day1 = kdmObj.PaperDay1
 let sent =kdmObj.PaperSent
@@ -1219,6 +1218,13 @@ paperCost = (paperUsed*500)*this.paperRate
 
 kdmObj.PaperCost= paperCost
 
+
+
+
+
+
+
+
 expense += paperCost
   }
 }
@@ -1232,15 +1238,53 @@ kdmObj.isExecuted= 1
 kdmObj.TotalExpense = expense
 kdmObj.NetProfit= kdmObj.TotalIncome- kdmObj.TotalExpense
 this.kdmMonth[index]= kdmObj
+if(kdmObj.PaperDay1 && kdmObj.PaperArrivedTotal && kdmObj.PaperLast
+  && tpmObj.PaperDay1 && tpmObj.PaperArrivedTotal && tpmObj.PaperLast ){
+    let paperUsedBoth = kdmObj.PaperUsed + tpmObj.PaperUsed
+
+    let calculatedPaper = ((kdmObj.PaperDay1 + kdmObj.PaperArrivedTotal+tpmObj.PaperDay1)-(kdmObj.PaperLast + tpmObj.PaperLast))
+    // if(calculatedPaper<paperUsedBoth){
+    
+    //   this.combinedMonth[index].PaperUsed = calculatedPaper
+    //   this.combinedMonth[index].PaperCost = ((calculatedPaper*500)*this.paperRate)
+
+
+    //   console.log("111111")
+    // }
+    // else{
+    
+
+    //   this.combinedMonth[index].PaperUsed = calculatedPaper
+    //   this.combinedMonth[index].PaperCost = ((calculatedPaper*500)*this.paperRate)
+
+    //   console.log("22222")
+
+    // }
+
+
+    this.combinedMonth[index].PaperUsed = calculatedPaper
+    this.combinedMonth[index].PaperCost = ((calculatedPaper*500)*this.paperRate)
+
+
+this.combinedMonth[index].TotalExpense = (((this.kdmMonth[index].TotalExpense + this.tpmMonth[index].TotalExpense)-(this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost))+(this.combinedMonth[index].PaperCost))
+    
+
+  }
+
+  else{
+    this.combinedMonth[index].PaperUsed = this.kdmMonth[index].PaperUsed + this.tpmMonth[index].PaperUsed
+    this.combinedMonth[index].PaperCost = this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost
+this.combinedMonth[index].TotalExpense = this.kdmMonth[index].TotalExpense + this.tpmMonth[index].TotalExpense
+
+  }
 
 
 this.combinedMonth[index].TotalIncome= this.kdmMonth[index].TotalIncome + this.tpmMonth[index].TotalIncome
-this.combinedMonth[index].NetProfit = this.kdmMonth[index].NetProfit + this.tpmMonth[index].NetProfit
-this.combinedMonth[index].TotalExpense = this.kdmMonth[index].TotalExpense + this.tpmMonth[index].TotalExpense
+this.combinedMonth[index].NetProfit = this.combinedMonth[index].TotalIncome - this.combinedMonth[index].TotalExpense
+
 this.combinedMonth[index].BlackReading = this.kdmMonth[index].BlackReading + this.tpmMonth[index].BlackReading
 this.combinedMonth[index].ColourReading = this.kdmMonth[index].ColourReading + this.tpmMonth[index].ColourReading
-this.combinedMonth[index].PaperUsed = this.kdmMonth[index].PaperUsed + this.tpmMonth[index].PaperUsed
-this.combinedMonth[index].PaperCost = this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost
+
 
 this.combinedMonth[index].Rent = this.kdmMonth[index].Rent + this.tpmMonth[index].Rent
 this.combinedMonth[index].CurrentBill = this.kdmMonth[index].CurrentBill + this.tpmMonth[index].CurrentBill
@@ -1355,9 +1399,7 @@ tpmExecute(index : any){
   let sent =tpmObj.PaperSent
   let dayLast = tpmObj.PaperLast
   
-  // if(sent < tpmObj.PaperArrivedTotal){
-  //   sent = tpmObj.PaperArrivedTotal
-  // }
+
   
   let paperUsed = (arrived + day1) - (sent + dayLast)
   let paperCost =0
@@ -1380,16 +1422,55 @@ tpmExecute(index : any){
   tpmObj.TotalExpense = expense
   tpmObj.NetProfit= tpmObj.TotalIncome- tpmObj.TotalExpense
   this.tpmMonth[index]= tpmObj
+  if(kdmObj.PaperDay1 && kdmObj.PaperArrivedTotal && kdmObj.PaperLast
+    && tpmObj.PaperDay1 && tpmObj.PaperArrivedTotal && tpmObj.PaperLast ){
+      let paperUsedBoth = kdmObj.PaperUsed + tpmObj.PaperUsed
+  
+      let calculatedPaper = ((kdmObj.PaperDay1 + kdmObj.PaperArrivedTotal+tpmObj.PaperDay1)-(kdmObj.PaperLast + tpmObj.PaperLast))
+      // if(calculatedPaper<paperUsedBoth){
+      
+      //   this.combinedMonth[index].PaperUsed = calculatedPaper
+      //   this.combinedMonth[index].PaperCost = ((calculatedPaper*500)*this.paperRate)
 
+
+      //   console.log("111111")
+      // }
+      // else{
+      
+
+      //   this.combinedMonth[index].PaperUsed = calculatedPaper
+      //   this.combinedMonth[index].PaperCost = ((calculatedPaper*500)*this.paperRate)
+
+      //   console.log("22222")
+
+      // }
+
+
+      this.combinedMonth[index].PaperUsed = calculatedPaper
+      this.combinedMonth[index].PaperCost = ((calculatedPaper*500)*this.paperRate)
+
+
+this.combinedMonth[index].TotalExpense = (((this.kdmMonth[index].TotalExpense + this.tpmMonth[index].TotalExpense)-(this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost))+(this.combinedMonth[index].PaperCost))
+      
+  
+    }
+  
+    else{
+      this.combinedMonth[index].PaperUsed = this.kdmMonth[index].PaperUsed + this.tpmMonth[index].PaperUsed
+      this.combinedMonth[index].PaperCost = this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost
+this.combinedMonth[index].TotalExpense = this.kdmMonth[index].TotalExpense + this.tpmMonth[index].TotalExpense
+  
+    }
 
   
 this.combinedMonth[index].TotalIncome= this.kdmMonth[index].TotalIncome + this.tpmMonth[index].TotalIncome
-this.combinedMonth[index].NetProfit = this.kdmMonth[index].NetProfit + this.tpmMonth[index].NetProfit
-this.combinedMonth[index].TotalExpense = this.kdmMonth[index].TotalExpense + this.tpmMonth[index].TotalExpense
+this.combinedMonth[index].NetProfit = this.combinedMonth[index].TotalIncome - this.combinedMonth[index].TotalExpense
+
+
 this.combinedMonth[index].BlackReading = this.kdmMonth[index].BlackReading + this.tpmMonth[index].BlackReading
 this.combinedMonth[index].ColourReading = this.kdmMonth[index].ColourReading + this.tpmMonth[index].ColourReading
-this.combinedMonth[index].PaperUsed = this.kdmMonth[index].PaperUsed + this.tpmMonth[index].PaperUsed
-this.combinedMonth[index].PaperCost = this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost
+// this.combinedMonth[index].PaperUsed = this.kdmMonth[index].PaperUsed + this.tpmMonth[index].PaperUsed
+// this.combinedMonth[index].PaperCost = this.kdmMonth[index].PaperCost + this.tpmMonth[index].PaperCost
 
 this.combinedMonth[index].Rent = this.kdmMonth[index].Rent + this.tpmMonth[index].Rent
 this.combinedMonth[index].CurrentBill = this.kdmMonth[index].CurrentBill + this.tpmMonth[index].CurrentBill
@@ -1468,5 +1549,10 @@ summaryYear(){
 }
     // alert(JSON.stringify(this.loginForm.value));
 }
+
+
+
+
+
 
 

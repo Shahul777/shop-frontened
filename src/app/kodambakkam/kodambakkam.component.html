@@ -5,40 +5,366 @@
 <!-- *ngIf="!loginDetail && mainDetail" -->
 <div >
   <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
+  <!-- header="Predict Packet Price " -->
+  <p-dialog [closable]="false" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="paperPredict" [style]="{width: '50vw'}">
+    <ng-template pTemplate="header">
+<p style="font-weight : bold; font-size: medium;">{{this.customers[0].Date|date}}</p>
+    </ng-template>
+    
+    <ng-template pTemplate="body">
+      <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+      border-radius: 20px;">
+        <p style="color: green; border:1px solid black" >Number of remaining packets: {{paperCurrent/500}}</p>
+        <p style="font-weight: bold;border:1px solid blue">Current Month Excess Criteria: {{excessCurrent}}paisa</p>
+        <p style="font-weight: bold; color: red;border:1px solid red">Preditcable for {{excessCurrent}}paisa is : Rs.{{excessDemo}} for Stock-{{paperCurrent/500}}packets.({{packetFuture}}packets - Rs.{{excessTotal}})</p>
+      </div>
+      <p style="font-weight: bold;color : blueviolet">Income Till Date : Rs.{{incomeCurrent}}|i.e,(Average Rs.{{averageIncome}})|for {{paperTillDate}}packets Used in {{doneDay}}days </p>
 
-  <p-dialog [draggable]="true" [resizable]="true" [maximizable]="true" header="Predict Packet Price " [(visible)]="paperPredict" [style]="{width: '50vw'}">
-   
-<p >Number of remaining packets: {{paperCurrent/500}}</p>
-<p style="font-weight: bold;">Current Month Excess Criteria: {{excessCurrent}}paisa</p>
-<p style="font-weight: bold; color: red;">Preditcable for {{excessCurrent}}paisa is : Rs.{{excessDemo}}</p>
-<p style="font-weight: bold;"> Average Packets Used in {{doneDay}}days is {{averagePacketUsed}}packets | 
+      <p style=" color: red; font-weight: bold;"> Average Packets Used in {{doneDay}}days is {{averagePacketUsed}}packets | 
+      
+        Balance Working Day in this Month is {{balanceWorkingDay}}days X {{averagePacketUsed}}packets = {{packetFuture}}packets
+      </p>
+      <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+      border-radius: 20px;">
+        <p style="color: green;font-weight: bold; border:1px solid black">Shortage/OverTage Packets: {{shortDay}}packets</p>
+        <p style="font-weight: bold;border:1px solid blue;">Approximate End Date of {{paperCurrent/500}}packets is {{balanceDays}}days </p>
+         <p style="color: red;font-weight: bold;border:1px solid red;">DEADLINE OF PAPER ENDING : {{dayExact | date}} </p>
 
-  Balance Working Day in this Month is {{balanceWorkingDay}}days X {{averagePacketUsed}}packets = {{packetFuture}}packets
-</p>
-<p style="font-weight: bold;">Shortage/OverTage Packets: {{shortDay}}packets</p>
-<p style="font-weight: bold;">Approximate End Date of {{paperCurrent/500}}packets is {{balanceDays}}days </p>
-<p style="font-weight: bold;">DEADLINE OF PAPER ENDING : {{dayExact | date}} </p>
-<p-table [rows]="20"
- responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true"  [loading]="loading" styleClass="p-datatable-gridlines"
-[paginator]="true" 
- [value]="prices">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Price per sheet (paisa)</th>
-      <th>price-remaining packets (Rs.)</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-price>
-    <tr>
-      <td>{{ price.sheetPrice }} paisa</td>
-      <td>Rs. {{ price.packetPrice }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+      </div>
+<div style="display: grid; grid-template-columns: 1fr 1fr ; gap: 16px;">
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Paper"> 
+      <label for="inputtext">Paper</label>
+  </span>
+
+    <p-selectButton  [options]="optionPaper" [(ngModel)]="predictionObj.PaperPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText
+       [(ngModel)]="predictionObj.Salary"> 
+      <label for="inputtext">Salary</label>
+  </span>
+
+    <p-selectButton [options]="optionSalary" [(ngModel)]="predictionObj.SalaryPending"  optionLabel="label" optionValue="value"></p-selectButton>
+
+    <button  (click)="overlaypanelSalary.show($event)" pButton pRipple type="button" icon="pi pi-sitemap" class="p-button-rounded"></button>
+    <p-overlayPanel #overlaypanelSalary>
+      <!-- <p-table [rows]="20"
+     responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true"  [loading]="loading" styleClass="p-datatable-gridlines"
+    [paginator]="true" 
+     [value]="prices">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Price per sheet (paisa)</th>
+          <th>price-remaining packets (Rs.)</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-price>
+        <tr>
+          <td>{{ price.sheetPrice }} paisa</td>
+          <td>Rs. {{ price.packetPrice }}</td>
+        </tr>
+      </ng-template>
+    </p-table>   -->
+    
+  <div style="display: grid; grid-template-rows: 2fr 1fr;">
+
+
+    <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr 1fr;">
+<div class="four-column">
+
+  <p>TAJ</p>
+
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+
+    <label for="minmaxfraction">Leave</label>
+    <p-inputNumber [(ngModel)]="tajLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+    </p-inputNumber>
+  </span>
+
+  <button (click)="calculateSalary('taj')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+
+    <label for="integeronly">Salary</label>
+    <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
+    </p-inputNumber>
+  </span>
+
+
+</div>
+<div class="four-column">
+
+  <p>NOOR</p>
+
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+
+    <label for="minmaxfraction">Leave</label>
+    <p-inputNumber [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+    </p-inputNumber>
+  </span>
+
+  <button (click)="calculateSalary('noor')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+
+    <label for="integeronly">Salary</label>
+    <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
+    </p-inputNumber>
+  </span>
+
+</div>
+<div class="four-column">
+  <p>ASSAN</p>
+
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+
+    <label for="minmaxfraction">Leave</label>
+    <p-inputNumber [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+    </p-inputNumber>
+  </span>
+
+  <button (click)="calculateSalary('assan')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+
+    <label for="integeronly">Salary</label>
+    <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
+    </p-inputNumber>
+  </span>
+
+</div>
+<div class="four-column">
+  <p>RASHEED</p>
+
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+
+    <label for="minmaxfraction">Leave</label>
+    <p-inputNumber [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+    </p-inputNumber>
+  </span>
+
+  <button (click)="calculateSalary('rasheed')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+
+    <label for="integeronly">Salary</label>
+    <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
+    </p-inputNumber>
+  </span>
+
+</div>
+<div class="four-column">
+  <p>MANI</p>
+
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+
+    <label for="minmaxfraction">Leave</label>
+    <p-inputNumber [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+    </p-inputNumber>
+  </span>
+
+  <button (click)="calculateSalary('mani')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+  <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+
+    <label for="integeronly">Salary</label>
+    <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
+    </p-inputNumber>
+  </span>
+
+</div>
+
+    </div>
+
+    <div>
+      <button  (click)="saveSalary(overlaypanelSalary)" pButton pRipple type="button" icon="pi pi-file" class="p-button-rounded"></button>
+
+
+    </div>
+  </div>
+  
+  </p-overlayPanel>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Toner"> 
+      <label for="inputtext">Toner</label>
+  </span>
+
+    <p-selectButton [options]="optionToner" [(ngModel)]="predictionObj.TonerPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Kl"> 
+      <label for="inputtext">KL Enterprises</label>
+  </span>
+
+    <p-selectButton [options]="optionKl" [(ngModel)]="predictionObj.KlPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Vadapalani"> 
+      <label for="inputtext">Vadapalani Bai</label>
+  </span>
+
+    <p-selectButton [options]="optionVadapalani"  [(ngModel)]="predictionObj.VadapalaniPending"optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.David"> 
+      <label for="inputtext">David</label>
+  </span>
+
+    <p-selectButton [options]="optionDavid" [(ngModel)]="predictionObj.DavidPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentTpm"> 
+      <label for="inputtext">Tpm Rent</label>
+  </span>
+
+    <p-selectButton [options]="optionRentTpm" [(ngModel)]="predictionObj.RentTpmPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentAshref"> 
+      <label for="inputtext">Ashref Rent</label>
+  </span>
+
+    <p-selectButton [options]="optionRentAshref" [(ngModel)]="predictionObj.RentAshrefPending"  optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentNoushad"> 
+      <label for="inputtext">Noushad Rent</label>
+  </span>
+
+    <p-selectButton [options]="optionRentNoushad" [(ngModel)]="predictionObj.RentNoushadPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Rent2"> 
+      <label for="inputtext">Rent 2 Kdm</label>
+  </span>
+
+    <p-selectButton [options]="optionRent2" [(ngModel)]="predictionObj.Rent2Pending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Current"> 
+      <label for="inputtext">Current</label>
+  </span>
+
+    <p-selectButton [options]="optionCurrent" [(ngModel)]="predictionObj.CurrentPending"  optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+  <div class="prediction">
+
+    <span class="p-float-label">
+      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Others"> 
+      <label for="inputtext">Others</label>
+  </span>
+
+    <p-selectButton [options]="optionOthers" [(ngModel)]="predictionObj.OthersPending" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
+
+</div>
+
+      <!-- Define the overlaypanel component -->
+
+
+
+
+    
+    </ng-template>
+
 
     <ng-template pTemplate="footer">
         <!-- <p-button icon="pi pi-check" (click)="displayBasic=false" label="Ok" styleClass="p-button-text"></p-button> -->
-    </ng-template>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+      <button pButton label="table" class="p-button-raised" icon="pi pi-cog" (click)="overlaypanel.show($event)"></button>
+      <!-- <button pButton  class="p-button-raised" ></button> -->
+
+      <button pButton *ngIf="notExecuted"  icon="pi pi-money-bill" (click)="executePredict()" pRipple type="button" label="Execute" class="p-button-rounded p-button-danger"></button>
+      <button pButton *ngIf="!notExecuted"  icon="pi pi-money-bill" (click)="overlaypanelPredict.show($event)" pRipple type="button" label="Output" class="p-button-rounded p-button-success"></button>
+
+
+
+      <button pButton (click)="savePredictObj()" class="p-button-raised" icon="pi pi-file"></button>
+
+        
+      <p-overlayPanel #overlaypanel>
+        <p-table [rows]="20"
+       responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true"  [loading]="loading" styleClass="p-datatable-gridlines"
+      [paginator]="true" 
+       [value]="prices">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Price per sheet (paisa)</th>
+            <th>price-remaining packets (Rs.)</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-price>
+          <tr>
+            <td>{{ price.sheetPrice }} paisa</td>
+            <td>Rs. {{ price.packetPrice }}</td>
+          </tr>
+        </ng-template>
+      </p-table>  
+      </p-overlayPanel>
+
+      <!-- this.predictPrices.push({sheetPrice : price/100,packetPrice : packetPrice2 ,
+ 
+        incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
+       this.prices.push({sheetPrice : price/100, packetPrice : packetPrice2 }) -->
+      
+      <p-overlayPanel #overlaypanelPredict>
+
+    <p style="color : green ;">Income So Far : Rs.{{incomeCurrent}} | Amount Paid : Rs.{{totalPaid}} | Amount Pending : Rs.{{totalPending}}||Current Month Excess Criteria: {{excessCurrent}}paisa</p> 
+    <button  (click)="closePredict(overlaypanelPredict)" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded"></button>
+
+
+        <p-table [rows]="20"
+       responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true"  [loading]="loading" styleClass="p-datatable-gridlines"
+      [paginator]="true" 
+       [value]="predictPrices">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Price per sheet (paisa)</th>
+            <th>Amount-remaining packets (Rs.)</th>
+            <th>Old Income - Paid</th>
+            <th>Future Income - Pending</th>
+            <th>Estimated Profit</th>
+            
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-price>
+          <tr>
+            <td style="font-size: 15px;">{{ price.sheetPrice }} paisa</td>
+            <td style="font-size: 15px;">Rs. {{ price.packetPrice }}</td>
+          <td style="color: blueviolet; font-weight: bold; font-size: 15px;">Rs.{{ price.incomePaid }}</td>
+            <td style="color : red;  font-weight: bold; font-size: 15px;">Rs. {{ price.pendingPredict }}</td>
+            <td style="color: green;  font-weight: bold; font-size: 15px;">Rs.{{ price.totalPredict }} </td>
+          
+          </tr>
+        </ng-template>
+      </p-table>  
+      </p-overlayPanel>
+
+
+    </div>
+    
+
+
+      </ng-template>
 </p-dialog>
 
   <p-table  *ngIf="!showCal" #dt1 [value]="customers" dataKey="id"
@@ -53,7 +379,123 @@
 
         </div>
         <div class="title-class"><h3 (click)="nameClicked()" >KODAMBAKKAM</h3>
+          <button *ngIf="showButton"  (click)="overlaypanelSalary2.show($event)" pButton pRipple type="button" icon="pi pi-sitemap" class="p-button-rounded"></button>
+          <p-overlayPanel #overlaypanelSalary2>
 
+          
+        <div style="display: grid; grid-template-rows: 2fr 1fr;">
+      
+      
+          <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr 1fr;">
+      <div class="four-column">
+      
+        <p>TAJ</p>
+      
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+      
+          <label for="minmaxfraction">Leave</label>
+          <p-inputNumber [(ngModel)]="tajLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          </p-inputNumber>
+        </span>
+      
+        <button (click)="calculateSalary('taj')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+      
+          <label for="integeronly">Salary</label>
+          <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
+          </p-inputNumber>
+        </span>
+      
+      
+      </div>
+      <div class="four-column">
+      
+        <p>NOOR</p>
+      
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+      
+          <label for="minmaxfraction">Leave</label>
+          <p-inputNumber [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          </p-inputNumber>
+        </span>
+      
+        <button (click)="calculateSalary('noor')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+      
+          <label for="integeronly">Salary</label>
+          <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
+          </p-inputNumber>
+        </span>
+      
+      </div>
+      <div class="four-column">
+        <p>ASSAN</p>
+      
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+      
+          <label for="minmaxfraction">Leave</label>
+          <p-inputNumber [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          </p-inputNumber>
+        </span>
+      
+        <button (click)="calculateSalary('assan')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+      
+          <label for="integeronly">Salary</label>
+          <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
+          </p-inputNumber>
+        </span>
+      
+      </div>
+      <div class="four-column">
+        <p>RASHEED</p>
+      
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+      
+          <label for="minmaxfraction">Leave</label>
+          <p-inputNumber [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          </p-inputNumber>
+        </span>
+      
+        <button (click)="calculateSalary('rasheed')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+      
+          <label for="integeronly">Salary</label>
+          <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
+          </p-inputNumber>
+        </span>
+      
+      </div>
+      <div class="four-column">
+        <p>MANI</p>
+      
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+      
+          <label for="minmaxfraction">Leave</label>
+          <p-inputNumber [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          </p-inputNumber>
+        </span>
+      
+        <button (click)="calculateSalary('mani')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+      
+          <label for="integeronly">Salary</label>
+          <p-inputNumber [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
+          </p-inputNumber>
+        </span>
+      
+      </div>
+      
+          </div>
+      
+          <div>
+            <!-- <button  (click)="saveSalary(overlaypanelSalary)" pButton pRipple type="button" icon="pi pi-file" class="p-button-rounded"></button> -->
+      TOTAL : {{tajCalculate + noorCalculate + assanCalculate + maniCalculate + rasheedCalculate}}
+      
+          </div>
+        </div>
+        
+        </p-overlayPanel>
           <button *ngIf="showButton"  pButton pRipple (click)="calClicked()" type="button" icon="pi pi-calendar" class="p-button-rounded"></button>
           <button *ngIf="showButton"  pButton pRipple type="button" (click)="checkPaperRemaining()" icon="pi pi-qrcode" class="p-button-rounded p-button-success"></button>
 

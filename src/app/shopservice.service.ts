@@ -7,7 +7,7 @@ import { kdmAccounts } from './kodambakkam/kdmDataModel';
 })
 export class ShopserviceService {
    //readonly APIUrl ="http://127.0.0.1:8000";
-  // readonly adminUrl ="http://127.0.0.1:8000/admin/"
+  //readonly adminUrl ="http://127.0.0.1:8000/admin/"
 
 
 
@@ -71,6 +71,28 @@ editKdmMonthById(accounts: any, id: any):Observable<any[]>{
 deleteKdmMonthById(id: any):Observable<any[]>{
   return this.http.delete<any[]>(this.APIUrl + '/kodambakkam/kdmMonth/' + id + '/')
 }
+
+
+
+getPredict():Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/kodambakkam/predictionData/')
+}
+getPredictById(id : any):Observable<any[]>{
+  return this.http.get<any[]>(this.APIUrl + '/kodambakkam/predictionData/' + id)
+}
+addPredict(accounts: any):Observable<any[]>{
+  return this.http.post<any[]>(this.APIUrl + '/kodambakkam/predictionData/', accounts)
+}
+editPredictById(accounts: any, id: any):Observable<any[]>{
+  return this.http.put<any[]>(this.APIUrl + '/kodambakkam/predictionData/' + id + '/', accounts)
+}
+deletePredictById(id: any):Observable<any[]>{
+  return this.http.delete<any[]>(this.APIUrl + '/kodambakkam/predictionData/' + id + '/')
+}
+
+
+
+
 
 
 getCombinedMonth():Observable<any[]>{

@@ -1,20 +1,28 @@
-import { Component, OnInit ,Output,EventEmitter ,Input} from '@angular/core';
+import { Component,ViewChild, OnInit ,Output,EventEmitter ,Input} from '@angular/core';
 import { ShopserviceService } from '../shopservice.service';
-import { combinedMonth, kdmAccounts,kdmMonth,rentSheet } from './kdmDataModel';
+import { combinedMonth, kdmAccounts,kdmMonth,rentSheet,predictionData } from './kdmDataModel';
 import { ConfirmationService, MessageService ,} from 'primeng/api';
 import { kdmLabourDetails } from './kdmDataModel';
 import { Validators,FormControl,FormGroup } from '@angular/forms';
+import { OverlayPanel } from 'primeng/overlaypanel';
+
 import { Subscription } from 'rxjs';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import { AnyMxRecord } from 'dns';
 @Component({
   selector: 'app-kodambakkam',
   templateUrl: './kodambakkam.component.html',
   styleUrls: ['./kodambakkam.component.css']
 })
 export class KodambakkamComponent implements OnInit {
+@ViewChild('overlaypanelPredict') overlaypanelPredict : any;
+
   @Input() adminAccess: boolean = false
   @Output() saveClicked = new EventEmitter();
   kdmAccountDetail: kdmAccounts = <kdmAccounts>{};
   kdmAccountHolidayDetail: kdmAccounts = <kdmAccounts>{};
+  predictionObj : predictionData = <predictionData>{};
+
   allAccountDetail: kdmAccounts = <kdmAccounts>{};
   allLabourDetail: kdmLabourDetails = <kdmLabourDetails>{};
   dataIncome: any;
@@ -225,6 +233,7 @@ export class KodambakkamComponent implements OnInit {
 
   // blackDonar : number =450;
 
+
   constructor(private service: ShopserviceService, private confirmationService: ConfirmationService) { }
   // private getTime(date? : Date){
   //   return date != null ? date.getTime() : 0;
@@ -237,6 +246,75 @@ export class KodambakkamComponent implements OnInit {
     else {
       return false
     }
+  }
+  optionPaper = [{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+  valuePaper = 0
+optionSalary =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueSalary =0
+
+optionToner =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueToner =0
+optionKl =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueKl=0
+optionVadapalani =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueVadapalani =0
+optionDavid =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueDavid =0
+optionRentTpm =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueRentTpm=0
+optionRentAshref =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueRentAshref=0
+optionRentNoushad =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueRentNoushad=0
+optionRent2 =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueRent2=0
+optionCurrent =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueCurrent=0
+optionOthers =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+valueOthers=0
+getButtonClass(selectedOption : any) {
+  if (selectedOption === 0) {
+    return 'pending-button';
+  } else if (selectedOption === 1) {
+    return 'paid-button';
+  } else {
+    return ''; // fallback for other cases
+  }
+}
+  predictionInitialize(){
+
+
+
+
+this.predictionObj.MonthString= ""
+
+this.predictionObj.Year= 0
+this.predictionObj.Paper= 120000
+this.predictionObj.PaperPending= 0
+this.predictionObj.Salary= 0
+this.predictionObj.SalaryPending= 0
+this.predictionObj.Toner= 12000
+this.predictionObj.TonerPending= 0
+this.predictionObj.Kl= 0
+this.predictionObj.KlPending= 0
+this.predictionObj.Vadapalani= 0
+this.predictionObj.VadapalaniPending= 0
+this.predictionObj.David= 0
+this.predictionObj.DavidPending= 0
+this.predictionObj.RentTpm= Math.ceil((this.tpmRent*30))
+this.predictionObj.RentTpmPending= 0
+this.predictionObj.RentAshref= Math.ceil(((this.kdmRent*30)*17.5)/100)
+this.predictionObj.RentAshrefPending= 0
+this.predictionObj.RentNoushad= Math.ceil(((this.kdmRent*30)*47.5)/100)
+this.predictionObj.RentNoushadPending= 0
+this.predictionObj.Rent2= Math.ceil(((this.kdmRent*30)*33.33)/100)
+this.predictionObj.Rent2Pending= 0
+this.predictionObj.Current= 0
+this.predictionObj.CurrentPending= 0
+this.predictionObj.Others= 0
+this.predictionObj.OthersPending= 0
+
+
   }
   wholeDeleteShow: boolean = false;
 
@@ -639,6 +717,7 @@ for (let i = this.selectedAccounts.length - 1; i >= 0; i--) {
     if(entry.id === startDate.id){
       index = this.customers.indexOf(entry);
       this.indexPrevious=index
+      this.indexPrevious+=1
 
 
     }
@@ -673,9 +752,213 @@ paperPredict : boolean =false
 prices : any =[]
 
 excessDemo : any
+
+isPredictPresent : boolean =false
+predictObjId : number =0
+tajLeave : any
+noorLeave : any
+assanLeave : any
+rasheedLeave : any
+maniLeave : any
+tajCalculate : any =0
+noorCalculate : any=0
+assanCalculate : any=0
+rasheedCalculate : any=0
+maniCalculate : any=0
+calculateSalary(name : string){
+
+  let total = 30
+  if(name==="taj"){
+
+    let present = total - this.tajLeave
+    this.tajCalculate= Math.ceil(present* this.tajSalary)
+  }
+  if(name==="noor"){
+
+    let present = total - this.noorLeave
+    this.noorCalculate= Math.ceil(present* this.noorSalary)
+  }
+  if(name==="assan"){
+
+    let present = total - this.assanLeave
+    this.assanCalculate= Math.ceil(present* this.assanSalary)
+  }
+  if(name==="rasheed"){
+
+    let present = total - this.rasheedLeave
+    this.rasheedCalculate= Math.ceil(present* this.rasheedSalary)
+  }
+  if(name==="mani"){
+
+    let present = total - this.maniLeave
+    this.maniCalculate= Math.ceil(present* this.maniSalary)
+  }
+}
+
+closePredict(panel: OverlayPanel){
+  this.notExecuted=true
+  panel.hide();
+}
+saveSalary(panel: OverlayPanel){
+  this.predictionObj.Salary=this.tajCalculate+ this.noorCalculate+ this.assanCalculate+this.rasheedCalculate+this.maniCalculate
+
+
+  
+    panel.hide();
+ 
+}
+excessTotal : any;
+notExecuted: boolean = true
+predictInput(){
+  this.notExecuted=true
+}
+
+
+// optionCurrent =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+// valueCurrent=0
+// optionOthers =[{label: 'Pending', value: 0}, {label: 'Paid', value: 1}];
+// valueOthers=0
+
+// incomeCurrent
+getPaidPending(){
+  let paid = 0
+  let pending =0
+  if(!this.predictionObj.PaperPending){
+pending+= this.predictionObj.Paper
+
+  }
+  else{
+  paid+= this.predictionObj.Paper
+  
+  }
+  if(!this.predictionObj.SalaryPending){
+    pending+= this.predictionObj.Salary
+  }
+  else{
+    paid+= this.predictionObj.Salary
+  
+  }
+  
+  if(!this.predictionObj.TonerPending){
+    pending+= this.predictionObj.Toner
+  }
+  else{
+  
+    paid+= this.predictionObj.Toner
+  }
+  if(!this.predictionObj.KlPending){
+    pending+= this.predictionObj.Kl
+  }
+  else{
+    paid+= this.predictionObj.Kl
+    
+  }
+  if(!this.predictionObj.VadapalaniPending){
+    pending+= this.predictionObj.Vadapalani
+  }
+  else{
+    paid+= this.predictionObj.Vadapalani
+    
+  }
+  if(!this.predictionObj.DavidPending){
+    pending+= this.predictionObj.David
+  }
+  else{
+  
+    paid+= this.predictionObj.David
+  }
+  if(!this.predictionObj.RentTpmPending){
+    pending+= this.predictionObj.RentTpm
+  }
+  else{
+    paid+= this.predictionObj.RentTpm
+    
+  }
+  if(!this.predictionObj.RentAshrefPending){
+    pending+= this.predictionObj.RentAshref
+  }
+  else{
+    paid+= this.predictionObj.RentAshref
+    
+  }
+  if(!this.predictionObj.RentNoushadPending){
+    pending+= this.predictionObj.RentNoushad
+  }
+  else{
+    paid+= this.predictionObj.RentNoushad
+    
+  }
+  if(!this.predictionObj.Rent2Pending){
+    pending+= this.predictionObj.Rent2
+  }
+  else{
+  
+    paid+= this.predictionObj.Rent2
+  }
+  if(!this.predictionObj.CurrentPending){
+    pending+= this.predictionObj.Current
+  }
+  else{
+    paid+= this.predictionObj.Current
+    
+  }
+  if(!this.predictionObj.OthersPending){
+    pending+= this.predictionObj.Others
+  }
+  else{
+    paid+= this.predictionObj.Others
+    
+  }
+
+return {Pending : pending, Paid : paid}
+}
+
+// incomeCurrent
+totalPending : any=0
+totalPaid : any=0
+executePredict(){
+this.predictPrices=[]
+let paid = 0
+let pending =0
+let pendingPaidObj = this.getPaidPending()
+paid= pendingPaidObj.Paid
+pending = pendingPaidObj.Pending
+this.totalPaid=paid
+this.totalPending=pending
+
+function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
+  // const sheetsPerPacket = 500;
+  // const totalSheets = remainingPackets * sheetsPerPacket;
+  const pricePerPacket = remainingPackets * pricePerSheet / 100;
+  return pricePerPacket.toFixed(2);
+}
+
+for (let price = 125; price <= 175; price += 5) {
+  let packetPrice2 : any
+   packetPrice2 = predictPacketPrice(this.packetFuture*500, price);
+
+   let total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
+ this.predictPrices.push({sheetPrice : price/100,packetPrice : packetPrice2 ,
+ 
+ incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
+
+
+}
+
+
+this.notExecuted=false
+}
+
+predictPrices: any;
 checkPaperRemaining(){
+this.notExecuted= true
+this.predictObjId=0
+  this.showProgress=true
+  
 const demo =  predictPacketPrice(this.paperCurrent, this.excessCurrent *100);
 this.excessDemo= demo
+
+this.excessTotal= predictPacketPrice(this.packetFuture*500, this.excessCurrent *100);
 this.prices=[]
 
 function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
@@ -693,7 +976,107 @@ this.prices.push({sheetPrice : price/100, packetPrice : packetPrice2 })
 
 }
 
-this.paperPredict=true
+
+this.service.getPredict().subscribe((predict : any)=>{
+
+  if(!predict.length){
+   this.predictObjId=0
+   let dateSelect = this.customers[0].Date
+
+   this.yearSelected= dateSelect.getFullYear();
+   const month = dateSelect.getMonth() + 1
+   this.monthSelected= this.getMonthName(month)
+
+   this.predictionObj.MonthString=this.monthSelected
+   this.predictionObj.Year= this.yearSelected
+   
+   this.showProgress=false
+   this.paperPredict=true
+  }
+  else{
+
+    
+
+
+
+let dateSelect = this.customers[0].Date
+
+this.yearSelected= dateSelect.getFullYear();
+const month = dateSelect.getMonth() + 1
+this.monthSelected= this.getMonthName(month)
+
+
+let check =false
+    predict.forEach((data : any)=>{
+
+if(data.MonthString ===this.monthSelected && data.Year===this.yearSelected){
+check =true
+this.predictionObj=data
+
+this.predictObjId=data.id
+}
+    })
+
+
+
+    if(!check){
+
+      this.predictObjId=0
+    }
+
+
+    this.showProgress=false
+    this.paperPredict=true
+  }
+},(error: any)=>{
+  console.log(error)
+
+  this.showProgress=false
+  this.paperPredict=false
+})
+
+
+
+
+
+
+
+
+
+}
+
+
+
+savePredictObj(){
+  this.paperPredict=false
+this.showProgress=true
+
+  if(!this.predictObjId){
+
+    this.service.addPredict(this.predictionObj).subscribe((event : any)=>{
+console.log(this.predictionObj)
+      console.log("ADDED NEW PREDICT OBJECT")
+      this.showProgress=false
+     
+    },(error: any)=>{
+      console.log(error)
+      this.showProgress=false
+    })
+
+
+  }
+else{
+
+  this.service.editPredictById(this.predictionObj,this.predictObjId).subscribe((event : any)=>{
+    console.log(this.predictionObj)
+    console.log("Edited EXisting Predict OBJECT")
+    this.showProgress=false
+    
+  },(error: any)=>{
+    console.log(error)
+    this.showProgress=false
+  })
+}
 
 }
 checkEntryPresent(){
@@ -773,7 +1156,11 @@ this.monthlyObj.TotalIncome=this.allAccountDetail.TotalIncome
 
 this.monthlyObj.TajPresent= this.allLabourDetail.TajPresent
 this.monthlyObj.NoorPresent = this.allLabourDetail.NoorPresent
+
 this.monthlyObj.PaperDay1 = this.customers[this.indexPrevious].PaperPresentToday
+console.log("🚀 ~ file: kodambais.monthlyObj.PaperDay1:", this.monthlyObj.PaperDay1)
+
+
 this.monthlyObj.PaperLast = this.selectedAccounts[this.selectedAccounts.length-1].PaperPresentToday
 this.monthlyObj.PaperUsed=Math.ceil( this.wholePaperCount )
 this.monthlyObj.PaperCost= Math.ceil( this.wholePaperCount * 500 * this.paperRate)
@@ -1500,7 +1887,6 @@ items3: any
 this.showCal=false
     this.showProgress=true
 
-
     if(this.adminAccess){
       this.loginDetail=true
       this.mainDetail=false
@@ -1817,13 +2203,15 @@ this.paperCurrent= (this.customers[0].PaperPresentToday * 500) + this.customers[
 const dayOfMonth = this.customers[0].Date.getDate();
 this.currentDoneDate=dayOfMonth
 let totalincome =0
-let paperSoldToday=0
+let paperSoldToday = 0
 for(let i =0 ; i < dayOfMonth ; i ++){
 
 totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
 paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
 
 }
+
+
 this.excessCurrent= (totalincome/paperSoldToday).toFixed(2);
 
 function getDaysInMonth(date: Date): number {
@@ -1870,6 +2258,13 @@ if(this.customers[i].isHoliday){
   }
 
 this.doneDay = completedDay + holiday
+
+
+this.incomeCurrent=totalincome
+this.paperTillDate= (paperSoldToday/500).toFixed(2)
+this.averageIncome= Math.ceil(this.incomeCurrent/this.doneDay)
+
+
 this.balanceWorkingDay= this.totalWorkingDay - completedDay
 let packet = paperSoldToday/500
 this.averagePacketUsed = (packet/ (dayOfMonth - sunday - holiday)).toFixed(2)
@@ -1887,18 +2282,51 @@ console.log(`There are ${totalDaysInMonth} days in the month of ${date.toLocaleS
 this.balanceDays = ((this.paperCurrent/500)/this.averagePacketUsed).toFixed(2)
 
 
+// function getDateAfterDays(numberOfDays: number, currentDate: string): string {
+
+//   const currentDateTime = new Date(currentDate);
+
+//   const dateAfterDays = new Date(currentDateTime.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
+
+//   return dateAfterDays.toISOString();
+// }
+
 function getDateAfterDays(numberOfDays: number, currentDate: string): string {
   // Convert the current date string to a Date object
   const currentDateTime = new Date(currentDate);
 
-  // Add the number of days to the current date
-  const dateAfterDays = new Date(currentDateTime.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
+  // Initialize a variable to keep track of the number of days passed
+  let daysPassed = 0;
+
+  // Loop through the days and skip Sundays
+  while (daysPassed < numberOfDays) {
+    // Get the day of the week (0 = Sunday, 1 = Monday, etc.)
+    const dayOfWeek = currentDateTime.getDay();
+
+    // If it's not Sunday or the last day, increment the days passed and the current date
+    if (dayOfWeek !== 0 || daysPassed === 0 || daysPassed === numberOfDays - 1) {
+      daysPassed++;
+      currentDateTime.setDate(currentDateTime.getDate() + 1);
+    } else {
+      // If it's Sunday, skip it by adding an extra day
+      currentDateTime.setDate(currentDateTime.getDate() + 1);
+    }
+  }
 
   // Convert the date after days back to an ISO string format
-  return dateAfterDays.toISOString();
+  return currentDateTime.toISOString();
 }
+
+
+
+
+
 console.log(getDateAfterDays(this.balanceDays,this.customers[0].Date)); // Output: "2023-03-16T18:30:00.000Z"
 this.dayExact=getDateAfterDays(this.balanceDays,this.customers[0].Date)
+
+
+this.predictionInitialize()
+
 console.log(dayOfMonth)
 console.log(this.excessCurrent)
 console.log(this.paperCurrent)
@@ -1923,6 +2351,9 @@ error=>{
 
 
 }
+paperTillDate :any
+avaerageIncome : number =0
+incomeCurrent : number =0;
 tonerYesterday: number=0;
 paperPresentYesterday:number =0;
 sheetYesterday : number =0

@@ -8,7 +8,7 @@
 // import { ButtonModule } from 'primeng/button';
 // import {DropdownModule} from 'primeng/dropdown';
 
-
+import {SelectButtonModule} from 'primeng/selectbutton';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -46,7 +46,7 @@ import {PickListModule} from 'primeng/picklist';
 import {SidebarModule} from 'primeng/sidebar';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {RadioButtonModule} from 'primeng/radiobutton';
-import {SelectButtonModule} from 'primeng/selectbutton';
+
 import {CheckboxModule} from 'primeng/checkbox';
 import { ShopserviceService } from './shopservice.service';
 import{HttpClientModule} from '@angular/common/http'
@@ -97,6 +97,7 @@ import {RippleModule} from 'primeng/ripple';
     GalleriaModule,
     DialogModule,
     ToastModule,
+
     TerminalModule,
     TreeModule,
     BrowserAnimationsModule,

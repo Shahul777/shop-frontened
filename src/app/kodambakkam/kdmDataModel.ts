@@ -136,3 +136,33 @@ export interface combinedMonth{
     isEdited : any;
 
 }
+export interface predictionData{
+
+    MonthString : any;
+    MonthNum : any;
+    Year : any;
+    Paper : any;
+    PaperPending : any;
+    Salary : any;
+    SalaryPending : any;
+    Toner : any;
+    TonerPending : any;
+    Kl : any;
+    KlPending : any;
+    Vadapalani : any;
+    VadapalaniPending : any;
+    David : any;
+    DavidPending  : any;
+    RentTpm : any;
+    RentTpmPending  : any;
+    RentAshref  : any;
+    RentAshrefPending  : any;
+    RentNoushad  : any;
+    RentNoushadPending  : any;
+    Rent2 : any;
+    Rent2Pending  : any;
+    Current : any;
+    CurrentPending  : any;
+    Others  : any;
+    OthersPending  : any;
+}

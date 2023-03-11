@@ -1661,6 +1661,7 @@ for (let i = this.selectedAccounts.length - 1; i >= 0; i--) {
     if(entry.id === startDate.id){
       index = this.customers.indexOf(entry);
       this.indexPrevious=index
+      this.indexPrevious+=1
 
 
     }
@@ -1770,6 +1771,9 @@ this.monthlyObj.AssanPresent= this.allLabourDetail.AssanPresent
 this.monthlyObj.ManiPresent = this.allLabourDetail.ManiPresent
 this.monthlyObj.RasheedPresent = this.allLabourDetail.RasheedPresent
 this.monthlyObj.PaperDay1 = this.customers[this.indexPrevious].PaperPresentToday
+console.log("🚀 ~ file: tr ~ this.monthlyObj.PaperDay1:", this.monthlyObj.PaperDay1)
+
+
 this.monthlyObj.PaperLast = this.selectedAccounts[this.selectedAccounts.length-1].PaperPresentToday
 this.monthlyObj.PaperUsed=Math.ceil( this.wholePaperCount )
 this.monthlyObj.PaperCost= Math.ceil( this.wholePaperCount * 500 * this.paperRate)
