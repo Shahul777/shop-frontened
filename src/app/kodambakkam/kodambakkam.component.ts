@@ -22,7 +22,7 @@ export class KodambakkamComponent implements OnInit {
   kdmAccountDetail: kdmAccounts = <kdmAccounts>{};
   kdmAccountHolidayDetail: kdmAccounts = <kdmAccounts>{};
   predictionObj : predictionData = <predictionData>{};
-
+  items4: any
   allAccountDetail: kdmAccounts = <kdmAccounts>{};
   allLabourDetail: kdmLabourDetails = <kdmLabourDetails>{};
   dataIncome: any;
@@ -799,12 +799,14 @@ closePredict(panel: OverlayPanel){
   this.notExecuted=true
   panel.hide();
 }
-saveSalary(panel: OverlayPanel){
+salaryOpen = false
+salaryOpen2= false
+saveSalary(){
   this.predictionObj.Salary=this.tajCalculate+ this.noorCalculate+ this.assanCalculate+this.rasheedCalculate+this.maniCalculate
 
 
-  
-    panel.hide();
+  this.salaryOpen2=false
+    // panel.hide();
  
 }
 excessTotal : any;
@@ -916,8 +918,14 @@ return {Pending : pending, Paid : paid}
 // incomeCurrent
 totalPending : any=0
 totalPaid : any=0
+
+// balanceWorkingDay
+twopredict : any
+indexpredict : any
 executePredict(){
 this.predictPrices=[]
+this.twopredict=[]
+this.indexpredict=0
 let paid = 0
 let pending =0
 let pendingPaidObj = this.getPaidPending()
@@ -933,12 +941,28 @@ function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
   return pricePerPacket.toFixed(2);
 }
 
+
+let packetPrice2 : any
+packetPrice2 = predictPacketPrice(this.packetFuture*500, 100);
+
+let total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
+this.twopredict.push({sheetPrice : 100/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
+
+incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
+
+packetPrice2 = predictPacketPrice(this.packetFuture*500, 110);
+
+total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
+this.twopredict.push({sheetPrice : 110/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
+
+incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
+
 for (let price = 125; price <= 175; price += 5) {
   let packetPrice2 : any
    packetPrice2 = predictPacketPrice(this.packetFuture*500, price);
 
    let total = ((this.incomeCurrent-this.totalPaid)+(packetPrice2 - this.totalPending))
- this.predictPrices.push({sheetPrice : price/100,packetPrice : packetPrice2 ,
+ this.predictPrices.push({sheetPrice : price/100,averageIncome: Math.ceil((packetPrice2/this.balanceWorkingDay)),packetPrice : packetPrice2 ,
  
  incomePaid : this.incomeCurrent-this.totalPaid, pendingPredict : packetPrice2 - this.totalPending,totalPredict : total })
 
@@ -2034,6 +2058,12 @@ let val : number = + this.rentSheet.tajSalary
       {label: 'Data Section'},
       
   ];
+  this.items4 = [
+    {label: '1.25 to 1.75 paisa'},
+    {label: '1 to 1.10 paisa'},
+
+    
+];
 
   this.items3=[
     {label: 'Accounts Section'},

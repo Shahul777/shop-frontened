@@ -1339,9 +1339,15 @@ this.service.editKdmMonthById(kdmObj, kdmObj.id).subscribe((event : any)=>{
 
   
 }
-kdmOutput(entry : any){
+data: any;
+comboOptions : any
+
+graphOutput = false
+kdmOutput(index : any){
 
 }
+// }
+// }
 
 tpmExecute(index : any){
   this.executeSpin=true
@@ -1537,6 +1543,85 @@ summaryYear(){
   this.summaryKdm = JSON.parse(JSON.stringify(this.kdmMonth));
   this.summaryTpm = JSON.parse(JSON.stringify(this.tpmMonth));
 
+
+
+
+  let label=[]
+  let income=[]
+  let netProfit=[]
+  let expense=[]
+  let black=[]
+  let paper=[]
+
+  this.summaryCombined.forEach((combined: any)=>{
+
+    label.push(combined.Month)
+
+  })
+  this.data = {
+    labels: ['November', 'December', 'January', 'February'],
+    datasets: [
+      {
+        label: 'Total Income',
+        backgroundColor: '#42A5F5',
+        borderColor: '#1E88E5',
+        data: [247191, 221450, 203512, 188876]
+      },
+      {
+        label: 'Net Profit',
+        backgroundColor: '#9CCC65',
+        borderColor: '#7CB342',
+        data: [108091, 96423, 72165, 61542]
+      },
+      {
+        label: 'Total Expense',
+        backgroundColor: '#FFA726',
+        borderColor: '#FFA726',
+        data: [139100, 125027, 131347, 127334]
+      },
+      {
+        label: 'Black Reading',
+        backgroundColor: '#66BB6A',
+        borderColor: '#66BB6A',
+        data: [181366, 164888, 167672, 165925]
+      },
+      {
+        label: 'Paper Used',
+        backgroundColor: '#EF5350',
+        borderColor: '#EF5350',
+        data: [260, 246, 258, 240]
+      }
+    ]
+  };
+
+  this.comboOptions = {
+    title: {
+      display: true,
+      text: 'Income, Profit, and Expenses'
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    legend: {
+      position: 'bottom'
+    },
+    responsive: true
+  };
+
+
+  this.graphOutput=true
+
+
+let result =[]
+result.push(this.summaryCombined)
+result.push(this.summaryKdm)
+result.push(this.summaryTpm)
+
+console.log("array",result)
   console.log(this.summaryCombined)
   console.log(this.summaryKdm)
   console.log(this.summaryTpm)

@@ -35,6 +35,11 @@
   #inputtext.input-prediction {
     color: black;
   }
+
+  :host ::ng-deep .text-salary .p-inputnumber-input {
+    color: black !important;
+
+  }
   .four-column{
     display: grid;
     grid-template-columns: 0.3fr 1fr 0.2fr 1fr;
@@ -48,6 +53,13 @@
     padding: 16px;
     /* margin-left : 8px; */
 }
+
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 1rem;
+    overflow: auto;
+}
+
+
 .a4-oldgone{
     display: grid;
     grid-template-columns: 1fr 1fr;
