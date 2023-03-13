@@ -14,28 +14,28 @@
     <ng-template pTemplate="body">
       <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
       border-radius: 20px;">
-        <p style="color: green; border:1px solid black" >Number of remaining packets: {{paperCurrent/500}}</p>
-        <p style="font-weight: bold;border:1px solid blue">Current Month Excess Criteria: {{excessCurrent}}paisa</p>
-        <p style="font-weight: bold; color: red;border:1px solid red">Preditcable for {{excessCurrent}}paisa is : Rs.{{excessDemo}} for Stock-{{paperCurrent/500}}packets.({{packetFuture}}packets - Rs.{{excessTotal}})</p>
+        <p style=" font-weight: bold; color: wheat; border:1px solid wheat" >Number of remaining packets: {{paperCurrent/500}}</p>
+        <p style="font-weight: bold;border:1px solid wheat">Current Month Excess Criteria: {{excessCurrent}}paisa</p>
+        <p style="font-weight: bold; color: rgb(0, 255, 242);border:1px solid wheat">Preditcable for {{excessCurrent}}paisa is : Rs.{{excessDemo}} for Stock-{{paperCurrent/500}}packets.({{packetFuture}}packets - Rs.{{excessTotal}})</p>
       </div>
-      <p style="font-weight: bold;color : blueviolet">Income Till Date : Rs.{{incomeCurrent}}|i.e,(Average Rs.{{averageIncome}})|for {{paperTillDate}}packets Used in {{doneDay}}days </p>
+      <p style="font-weight: bold;color : rgb(169, 188, 206)">Income Till Date : Rs.{{incomeCurrent}}|i.e,(Average Rs.{{averageIncome}})|for {{paperTillDate}}packets Used in {{doneDay}}days </p>
 
-      <p style=" color: red; font-weight: bold;"> Average Packets Used in {{doneDay}}days is {{averagePacketUsed}}packets | 
+      <p style=" color: yellow; font-weight: bold;"> Average Packets Used in {{doneDay}}days is {{averagePacketUsed}}packets | 
       
         Balance Working Day in this Month is {{balanceWorkingDay}}days X {{averagePacketUsed}}packets = {{packetFuture}}packets
       </p>
       <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
       border-radius: 20px;">
-        <p style="color: green;font-weight: bold; border:1px solid black">Shortage/OverTage Packets: {{shortDay}}packets</p>
-        <p style="font-weight: bold;border:1px solid blue;">Approximate End Date of {{paperCurrent/500}}packets is {{balanceDays}}days </p>
-         <p style="color: red;font-weight: bold;border:1px solid red;">DEADLINE OF PAPER ENDING : {{dayExact | date}} </p>
+        <p style="color: rgb(182, 155, 178);font-weight: bold; border:1px solid wheat">Shortage/OverTage Packets: {{shortDay}}packets</p>
+        <p style="font-weight: bold;border:1px solid wheat;">Approximate End Date of {{paperCurrent/500}}packets is {{balanceDays}}days </p>
+         <p style="color: yellow;font-weight: bold;border:1px solid wheat;">DEADLINE OF PAPER ENDING : {{dayExact | date}} </p>
 
       </div>
 <div style="display: grid; grid-template-columns: 1fr 1fr ; gap: 16px;">
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Paper"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Paper"> 
       <label for="inputtext">Paper</label>
   </span>
 
@@ -44,7 +44,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText
        [(ngModel)]="predictionObj.Salary"> 
       <label for="inputtext">Salary</label>
   </span>
@@ -66,7 +66,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
     
         <label for="minmaxfraction">Leave</label>
-        <p-inputNumber class="text-salary"  [(ngModel)]="tajLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+        <p-inputNumber [(ngModel)]="tajLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
         </p-inputNumber>
       </span>
     
@@ -74,7 +74,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
     
         <label for="integeronly">Salary</label>
-        <p-inputNumber class="text-salary"  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
+        <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
         </p-inputNumber>
       </span>
     
@@ -87,7 +87,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
     
         <label for="minmaxfraction">Leave</label>
-        <p-inputNumber  class="text-salary"  [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+        <p-inputNumber    [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
         </p-inputNumber>
       </span>
     
@@ -95,7 +95,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
     
         <label for="integeronly">Salary</label>
-        <p-inputNumber  class="text-salary"  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
+        <p-inputNumber    [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
         </p-inputNumber>
       </span>
     
@@ -106,7 +106,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
     
         <label for="minmaxfraction">Leave</label>
-        <p-inputNumber class="text-salary"  [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+        <p-inputNumber  [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
         </p-inputNumber>
       </span>
     
@@ -114,7 +114,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
     
         <label for="integeronly">Salary</label>
-        <p-inputNumber class="text-salary"  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
+        <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
         </p-inputNumber>
       </span>
     
@@ -125,7 +125,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
     
         <label for="minmaxfraction">Leave</label>
-        <p-inputNumber class="text-salary"  [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+        <p-inputNumber   [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
         </p-inputNumber>
       </span>
     
@@ -133,7 +133,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
     
         <label for="integeronly">Salary</label>
-        <p-inputNumber class="text-salary"  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
+        <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
         </p-inputNumber>
       </span>
     
@@ -144,7 +144,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
     
         <label for="minmaxfraction">Leave</label>
-        <p-inputNumber class="text-salary"  [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+        <p-inputNumber   [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
         </p-inputNumber>
       </span>
     
@@ -152,7 +152,7 @@
       <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
     
         <label for="integeronly">Salary</label>
-        <p-inputNumber class="text-salary"  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
+        <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
         </p-inputNumber>
       </span>
     
@@ -181,7 +181,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Toner"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Toner"> 
       <label for="inputtext">Toner</label>
   </span>
 
@@ -190,7 +190,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Kl"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Kl"> 
       <label for="inputtext">KL Enterprises</label>
   </span>
 
@@ -199,7 +199,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Vadapalani"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Vadapalani"> 
       <label for="inputtext">Vadapalani Bai</label>
   </span>
 
@@ -208,7 +208,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.David"> 
+      <input (input)="predictInput()" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.David"> 
       <label for="inputtext">David</label>
   </span>
 
@@ -217,7 +217,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentTpm"> 
+      <input (input)="predictInput()"   type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentTpm"> 
       <label for="inputtext">Tpm Rent</label>
   </span>
 
@@ -226,7 +226,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentAshref"> 
+      <input (input)="predictInput()" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentAshref"> 
       <label for="inputtext">Ashref Rent</label>
   </span>
 
@@ -235,7 +235,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentNoushad"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.RentNoushad"> 
       <label for="inputtext">Noushad Rent</label>
   </span>
 
@@ -244,7 +244,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Rent2"> 
+      <input (input)="predictInput()" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Rent2"> 
       <label for="inputtext">Rent 2 Kdm</label>
   </span>
 
@@ -253,7 +253,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Current"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Current"> 
       <label for="inputtext">Current</label>
   </span>
 
@@ -262,7 +262,7 @@
   <div class="prediction">
 
     <span class="p-float-label">
-      <input (input)="predictInput()" class="input-prediction" type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Others"> 
+      <input (input)="predictInput()"  type="number" id="inputtext" pInputText [(ngModel)]="predictionObj.Others"> 
       <label for="inputtext">Others</label>
   </span>
 
@@ -427,7 +427,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
       
           <label for="inputtext">Leave</label>
-          <p-inputNumber class="text-salary"  [(ngModel)]="tajLeave" inputId="inputtext" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          <p-inputNumber  [(ngModel)]="tajLeave" inputId="inputtext" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
           </p-inputNumber>
         </span>
       
@@ -435,7 +435,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
       
           <label for="integeronly">Salary</label>
-          <p-inputNumber class="text-salary" [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
+          <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
           </p-inputNumber>
         </span>
       
@@ -448,7 +448,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
       
           <label for="minmaxfraction">Leave</label>
-          <p-inputNumber class="text-salary" [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          <p-inputNumber  [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
           </p-inputNumber>
         </span>
       
@@ -456,7 +456,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
       
           <label for="integeronly">Salary</label>
-          <p-inputNumber class="text-salary"  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
+          <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
           </p-inputNumber>
         </span>
       
@@ -467,7 +467,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
       
           <label for="minmaxfraction">Leave</label>
-          <p-inputNumber class="text-salary" [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          <p-inputNumber  [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
           </p-inputNumber>
         </span>
       
@@ -475,7 +475,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
       
           <label for="integeronly">Salary</label>
-          <p-inputNumber  class="text-salary" [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
+          <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
           </p-inputNumber>
         </span>
       
@@ -486,7 +486,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
       
           <label for="minmaxfraction">Leave</label>
-          <p-inputNumber class="text-salary" [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          <p-inputNumber  [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
           </p-inputNumber>
         </span>
       
@@ -494,7 +494,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
       
           <label for="integeronly">Salary</label>
-          <p-inputNumber class="text-salary" [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
+          <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
           </p-inputNumber>
         </span>
       
@@ -505,7 +505,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
       
           <label for="minmaxfraction">Leave</label>
-          <p-inputNumber class="text-salary" [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+          <p-inputNumber  [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
           </p-inputNumber>
         </span>
       
@@ -513,7 +513,7 @@
         <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
       
           <label for="integeronly">Salary</label>
-          <p-inputNumber class="text-salary" [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
+          <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
           </p-inputNumber>
         </span>
       
@@ -715,8 +715,25 @@
           {{customer.ColourCopies}}
         </td> -->
 
-        <td>
-          {{(customer.PaperSoldToday /500).toFixed(2)}}Packet({{customer.PaperSoldToday}})
+        <td style="width : 50px;">
+<div style="display: grid; grid-template-columns : 1fr 1fr; gap : 8px;">
+  {{(customer.PaperSoldToday /500).toFixed(2)}}Packet({{customer.PaperSoldToday}})
+
+  <i class="pi pi-info"  style="cursor : pointer" (click)="op.toggle($event)" style="font-size: 1.2rem"></i>
+</div>
+
+
+
+
+
+          <p-overlayPanel #op >
+            <ng-template pTemplate>
+   Black Reading : {{customer.BlackCopies}}
+   Colour Reading : {{customer.ColourCopies}}
+            </ng-template>
+          </p-overlayPanel>
+          <!-- <p-dropdown [options]="dropdownOptions(customer)" [(ngModel)]="selectedOptions" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
+       
         </td>
 
         <td>
@@ -1168,7 +1185,7 @@
 
 
 
-  <p-dialog header="Kodambakkam Entry" [closable]="true" [(visible)]="isAddAccounts" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+  <p-dialog class="custom-dialog" header="Kodambakkam Entry" [closable]="true" [(visible)]="isAddAccounts" [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
             [draggable]="true" [resizable]="true">
     <ng-template pTemplate="body">
 
@@ -1366,7 +1383,7 @@
                     <div>
                       <div class="field col-12 md:col-4">
                         <span class="p-float-label">
-                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="extraPaperRecieved"></p-inputNumber>
+                          <p-inputNumber   inputId="inputnumber" autocomplete="off" [(ngModel)]="extraPaperRecieved"></p-inputNumber>
                           <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
                           <label style=" font-size: 15px;" for="inputnumber">Paper Recieved Today</label>
                         </span>
@@ -1842,7 +1859,7 @@
           <div>
             <div class="field col-12 md:col-4">
               <span class="p-float-label">
-                <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="paperToTpm"></p-inputNumber>
+                <p-inputNumber   inputId="inputnumber" autocomplete="off" [(ngModel)]="paperToTpm"></p-inputNumber>
                 <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
                 <label style=" font-size: 15px;" for="inputnumber">Paper Sent To Trustpuram</label>
               </span>

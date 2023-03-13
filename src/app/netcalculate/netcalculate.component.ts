@@ -1586,7 +1586,7 @@ summaryYear(){
     datasets: [{
         type: 'line',
         label: 'PROFIT',
-        borderColor: '#000000',
+        borderColor: '#FAFA33',
         borderWidth: 2,
         fill: false,
         data: [
@@ -1672,6 +1672,7 @@ this.basicData = {
           label: 'Paper Used',
           data: [],
           fill: false,
+          backgroundColor: '#FF0000',
           borderColor: '#7CFC00',
           tension: .4
       },
@@ -1679,6 +1680,7 @@ this.basicData = {
           label: 'Color Reading',
           data: [],
           fill: false,
+          backgroundColor: '#FF0000',
           borderColor: '#FFA726',
           tension: .4
       },
@@ -1686,6 +1688,7 @@ this.basicData = {
         label: 'Trustpuram Color',
         data: [],
         fill: false,
+        backgroundColor: '#FF0000',
         borderColor: '#0000FF',
         tension: .4
     },
@@ -1693,6 +1696,8 @@ this.basicData = {
       label: 'Kodambakkam Color',
       data: [],
       fill: false,
+      
+      backgroundColor: '#FAFA33',
       borderColor: '#FF0000',
       tension: .4
   },
@@ -1700,6 +1705,7 @@ this.basicData = {
     label: 'Excess Criteria',
     data: [],
     fill: false,
+    backgroundColor: '#FF0000',
     borderColor: '#FFFF00',
     tension: .4
 },
@@ -1758,7 +1764,8 @@ this.blackData = {
       {
         type: 'line',
           label: 'Total Black Reading',
-          backgroundColor: '#000000',
+          backgroundColor: '#FF0000',
+          borderColor: '#FAFA33',
           data: []
       }
   ]
@@ -1811,7 +1818,8 @@ this.stackedData = {
     {
       type: 'line',
       label: 'Total Income',
-      backgroundColor: '#42A5F5',
+      backgroundColor: '#FF0000',
+          borderColor: '#FAFA33',
       data: [
        
       ]
@@ -1880,7 +1888,7 @@ this.stackedOptions = {
     plugins: {
       legend: {
           labels: {
-              color: '#000000'
+              color: '#F5DEB3'
           }
       },
       tooltips: {
@@ -1897,13 +1905,31 @@ this.stackedOptions = {
 
 
   // responsive: true,
+
+  
+
+
+
+
   scales: {
-      x: {
-          stacked: true,
+    x: {
+       stacked : true,
+      ticks: {
+          color: '#F5DEB3'
       },
-      y: {
-          stacked: true
+      grid: {
+          color: '#ebedef'
       }
+  },
+  y: {
+    stacked : true,
+      ticks: {
+          color: '#F5DEB3'
+      },
+      grid: {
+          color: '#F5DEB3'
+      }
+  }
   }
 };
 
@@ -1946,7 +1972,7 @@ this.blackOptions= {
   plugins: {
       legend: {
           labels: {
-              color: '#495057'
+              color: '#FFFFFF'
           }
       }
   },
@@ -1954,7 +1980,7 @@ this.blackOptions= {
       x: {
        
           ticks: {
-              color: '#495057'
+              color: '#F5DEB3'
           },
           grid: {
               color: '#ebedef'
@@ -1963,40 +1989,56 @@ this.blackOptions= {
       y: {
        
           ticks: {
-              color: '#495057'
+              color: '#F5DEB3'
           },
           grid: {
-              color: '#ebedef'
+              color: '#F5DEB3'
           }
       }
   }
 };
 this.basicOptions=  {
   scales: {
-    xAxes: [{
+    x: {
+       
       ticks: {
-        fontColor: '#000000' // change x-axis element color to red
+          color: '#F5DEB3'
+      },
+      grid: {
+          color: '#ebedef'
       }
-    }],
-    yAxes: [{
+  },
+  y: {
+   
       ticks: {
-        fontColor: '#000000' // change y-axis element color to red
+          color: '#F5DEB3'
+      },
+      grid: {
+          color: '#F5DEB3'
       }
-    }]
+  }
   }
 };
 this.chartOptions = {
   scales: {
-    xAxes: [{
+    x: {
+       
       ticks: {
-        fontColor: '#000000' // change x-axis element color to red
+          color: '#F5DEB3'
+      },
+      grid: {
+          color: '#ebedef'
       }
-    }],
-    yAxes: [{
+  },
+  y: {
+   
       ticks: {
-        fontColor: '#000000' // change y-axis element color to red
+          color: '#F5DEB3'
+      },
+      grid: {
+          color: '#F5DEB3'
       }
-    }]
+  }
   }
 };
 

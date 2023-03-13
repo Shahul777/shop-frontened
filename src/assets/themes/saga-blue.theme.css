@@ -4366,8 +4366,11 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 .p-dialog .p-dialog-header {
   border-bottom: 0 none;
-  background: #ffffff;
-  color: #495057;
+  /* background: #ffffff;
+  color: #495057; */
+  background : black;
+  /* color: #495057; */
+  color: wheat;
   padding: 1.5rem;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
@@ -4400,14 +4403,18 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   margin-right: 0;
 }
 .p-dialog .p-dialog-content {
-  background: #ffffff;
-  color: #495057;
+  /* background: #ffffff; */
+  background : black;
+  /* color: #495057; */
+  color: wheat;
   padding: 0 1.5rem 2rem 1.5rem;
 }
 .p-dialog .p-dialog-footer {
   border-top: 0 none;
-  background: #ffffff;
-  color: #495057;
+  /* background: #ffffff; */
+  /* color: #495057; */
+  background : black;
+  color: wheat;
   padding: 0 1.5rem 1.5rem 1.5rem;
   text-align: right;
   border-bottom-right-radius: 3px;

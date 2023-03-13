@@ -31,7 +31,9 @@
 
 }
 
-
+.custom-dialog {
+    background-color: #f2f2f2;
+}
   #inputtext.input-prediction {
     color: black;
   }
@@ -48,7 +50,7 @@
 .prediction{
     display: grid; 
     grid-template-rows:1fr 1fr;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+    box-shadow: 0 1px 3px 0 rgba(182, 228, 15, 0.3) !important;
     border-radius: 20px;
     padding: 16px;
     /* margin-left : 8px; */

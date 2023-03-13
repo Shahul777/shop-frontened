@@ -265,8 +265,23 @@
           {{customer.ColourCopies}}
         </td> -->
 
-        <td>
-          {{(customer.PaperSoldToday /500).toFixed(2)}}Packet({{customer.PaperSoldToday}})
+        <td style="width : 50px;" >
+          <div style="display: grid; grid-template-columns : 1fr 1fr; gap : 8px;">
+            {{(customer.PaperSoldToday /500).toFixed(2)}}Packet({{customer.PaperSoldToday}})
+          
+            <i class="pi pi-info"  style="cursor : pointer" (click)="op.toggle($event)" style="font-size: 1.2rem"></i>
+          </div>
+          
+          
+          
+          
+          
+                    <p-overlayPanel #op >
+                      <ng-template pTemplate>
+             Black Reading : {{customer.BlackCopies}}
+             Colour Reading : {{customer.ColourCopies}}
+                      </ng-template>
+                    </p-overlayPanel>
 
         </td>
 
@@ -912,7 +927,7 @@
                     <div>
                       <div class="field col-12 md:col-4">
                         <span class="p-float-label">
-                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="extraPaperRecieved"></p-inputNumber>
+                          <p-inputNumber   inputId="inputnumber" autocomplete="off" [(ngModel)]="extraPaperRecieved"></p-inputNumber>
                           <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
                           <label style=" font-size: 15px;" for="inputnumber">Paper Recieved Today</label>
                         </span>
@@ -935,7 +950,7 @@
                       <br />
                       <div class="field col-12 md:col-4">
                         <span class="p-float-label">
-                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="copiesGone"></p-inputNumber>
+                          <p-inputNumber   inputId="inputnumber" autocomplete="off" [(ngModel)]="copiesGone"></p-inputNumber>
                           <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
                           <label style=" font-size: 15px;" for="inputnumber">Copies Gone</label>
                         </span>
@@ -945,7 +960,7 @@
                       <br />
                       <div class="field col-12 md:col-4">
                         <span class="p-float-label">
-                          <p-inputNumber inputId="inputnumber" autocomplete="off" [(ngModel)]="paperSheetGone"></p-inputNumber>
+                          <p-inputNumber  inputId="inputnumber" autocomplete="off" [(ngModel)]="paperSheetGone"></p-inputNumber>
                           <!-- <input type="text" inputId="inputnumber" autocomplete="off" pInputText [(ngModel)]="paperPresentToday"> -->
                           <label style=" font-size: 15px;" for="inputnumber">Money</label>
                         </span>

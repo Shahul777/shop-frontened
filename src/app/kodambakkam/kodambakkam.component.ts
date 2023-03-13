@@ -922,6 +922,18 @@ totalPaid : any=0
 // balanceWorkingDay
 twopredict : any
 indexpredict : any
+
+dropdownOptions(rowData: any) {
+
+  console.log(rowData)
+  return [
+    { label: 'Option 1', name: rowData.BlackCopies },
+    { label: 'Option 2', name: rowData.ColourCopies },
+  
+  ];
+}
+
+selectedOptions: any[] = [];
 executePredict(){
 this.predictPrices=[]
 this.twopredict=[]
