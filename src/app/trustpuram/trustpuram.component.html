@@ -266,11 +266,12 @@
         </td> -->
 
         <td>
-          {{(customer.PaperSoldToday /500).toFixed(2)}}Packet
+          {{(customer.PaperSoldToday /500).toFixed(2)}}Packet({{customer.PaperSoldToday}})
+
         </td>
 
         <td>
-         Rs.{{(customer.TotalIncome/customer.PaperSoldToday).toFixed(2) }}
+          Rs.{{(customer.TotalIncome/customer.PaperSoldToday).toFixed(2)}}({{((customer.TotalIncome-customer.Bindings-(customer.ColourCopies*10)-300)/customer.PaperSoldToday).toFixed(2)}})
         </td>
         <!-- <td>
           {{customer.Date | date: 'dd/MM/yyyy'}}
