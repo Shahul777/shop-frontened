@@ -193,6 +193,11 @@
             Paper
           </div>
         </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Excess
+          </div>
+        </th>
         <!-- <th>
           <div class="flex justify-content-center align-items-center">
             Date
@@ -261,9 +266,12 @@
         </td> -->
 
         <td>
-          {{customer.PaperSoldToday }}
+          {{(customer.PaperSoldToday /500).toFixed(2)}}Packet
         </td>
 
+        <td>
+         Rs.{{(customer.TotalIncome/customer.PaperSoldToday).toFixed(2) }}
+        </td>
         <!-- <td>
           {{customer.Date | date: 'dd/MM/yyyy'}}
         </td> -->
