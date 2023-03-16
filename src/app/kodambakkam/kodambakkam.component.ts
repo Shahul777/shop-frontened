@@ -167,8 +167,8 @@ export class KodambakkamComponent implements OnInit {
 
   tajPresentBool: any;
   noorPresentBool: any;
-  isTajHalfDay: boolean = false;
-  isNoorHalfDay: boolean = false;
+  isTajHalfDay=0
+  isNoorHalfDay=0
 
   assanPresentBool: any;
   rasheedPresentBool: any;
@@ -2537,8 +2537,8 @@ this.noorExpense=0
 
 this.tajPresentBool=''
 this.noorPresentBool=''
-this.isTajHalfDay=false
-this.isNoorHalfDay=false
+this.isTajHalfDay=0
+this.isNoorHalfDay=0
 
 
 
@@ -3067,6 +3067,10 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   this.kdmLabourDetail.GetTime= this.kdmAccountDetail.GetTime
   this.kdmLabourDetail.TajExpense= this.tajExpense
   this.kdmLabourDetail.NoorExpense=this.noorExpense
+  this.kdmLabourDetail.isNoorHalfDay= this.isNoorHalfDay
+  
+
+  this.kdmLabourDetail.isTajHalfDay=  this.isTajHalfDay
   /////////////////////////////////////////////////////////////
   // this.kdmAccountDetail.Expenses+=this.tajExpense
   // this.kdmAccountDetail.Expenses+= this.noorExpense

@@ -162,9 +162,9 @@ pastSoldDetail2 : any
 assanPresentBool : any;
 rasheedPresentBool : any;
 maniPresentBool : any;
-isAssanHalfDay : boolean =false;
-isRasheedHalfDay : boolean =false;
-isManiHalfDay : boolean = false;
+isAssanHalfDay =0;
+isRasheedHalfDay=0;
+isManiHalfDay=0;
 // Date: any;
 // Day : string;
 // GetTime:string;
@@ -1261,9 +1261,9 @@ this.rasheedExpense=0
 this.maniPresentBool=''
 this.assanPresentBool=''
 this.rasheedPresentBool=''
-this.isManiHalfDay=false
-this.isAssanHalfDay=false
-this.isRasheedHalfDay=false
+this.isManiHalfDay=0
+this.isAssanHalfDay=0
+this.isRasheedHalfDay=0
 
 
 
@@ -2486,6 +2486,9 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   this.kdmLabourDetail.RasheedExpense= this.rasheedExpense
   this.kdmLabourDetail.AssanExpense=this.assanExpense
   this.kdmLabourDetail.ManiExpense=this.maniExpense
+  this.kdmLabourDetail.isManiHalfDay= this.isManiHalfDay
+  this.kdmLabourDetail.isAssanHalfDay = this.isAssanHalfDay
+  this.kdmLabourDetail.isRasheedHalfDay=this.isRasheedHalfDay
   /////////////////////////////////////////////////////////////
   // this.kdmAccountDetail.Expenses+=this.tajExpense
   // this.kdmAccountDetail.Expenses+= this.noorExpense
