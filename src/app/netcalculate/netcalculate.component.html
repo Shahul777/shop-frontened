@@ -1,10 +1,20 @@
 
-<div class="loading-indicator" *ngIf="showProgress">
+<!-- <div class="loading-indicator" *ngIf="showProgress">
     <p-progressSpinner></p-progressSpinner>
-  </div>
-  <div class="loading-indicator" *ngIf="executeSpin">
+  </div> -->
+  <!-- <div class="loading-indicator" *ngIf="executeSpin">
     <p-progressSpinner></p-progressSpinner>
+  </div> -->
+  <div class="loading-con" *ngIf="showProgress || executeSpin ">
+    <div class="center">
+        <div class="ring"></div>
+        <span>Loading...</span>
   </div>
+  </div>
+  
+
+  <div *ngIf="!showProgress || !executeSpin" >
+  
   <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
 
 
@@ -575,163 +585,4 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<div *ngIf="loginDetail && !mainDetail" class="login-class">
-<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-    <p-panel header="Login Example">
-        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Login:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="text" formControlName="login" class="form-control" name="login">
-                </div>
-                <div class="ui-grid-col-4">
-                    <div [hidden]="loginForm.controls['login'].valid || !loginForm.controls['login'].dirty" class="alert alert-danger">
-                        Login is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2">
-                    Password:
-                </div>
-                <div class="ui-grid-col-6">
-                    <input pInputText type="password" formControlName="password" class="form-control" name="password">
-                </div>
-                <div class="ui-grid-col-4">
-                    <div [hidden]="loginForm.controls['password'].valid || !loginForm.controls['password'].dirty" class="alert alert-danger">
-                        Password is required
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-2"></div>
-                <div class="ui-grid-col-6">
-                    <button pButton type="submit" label="Submit" [disabled]="!loginForm.valid"></button>
-                </div>
-                <div class="ui-grid-col-4"></div>
-            </div>
-        </div>
-    </p-panel>
-</form>
-</div> -->
-
-<!-- <div *ngIf="!loginDetail && mainDetail" class="main-class" >
-jgasjjagf
-</div> -->
-
-
-
-
-
-<!-- <div>
-
-    <p-steps
-    [model]="items"
-    [(activeIndex)]="activeIndex"
-    [readonly]="true"
-  ></p-steps>
-
-
-
-
-<div class="con-main">
-
-    <div class="content">
- 
-<div *ngIf="activeIndex==0">
-
-    <p-panel header="Account Section Data">
-        <div class="card">
-            <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name"
-                [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
-                <ng-template pTemplate="header">
-                    <div class="flex flex-column md:flex-row md:justify-content-between">
-                        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0"></p-dropdown>
-                        <span class="p-input-icon-left mb-2 md:mb-0">
-                            <i class="pi pi-search"></i>
-                            <input type="search" pInputText placeholder="Search by Name" >
-                        </span>
-                        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-                    </div>
-                </ng-template>
-                <ng-template let-product pTemplate="listItem">
-                    <div class="col-12">
-                        <div class="product-list-item">
-                            <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name"/>
-                            <div class="product-list-detail">
-                                <div class="product-name">{{product.Date}}</div>
-                                <div class="product-description">{{product.TotalIncome}}</div>
-                                <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.ColourCopies}}</span>
-                            </div>
-                            <div class="product-list-action">
-                                <span class="product-price">${{product.BlackCopies}}</span>
-                                <p-button icon="pi pi-shopping-cart" label="Add to Cart" ></p-button>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-                <ng-template let-product pTemplate="gridItem">
-                    <div class="col-12 md:col-4">
-                        <div class="product-grid-item card">
-                            <div class="product-grid-item-top">
-                                <div>
-                                    <i class="pi pi-tag product-category-icon"></i>
-                                    <span class="product-category">{{product.Date}}</span>
-                                </div>
-                            </div>
-                            <div class="product-grid-item-content">
-                                <div class="product-name">{{product.TotalIncome}}</div>
-                                <div class="product-description">{{product.BlackCopies}}</div>
-                            </div>
-                            <div class="product-grid-item-bottom">
-                                <span class="product-price">${{product.ColourCopies}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </p-dataView>
-        </div>
-
-    </p-panel>
 </div>
-<div *ngIf="activeIndex==1">
-hello
-</div>
-
-
-
-</div>
-
-
-
-
-<div class="btn-con"> 
-
-    <div *ngIf="activeIndex==0">
-    <button  pButton pRipple type="button" (click)="stepNext()" icon="pi pi-right" class="p-button-raised">Next</button>
-</div>
-<div *ngIf="activeIndex==1">
-    <button  pButton pRipple type="button" (click)="stepBack()" icon="pi pi-left" class="p-button-raised">Back</button>
-</div>
-</div>
-</div>
-
-</div> -->

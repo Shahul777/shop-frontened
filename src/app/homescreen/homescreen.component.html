@@ -3,6 +3,21 @@
 <div class="loading-indicator" *ngIf="showProgress">
   <p-progressSpinner></p-progressSpinner>
 </div>
+
+<!-- <div class="loading-con" *ngIf="showProgress">
+  <div class="center">
+      <div class="ring"></div>
+      <span>Loading...</span>
+</div>
+</div> -->
+
+
+
+
+<div *ngIf="!showProgress">
+
+
+
 <p-menubar >
 
 
@@ -106,19 +121,6 @@
 
 
 
-<!-- 
-<form>
-  <div>
-    <input type="file" (change)="onFileSelected($event)">
-  </div>
-  <div>
-    <button type="submit" (click)="onSubmit()">Upload</button>
-  </div>
-</form>
-<div>
-  <label for="text">Extracted Text:</label>
-  <input type="text" id="text" [(ngModel)]="text">
-</div> -->
 
 
 
@@ -376,3 +378,6 @@
 </div>
 </ng-template>
 </p-dialog>
+
+
+</div>

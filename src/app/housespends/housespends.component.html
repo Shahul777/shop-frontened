@@ -1,87 +1,95 @@
-<div class="loading-indicator" *ngIf="showProgress">
+<!-- <div class="loading-indicator" *ngIf="showProgress">
     <p-progressSpinner></p-progressSpinner>
+  </div> -->
+  <div class="loading-con" *ngIf="showProgress">
+    <div class="center">
+        <div class="ring"></div>
+        <span>Loading...</span>
   </div>
-
-
-  <p-table #dt1 [value]="houseData"   dataKey="id"
-  [rows]="5"
-  responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"  styleClass="p-datatable-gridlines"
-  [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-  [globalFilterFields]="['Date','country.name','representative.name','status']">
-
-           <!-- <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Customers
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (change)="dt1.filterGlobal($event.target, 'contains')" placeholder="Global Search" />
-                </span>
-            </div>
-        </ng-template> -->
-
-
-    <ng-template pTemplate="header">
-        <tr>
-            <th>         
-                
-                <div class="flex justify-content-center align-items-center">
-                Date
-                <p-columnFilter type="date" field="Date" display="menu">
-
-                    
-                </p-columnFilter>
+  </div>
+  
+<div *ngIf="!showProgress">
+    <p-table #dt1 [value]="houseData"   dataKey="id"
+    [rows]="5"
+    responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]"  styleClass="p-datatable-gridlines"
+    [paginator]="true" [filterDelay]="0" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['Date','country.name','representative.name','status']">
+  
+             <!-- <ng-template pTemplate="caption">
+              <div class="table-header">
+                  List of Customers
+                  <span class="p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (change)="dt1.filterGlobal($event.target, 'contains')" placeholder="Global Search" />
+                  </span>
               </div>
-            </th>
-            <th>Grocerry</th>
-            <th>Entertainment</th>
-            <th>Maintanence</th>
-            <th>Deposit</th>
+          </ng-template> -->
+  
+  
+      <ng-template pTemplate="header">
+          <tr>
+              <th>         
+                  
+                  <div class="flex justify-content-center align-items-center">
+                  Date
+                  <p-columnFilter type="date" field="Date" display="menu">
+  
+                      
+                  </p-columnFilter>
+                </div>
+              </th>
+              <th>Grocerry</th>
+              <th>Entertainment</th>
+              <th>Maintanence</th>
+              <th>Deposit</th>
+  
+  
+  
+  
+  
+              <th>Cash Expense</th>
+              <th>Paytm Expense</th>
+              <th>Total Expense</th>
+              <!-- <th>Expand</th> -->
+      
+  
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product >
+          <tr>
+              <td>{{product.Date| date: 'dd/MM/yyyy'}}</td>
+              <td>{{product.Grocerry}}</td>
+              <td>{{product.Entertainment}}</td>
+              <td>{{product.Maintanence}}</td>
+              <td>{{product.MoneyDeposit}}</td>
+  
+  
+              <td>{{product.CashExpense}}</td>
+              <td>{{product.PaytmExpense}}</td>
+  
+  
+              <td>{{product.TotalExpense}}</td>
+  
+              <!-- <td>
+                {{product.Date| date: 'dd/MM/yyyy'}}
+                {{i}}
+                  <p-listbox [options]="listItem" [group]="true" [(ngModel)]="listSelect" [metaKeySelection]="false"   [style]="{'width':'15rem'}">
+                  <ng-template let-group pTemplate="group">
+                      <div class="flex align-items-center">
+                          
+                          <span>{{group.name}}</span>
+                          <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/>
+                          <span>{{group.age}}</span>
+                      </div>
+                  </ng-template>
+              </p-listbox>
+          
+  
+  
+          
+          </td> -->
+          </tr>
+      </ng-template>
+  </p-table>
+</div>
 
-
-
-
-
-            <th>Cash Expense</th>
-            <th>Paytm Expense</th>
-            <th>Total Expense</th>
-            <!-- <th>Expand</th> -->
-    
-
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-product >
-        <tr>
-            <td>{{product.Date| date: 'dd/MM/yyyy'}}</td>
-            <td>{{product.Grocerry}}</td>
-            <td>{{product.Entertainment}}</td>
-            <td>{{product.Maintanence}}</td>
-            <td>{{product.MoneyDeposit}}</td>
-
-
-            <td>{{product.CashExpense}}</td>
-            <td>{{product.PaytmExpense}}</td>
-
-
-            <td>{{product.TotalExpense}}</td>
-
-            <!-- <td>
-              {{product.Date| date: 'dd/MM/yyyy'}}
-              {{i}}
-                <p-listbox [options]="listItem" [group]="true" [(ngModel)]="listSelect" [metaKeySelection]="false"   [style]="{'width':'15rem'}">
-                <ng-template let-group pTemplate="group">
-                    <div class="flex align-items-center">
-                        
-                        <span>{{group.name}}</span>
-                        <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/>
-                        <span>{{group.age}}</span>
-                    </div>
-                </ng-template>
-            </p-listbox>
-        
-
-
-        
-        </td> -->
-        </tr>
-    </ng-template>
-</p-table>

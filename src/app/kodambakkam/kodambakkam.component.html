@@ -1,9 +1,16 @@
-<div class="loading-indicator" *ngIf="showProgress">
+<!-- <div class="loading-indicator" *ngIf="showProgress">
   <p-progressSpinner></p-progressSpinner>
+</div> -->
+
+<div class="loading-con" *ngIf="showProgress">
+  <div class="center">
+      <div class="ring"></div>
+      <span>Loading...</span>
+</div>
 </div>
 
 <!-- *ngIf="!loginDetail && mainDetail" -->
-<div >
+<div *ngIf="!showProgress" >
   <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
   <!-- header="Predict Packet Price " -->
   <p-dialog [closable]="false" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="paperPredict" [style]="{width: '50vw'}">

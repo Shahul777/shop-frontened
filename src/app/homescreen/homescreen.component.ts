@@ -951,7 +951,28 @@ this.houseAccountDetail.TotalProfit =0
 
     window.open('https://play.google.com/store/apps/details?id=com.connect.enduser&hl=en_IN&gl=US', '_blank');
   }
+  imageUrls = ['giphy.gif', 'wall.jpg', 'wall3.jpg','tea.gif'];
+  currentImageIndex = 0;
+
+  changeBackgroundImage() {
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.imageUrls.length;
+    let dockWindow : any
+     dockWindow = document.querySelector('.dock-window');
+    // dockWindow.style.backgroundImage = `url(${this.imageUrls[this.currentImageIndex]})`;
+    dockWindow.classList.add('fade-out');
+    setTimeout(() => {
+      dockWindow.style.backgroundImage = `url(${this.imageUrls[this.currentImageIndex]})`;
+      dockWindow.classList.remove('fade-out');
+    }, 1000);
+  
+
+
+    
+  }
   ngOnInit() {
+    setInterval(() => {
+      this.changeBackgroundImage();
+    }, 2000);
     this.passwordClick= false
     this.deleteHouseEntry=false
 this.initializeHouseAccount()
