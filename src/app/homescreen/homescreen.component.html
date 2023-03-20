@@ -31,7 +31,7 @@
   </ng-template>
 </p-menubar>
 
-<div class="dock-window">
+<div [ngClass]="{'dock-window0': currentImageIndex === 0 ,'dock-window1': currentImageIndex === 1 ,'dock-window2': currentImageIndex === 2,'dock-window3': currentImageIndex === 3}">
   <p-dock *ngIf="!passwordClick"  [model]="dockItems" position="bottom">
     <ng-template pTemplate="item" let-item>
         <img [src]="item.icon" [alt]="item.label" width="100%">

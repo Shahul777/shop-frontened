@@ -127,7 +127,38 @@
 
 }
 
-  .dock-window {
+  .dock-window0 {
+    width: 100%;
+max-height: calc(100vh - 64px);
+       min-height: calc(100vh - 64px);
+    /* position: relative; */
+    background-image: url(wall.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 1s ease-out;
+}
+
+.dock-window1 {
+    width: 100%;
+max-height: calc(100vh - 64px);
+       min-height: calc(100vh - 64px);
+    /* position: relative; */
+    background-image: url(giphy.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 1s ease-out;
+}
+.dock-window2 {
+    width: 100%;
+max-height: calc(100vh - 64px);
+       min-height: calc(100vh - 64px);
+    /* position: relative; */
+    background-image: url(wall3.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 1s ease-out;
+}
+.dock-window3 {
     width: 100%;
 max-height: calc(100vh - 64px);
        min-height: calc(100vh - 64px);
@@ -137,9 +168,22 @@ max-height: calc(100vh - 64px);
     background-size: cover;
     transition: background-image 1s ease-out;
 }
-.dock-window.fade-out {
+
+.dock-window0.fade-out {
     background-image: none;
   }
+  .dock-window1.fade-out {
+    background-image: none;
+  }
+  .dock-window2.fade-out {
+    background-image: none;
+  }
+  .dock-window3.fade-out {
+    background-image: none;
+  }
+
+
+
 
 :host ::ng-deep .p-menubar {
     padding: 0.5rem;

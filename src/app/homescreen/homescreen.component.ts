@@ -956,13 +956,17 @@ this.houseAccountDetail.TotalProfit =0
 
   changeBackgroundImage() {
     this.currentImageIndex = (this.currentImageIndex + 1) % this.imageUrls.length;
+    console.log(this.currentImageIndex)
     let dockWindow : any
-     dockWindow = document.querySelector('.dock-window');
+    console.log('.dock-window'+this.currentImageIndex)
+     dockWindow = document.querySelector('.dock-window'+this.currentImageIndex);
+
+     console.log(dockWindow)
     // dockWindow.style.backgroundImage = `url(${this.imageUrls[this.currentImageIndex]})`;
-    dockWindow.classList.add('fade-out');
+    // dockWindow.classList.add('fade-out');
     setTimeout(() => {
-      dockWindow.style.backgroundImage = `url(${this.imageUrls[this.currentImageIndex]})`;
-      dockWindow.classList.remove('fade-out');
+      // dockWindow.style.backgroundImage = `url(${this.imageUrls[this.currentImageIndex]})`;
+      // dockWindow.classList.remove('fade-out');
     }, 1000);
   
 
@@ -970,6 +974,7 @@ this.houseAccountDetail.TotalProfit =0
     
   }
   ngOnInit() {
+    this.imageUrls = [ 'giphy.gif','wall.jpg','wall3.jpg','tea.gif',];
     setInterval(() => {
       this.changeBackgroundImage();
     }, 2000);
@@ -1096,33 +1101,6 @@ this.spendPage()
   ];
 
 
-  // {
-  //   label: 'Kodambakkam',
-  //   icon: 'pi pi-refresh', 
-  //   command: () => {
-  //     console.log("wdwd")
-  //     this.showkodambakkamFunc('labour');
-  //   }
-  // },
-  // {
-  //    label: 'Trustpuram',
-  //   icon: 'pi pi-times', command: () => {
-  //     this.showTrustpuramFunc('labour');
-  //   }
-  // },
-  // {
-  //   label: 'Net-Calculation',
-  //   icon: 'pi pi-external-link'
-  //   , command: () => {
-  //     this.netcalculateFunc();
-  //   }
-  // },
-  // {
-  //   label: 'House-Spends',
-  //   icon: 'pi pi-upload', command: () => {
-  //     this.housespendsFunc();
-  //   }
-  // }
 
   this.dockItems = [
 
@@ -1263,84 +1241,6 @@ this.spendPage()
 ];
 
 
-// this.dockItemsSpents = []
-
-
-// this.dockItemsSpents.push(this.tempMenu[0])
-// [
-//   {
-//       label: 'Calendar',
-//       tooltipOptions: {
-//           tooltipLabel: "Calendar",
-//           tooltipPosition: 'top',
-//           positionTop: -15,
-//           positionLeft: 15
-//       },
-//       icon: "assets/showcase/calendar.png",
-//       command: () => {
-//           // this.displayFinder = true;
-
-//          this.calendarOn()
-//           console.log("fefef")
-  
-//       }
-//   },
-//   {
-//       label: 'Grocerry',
-//       tooltipOptions: {
-//           tooltipLabel: "Grocerry",
-//           tooltipPosition: 'top',
-//           positionTop: -15,
-//           positionLeft: 15
-//       },
-//       icon: "assets/showcase/grocerry.png",
-//       command: () => {
-
-//       }
-//   },
-//   {
-//       label: 'Maintanence',
-//       tooltipOptions: {
-//           tooltipLabel: "Maintanence",
-//           tooltipPosition: 'top',
-//           positionLeft: 15,
-//           positionTop: -15
-//       },
-//       icon: "assets/showcase/maintanence.png",
-//       command: () => {
-      
-//       }
-//   },
-//   {
-//       label: 'Entertainment',
-//       tooltipOptions: {
-//           tooltipLabel: "Entertainment",
-//           tooltipPosition: 'top',
-//           positionTop: -15,
-//           positionLeft: 15
-//       },
-//       icon: "assets/showcase/entertainment.png",
-//       command: () => {
-
-//       }
-//   },
-//   {
-//       label: 'Deposit',
-//       tooltipOptions: {
-//           tooltipLabel: "Deposit",
-//           tooltipPosition: 'top',
-//           positionTop: -15,
-//           positionLeft: 15
-//       },
-//       icon: "assets/showcase/deposit.png",
-//       command: () => {
-
-//       }
-//   },
-
-// ];
-
-
 
 
 
@@ -1376,18 +1276,6 @@ this.spendPage()
 
 
 
-    // {
-    //   label: 'Kodambakkam-Admin',
-    //   icon: 'pi pi-slack', command: () => {
-    //     this.showkodambakkamFunc('admin');
-    //   }
-    // },
-    // {
-    //   label: 'Trustpuram-Admin',
-    //   icon: 'pi pi-paypal', command: () => {
-    //     this.showTrustpuramFunc('admin');
-    //   }
-    // },
 
 
   }
