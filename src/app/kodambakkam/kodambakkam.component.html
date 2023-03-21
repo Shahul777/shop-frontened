@@ -20,22 +20,49 @@
     
     <ng-template pTemplate="body">
       <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
-      border-radius: 20px;">
-        <p style=" font-weight: bold; color: wheat; border:1px solid wheat" >Number of remaining packets: {{paperCurrent/500}}</p>
-        <p style="font-weight: bold;border:1px solid wheat">Current Month Excess Criteria: {{excessCurrent}}paisa</p>
-        <p style="font-weight: bold; color: rgb(0, 255, 242);border:1px solid wheat">Preditcable for {{excessCurrent}}paisa is : Rs.{{excessDemo}} for Stock-{{paperCurrent/500}}packets.({{packetFuture}}packets - Rs.{{excessTotal}})</p>
+      border-radius: 20px;  text-align : center; "  >
+        <p style=" font-weight: bold; color: wheat; border:1px solid wheat" >Number of remaining packets:<span style="font-size: x-large; color : #36f4ec;"> {{paperCurrent/500}}</span> </p>  
+        <p style="font-weight: bold;border:1px solid wheat">Current Month Excess Criteria:<span style="font-size: x-large; color : #36f4ec;"> {{excessCurrent}}</span>paisa</p>
+        <p style="font-weight: bold; color: wheat;border:1px solid wheat">Preditcable for<span style="font-size: medium; color : #36f4ec;"> {{excessCurrent}} </span>paisa is :<span style="font-size: medium; color : #36f4ec;"> Rs.{{excessDemo}}</span> for Stock- <span style="font-size: medium; color : #36f4ec;">{{paperCurrent/500}} </span>packets.(<span style="font-size: medium; color : #36f4ec;">{{packetFuture}}</span>packets -<span style="font-size: medium; color : #36f4ec;"> Rs.{{excessTotal}}</span>)</p>
       </div>
-      <p style="font-weight: bold;color : rgb(169, 188, 206)">Income Till Date : Rs.{{incomeCurrent}}|i.e,(Average Rs.{{averageIncome}})|for {{paperTillDate}}packets Used in {{doneDay}}days </p>
+      <p style="font-weight: bold;color : white; text-align : center">Income Till Date : Rs.<span style="font-size: x-large; color : #36f4ec;">{{incomeCurrent}}</span>|i.e,(Average Rs.<span style="font-size: x-large; color : #36f4ec;">{{averageIncome}}</span>)|for <span style="font-size: x-large; color : #36f4ec;">{{paperTillDate}}</span>packets Used in <span style="font-size: x-large; color : #36f4ec;">{{doneDay}}</span>days </p>
 
-      <p style=" color: yellow; font-weight: bold;"> Average Packets Used in {{doneDay}}days is {{averagePacketUsed}}packets | 
+      <p style=" color: yellow; font-weight: bold; text-align : center"> Average Packets Used in <span style="font-size: x-large; color : #36f4ec;">{{doneDay}} </span>days is <span style="font-size: x-large; color : #36f4ec;">{{averagePacketUsed}}</span>packets | 
       
-        Balance Working Day in this Month is {{balanceWorkingDay}}days X {{averagePacketUsed}}packets = {{packetFuture}}packets
+        Balance Working Day in this Month is<span style="font-size: x-large; color : #36f4ec;"> {{balanceWorkingDay}} </span>days X <span style="font-size: x-large; color : #36f4ec;"> {{averagePacketUsed}}</span>packets = <span style="font-size: x-large; color : #36f4ec;"> {{packetFuture}} </span>packets
       </p>
       <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
-      border-radius: 20px;">
-        <p style="color: rgb(182, 155, 178);font-weight: bold; border:1px solid wheat">Shortage/OverTage Packets: {{shortDay}}packets</p>
-        <p style="font-weight: bold;border:1px solid wheat;">Approximate End Date of {{paperCurrent/500}}packets is {{balanceDays}}days </p>
-         <p style="color: yellow;font-weight: bold;border:1px solid wheat;">DEADLINE OF PAPER ENDING : {{dayExact | date}} </p>
+      border-radius: 20px; text-align : center">
+        <p style="color: yellow;font-weight: bold; border:1px solid wheat">Shortage/Excess Packets: <span style="font-size: x-large; color : #36f4ec;">{{shortDay}} </span>packets 
+          
+          <button  *ngIf="shortDay > 0" pButton label="Excess" class="p-button-raised" icon="pi pi-money-bill" (click)="overlaypanel22.show($event)"></button>
+        
+          <p-overlayPanel #overlaypanel22>
+            <p-table [rows]="20"
+           responsiveLayout="scroll" [rowHover]="true" [showCurrentPageReport]="true"  [loading]="loading" styleClass="p-datatable-gridlines"
+          [paginator]="true" 
+           [value]="prices2">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Price per sheet (paisa)</th>
+                <th>price-remaining packets (Rs.)</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-price>
+              <tr>
+                <td>{{ price.sheetPrice }} paisa</td>
+                <td>Rs. {{ price.packetPrice }}</td>
+              </tr>
+            </ng-template>
+          </p-table>  
+          </p-overlayPanel>
+
+
+        </p>
+
+
+        <p style="font-weight: bold;border:1px solid wheat;">Approximate End Date of <span style="font-size: x-large; color : #36f4ec;">{{paperCurrent/500}} </span>packets is <span style="font-size: x-large; color : #36f4ec;">{{balanceDays}}days</span> </p>
+         <p style="color: yellow;font-weight: bold;border:1px solid wheat;">DEADLINE OF PAPER ENDING : <span style="font-size: x-large; color : #36f4ec;">{{dayExact | date}}</span> </p>
 
       </div>
 <div style="display: grid; grid-template-columns: 1fr 1fr ; gap: 16px;">

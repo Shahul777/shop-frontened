@@ -2347,6 +2347,22 @@ this.packetFuture = (this.balanceWorkingDay * this.averagePacketUsed).toFixed(2)
 // }
 this.shortDay=(this.paperCurrent/500 - this.packetFuture).toFixed(2)
 
+this.prices2=[]
+
+function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
+  // const sheetsPerPacket = 500;
+  // const totalSheets = remainingPackets * sheetsPerPacket;
+  const pricePerPacket = remainingPackets * pricePerSheet / 100;
+  return pricePerPacket.toFixed(2);
+}
+
+for (let price = 125; price <= 165; price += 5) {
+  const packetPrice2 = predictPacketPrice(this.shortDay *500, price);
+ 
+this.prices2.push({sheetPrice : price/100, packetPrice : packetPrice2 })
+
+}
+
 console.log(`There are ${totalDaysInMonth} days in the month of ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}.`);
 
 this.balanceDays = ((this.paperCurrent/500)/this.averagePacketUsed).toFixed(2)
@@ -2421,6 +2437,7 @@ error=>{
 
 
 }
+prices2 : any=[]
 paperTillDate :any
 avaerageIncome : number =0
 incomeCurrent : number =0;
