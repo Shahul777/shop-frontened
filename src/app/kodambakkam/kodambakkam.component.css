@@ -63,14 +63,14 @@
     box-shadow:1px 5px 2px #0456c8;
   }
   }
-  span{
+  /* span{
     color: #737373;
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
     line-height: 200px;
     animation: text 3s ease-in-out infinite;
-  }
+  } */
   @keyframes text {
     50%{
         color: black;

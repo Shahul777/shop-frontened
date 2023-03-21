@@ -2259,29 +2259,26 @@ let paperSoldToday = 0
 let paperSoldTotal =0 
 
 let paperArrived =0
-for(let i =0 ; i < dayOfMonth ; i ++){
-
-  paperArrived += this.customers[i].PaperQuantityCame 
-  }
 
 
-paperSoldToday= ((((this.customers[dayOfMonth].PaperPresentToday * 500)+this.customers[dayOfMonth].PaperSheet)
 
-+paperArrived +((this.tpmDatas[dayOfMonth].PaperPresentToday * 500)+this.tpmDatas[dayOfMonth].PaperSheet))-(
+// paperSoldToday= ((((this.customers[dayOfMonth].PaperPresentToday * 500)+this.customers[dayOfMonth].PaperSheet)
 
-  ((this.customers[0].PaperPresentToday * 500)+this.customers[0].PaperSheet) +
+// +paperArrived +((this.tpmDatas[dayOfMonth].PaperPresentToday * 500)+this.tpmDatas[dayOfMonth].PaperSheet))-(
 
-  ((this.tpmDatas[0].PaperPresentToday * 500)+this.tpmDatas[0].PaperSheet)
-)
-)
+//   ((this.customers[0].PaperPresentToday * 500)+this.customers[0].PaperSheet) +
+
+//   ((this.tpmDatas[0].PaperPresentToday * 500)+this.tpmDatas[0].PaperSheet)
+// )
+// )
 
 
 
 for(let i =0 ; i < dayOfMonth ; i ++){
 
 totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
-// paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
-
+paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
+paperArrived += this.customers[i].PaperQuantityCame 
 }
 
 
