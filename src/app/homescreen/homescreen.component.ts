@@ -956,12 +956,12 @@ this.houseAccountDetail.TotalProfit =0
 
   changeBackgroundImage() {
     this.currentImageIndex = (this.currentImageIndex + 1) % this.imageUrls.length;
-    console.log(this.currentImageIndex)
+    
     let dockWindow : any
-    console.log('.dock-window'+this.currentImageIndex)
+    
      dockWindow = document.querySelector('.dock-window'+this.currentImageIndex);
 
-     console.log(dockWindow)
+    
     // dockWindow.style.backgroundImage = `url(${this.imageUrls[this.currentImageIndex]})`;
     // dockWindow.classList.add('fade-out');
     setTimeout(() => {

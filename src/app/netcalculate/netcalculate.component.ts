@@ -99,6 +99,7 @@ dateCalc : any
 items4 : any;
 activeIndex1: any
   ngOnInit(): void {
+    console.log("IN NET CALCULATE")
     this.showProgress=true
     this.showCal=false
     this.items4 = [
@@ -223,6 +224,7 @@ console.log(kdm.Year, tpm.Year)
     }
   })
 if(success){
+  console.log("COMBINEDDDD ENTRY ON")
   this.loadCombined()
 
 }
@@ -342,6 +344,7 @@ this.checkCombined()
       
       // })
       for(let i=0 ; i < this.kdmMonth.length; i++){
+        console.log("ENTRY CHECK KDM TPM ", this.kdmMonth[i], this.tpmMonth[i])
 
 
 
@@ -414,6 +417,7 @@ this.checkCombined()
         }
       
         else{
+          console.log("BEFORE COMBINED", this.combinedMonth)
           this.listOfConnections=this.combinedMonth
       if(this.kdmMonth.length === this.combinedMonth.length ){
         this.combinedMonth.sort((a : any, b: any) => {
@@ -455,7 +459,7 @@ this.checkCombined()
 
   for(let i =0 ; i < this.combinedMonth.length; i++){
 
-    if(!this.kdmMonth[i].isExecuted || !this.tpmMonth[i].isExecuted){
+    // if(!this.kdmMonth[i].isExecuted || !this.tpmMonth[i].isExecuted){
 
       let demoCombined = JSON.parse(JSON.stringify(this.combinedMonth[i]));
       demoCombined.TotalIncome= this.kdmMonth[i].TotalIncome + this.tpmMonth[i].TotalIncome
@@ -480,9 +484,9 @@ this.checkCombined()
       this.combinedMonth[i]= demoCombined
 
 
-    }
+    // }
   }
-      
+      console.log("COMBINED__ENTY",this.combinedMonth)
         this.display1=true
         this.display2=false
         this.showProgress=false
@@ -1135,7 +1139,7 @@ tpmExecuteCheck(index : any){
   index = this.combinedMonth.indexOf(index)
 
 
-  console.log(this.tpmMonth)
+ 
   if(!this.tpmMonth[index].isEdited){
     return true
   }

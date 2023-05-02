@@ -1096,9 +1096,11 @@ this.predictObjId=data.id
 savePredictObj(){
   this.paperPredict=false
 this.showProgress=true
+console.log(this.predictObjId)
 
   if(!this.predictObjId){
-
+    this.predictionObj.MonthString= this.monthSelected
+    this.predictionObj.Year= this.yearSelected
     this.service.addPredict(this.predictionObj).subscribe((event : any)=>{
 console.log(this.predictionObj)
       console.log("ADDED NEW PREDICT OBJECT")
