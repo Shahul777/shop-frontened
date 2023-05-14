@@ -1220,9 +1220,9 @@ let day1 = kdmObj.PaperDay1
 let sent =kdmObj.PaperSent
 let dayLast = kdmObj.PaperLast
 
-if(sent < tpmObj.PaperArrivedTotal){
-  sent = tpmObj.PaperArrivedTotal
-}
+// if(sent < tpmObj.PaperArrivedTotal){
+//   sent = tpmObj.PaperArrivedTotal
+// }
 
 let paperUsed = (arrived + day1) - (sent + dayLast)
 let paperCost =0

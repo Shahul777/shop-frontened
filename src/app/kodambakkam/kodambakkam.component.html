@@ -15,8 +15,11 @@
   <!-- header="Predict Packet Price " -->
   <p-dialog [closable]="false" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="paperPredict" [style]="{width: '50vw'}">
     <ng-template pTemplate="header">
-<p style="font-weight : bold; font-size: medium;">{{this.customers[0].Date|date}}</p>
-    </ng-template>
+<p style="font-weight : bold; font-size: medium;">{{this.customers[0].Date|date}}| <b>Total-Days:</b>{{totalWorkingDaysMonth}}</p>
+<!-- <p-calendar  (onSelect)="predictDateSelected($event)"  [(ngModel)]="predictDate" [inline]="true" [showWeek]="false"></p-calendar> -->
+<p-calendar (onSelect)="predictDateSelected($event)" [(ngModel)]="predictDate" [showIcon]="true"></p-calendar>
+<p-button (click)="loadPage()" icon="pi pi-times" styleClass="p-button-rounded p-button-danger"></p-button>
+</ng-template>
     
     <ng-template pTemplate="body">
       <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
@@ -63,6 +66,24 @@
 
         <p style="font-weight: bold;border:1px solid wheat;">Approximate End Date of <span style="font-size: x-large; color : #36f4ec;">{{paperCurrent/500}} </span>packets is <span style="font-size: x-large; color : #36f4ec;">{{balanceDays}}days</span> </p>
          <p style="color: yellow;font-weight: bold;border:1px solid wheat;">DEADLINE OF PAPER ENDING : <span style="font-size: x-large; color : #36f4ec;">{{dayExact | date}}</span> </p>
+
+      </div>
+
+      <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+      border-radius: 20px; text-align : center">
+        <p style="color: yellow;font-weight: bold; border:1px solid wheat">Money Cutoff: Rs<span style="font-size: x-large; color : #36f4ec;">{{minimumCutoffMoney}} </span>/day 
+          
+        <br>
+        <span style="font-weight: bold;">Profit : Rs.<span style="font-size: x-large; color : #36f4ec;">{{profitCameTill}}/day </span></span>
+        </p>
+
+
+        <p style="font-weight: bold;border:1px solid wheat;">Cash Money :<span style="font-size: x-large; color : #36f4ec;">{{totalCash}} </span>
+          <br>
+          <span style="font-weight: bold;">Total Profit : Rs.<span style="font-size: x-large; color : #36f4ec;">{{profitEstimateTotal}} </span></span>
+        
+        </p>
+         <p style="color: yellow;font-weight: bold;border:1px solid wheat;">Paytm Money :<span style="font-size: x-large; color : #36f4ec;">{{totalPaytm}}</span> </p>
 
       </div>
 <div style="display: grid; grid-template-columns: 1fr 1fr ; gap: 16px;">
@@ -568,7 +589,7 @@
          
  
           <button *ngIf="showButton"  pButton pRipple (click)="calClicked()" type="button" icon="pi pi-calendar" class="p-button-rounded"></button>
-          <button *ngIf="showButton"  pButton pRipple type="button" (click)="checkPaperRemaining()" icon="pi pi-qrcode" class="p-button-rounded p-button-success"></button>
+          <button *ngIf="showButton"  pButton pRipple type="button" (click)="checkPaperRemaining(0)" icon="pi pi-qrcode" class="p-button-rounded p-button-success"></button>
 
         </div>
         <!-- <span class="p-input-icon-left ml-auto">

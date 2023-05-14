@@ -996,103 +996,19 @@ this.notExecuted=false
 }
 
 predictPrices: any;
-checkPaperRemaining(){
-this.notExecuted= true
-this.predictObjId=0
-  this.showProgress=true
-  
-const demo =  predictPacketPrice(this.paperCurrent, this.excessCurrent *100);
-this.excessDemo= demo
 
-this.excessTotal= predictPacketPrice(this.packetFuture*500, this.excessCurrent *100);
-this.prices=[]
-
-function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
-  // const sheetsPerPacket = 500;
-  // const totalSheets = remainingPackets * sheetsPerPacket;
-  const pricePerPacket = remainingPackets * pricePerSheet / 100;
-  return pricePerPacket.toFixed(2);
-}
-
-for (let price = 125; price <= 175; price += 5) {
-  const packetPrice2 = predictPacketPrice(this.paperCurrent, price);
-  console.log("Remaianing Packets", this.paperCurrent/500)
-  console.log(`At ${price / 100} paisa per sheet, the remaining packets will sell for Rs. ${packetPrice2}`);
-this.prices.push({sheetPrice : price/100, packetPrice : packetPrice2 })
-
-}
-
-
-this.service.getPredict().subscribe((predict : any)=>{
-
-  if(!predict.length){
-   this.predictObjId=0
-   let dateSelect = this.customers[0].Date
-
-   this.yearSelected= dateSelect.getFullYear();
-   const month = dateSelect.getMonth() + 1
-   this.monthSelected= this.getMonthName(month)
-
-   this.predictionObj.MonthString=this.monthSelected
-   this.predictionObj.Year= this.yearSelected
-   
-   this.showProgress=false
-   this.paperPredict=true
-  }
-  else{
-
-    
-
-
-
-let dateSelect = this.customers[0].Date
-
-this.yearSelected= dateSelect.getFullYear();
-const month = dateSelect.getMonth() + 1
-this.monthSelected= this.getMonthName(month)
-
-
-let check =false
-    predict.forEach((data : any)=>{
-
-if(data.MonthString ===this.monthSelected && data.Year===this.yearSelected){
-check =true
-this.predictionObj=data
-
-this.predictObjId=data.id
-}
-    })
-
-
-
-    if(!check){
-
-      this.predictObjId=0
-    }
-
-
-    this.showProgress=false
-    this.paperPredict=true
-  }
-},(error: any)=>{
-  console.log(error)
-
-  this.showProgress=false
-  this.paperPredict=false
-})
-
-
-
-
-
-
-
-
-
-}
-
-
-
+// estimateProfit(){
+//  let averagenew =0 
+//  averagenew= Math.ceil(this.incomeCurrent/this.totalWorkingDaysMonth)
+// this.minimumCutoffMoney=Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth)
+// this.profitCameTill= averagenew - this.minimumCutoffMoney
+// this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
+// console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
+// console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
+// }
+profitCameTill: any=0
+profitEstimateTotal : any=0
+minimumCutoffMoney: any=0
 savePredictObj(){
   this.paperPredict=false
 this.showProgress=true
@@ -2249,6 +2165,267 @@ this.tonerYesterday=toners
   }
 }
 
+this.predictionOnMonth(0)
+
+// this.paperCurrent= (this.customers[0].PaperPresentToday * 500) + this.customers[0].PaperSheet +
+
+// (this.tpmDatas[0].PaperPresentToday * 500) + this.tpmDatas[0].PaperSheet
+
+
+// const dayOfMonth = this.customers[0].Date.getDate();
+// this.currentDoneDate=dayOfMonth
+// let totalincome =0
+// let paperSoldToday = 0
+// let paperSoldTotal =0 
+
+// let paperArrived =0
+
+
+
+// let cash = 0
+// let paytm =0
+// console.log(this.customers)
+// for(let i =0 ; i < dayOfMonth ; i ++){
+//   // if(this.customers[i].isHoliday || this.customers[i].isSunday || this.tpmDatas[i].isHoliday || this.tpmDatas[i].isSunday){
+
+//   // }
+//   // else{
+ 
+//   // }
+//   cash += this.customers[i].CashIncome  + this.tpmDatas[i].CashIncome
+//   paytm+= this.customers[i].PaytmIncome  + this.tpmDatas[i].PaytmIncome
+
+// totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
+// paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
+// paperArrived += this.customers[i].PaperQuantityCame 
+// }
+// this.totalCash= cash
+// this.totalPaytm= paytm
+
+// this.excessCurrent= (totalincome/paperSoldToday).toFixed(2);
+
+// function getDaysInMonth(date: Date): number {
+//   const year = date.getFullYear();
+//   const month = date.getMonth();
+//   const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+//   const daysInMonth = [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+//   let totalDays = 0;
+  
+//   for (let i = 1; i <= daysInMonth[month]; i++) {
+//     const dayOfWeek = new Date(year, month, i).getDay();
+//     if (dayOfWeek !== 0) { // omit Sundays
+//       totalDays++;
+//     }
+//   }
+
+//   return totalDays;
+// }
+
+// const date = this.customers[0].Date
+// const totalDaysInMonth = getDaysInMonth(date);
+// this.totalWorkingDay=totalDaysInMonth
+
+// let completedDay = 0
+// let holiday =0
+// let paperUsed =0
+// let sunday =0
+// for(let i =0 ; i < dayOfMonth ; i ++){
+
+// if(!this.customers[i].isSunday){
+//   completedDay+=1
+// }
+// if(this.customers[i].isSunday){
+//   sunday+=1
+// }
+// if(this.customers[i].isHoliday){
+//   holiday+=1
+// }
+  
+//   }
+
+// this.doneDay = completedDay + holiday
+
+
+// this.incomeCurrent=totalincome
+// this.paperTillDate= (paperSoldToday/500).toFixed(2)
+// this.averageIncome= Math.ceil(this.incomeCurrent/this.doneDay)
+
+
+// this.balanceWorkingDay= this.totalWorkingDay - completedDay
+// this.doneWorkingDay = completedDay
+// this.totalWorkingDaysMonth = this.doneWorkingDay+ this.balanceWorkingDay
+// let packet = paperSoldToday/500
+// this.averagePacketUsed = (packet/ (dayOfMonth - sunday - holiday)).toFixed(2)
+
+// this.packetFuture = (this.balanceWorkingDay * this.averagePacketUsed).toFixed(2)
+
+// this.shortDay=(this.paperCurrent/500 - this.packetFuture).toFixed(2)
+
+// this.prices2=[]
+
+// function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
+
+//   const pricePerPacket = remainingPackets * pricePerSheet / 100;
+//   return pricePerPacket.toFixed(2);
+// }
+
+// for (let price = 125; price <= 165; price += 5) {
+//   const packetPrice2 = predictPacketPrice(this.shortDay *500, price);
+ 
+// this.prices2.push({sheetPrice : price/100, packetPrice : packetPrice2 })
+
+// }
+
+// console.log(`There are ${totalDaysInMonth} days in the month of ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}.`);
+
+// this.balanceDays = ((this.paperCurrent/500)/this.averagePacketUsed).toFixed(2)
+
+
+
+
+// function getDateAfterDays(numberOfDays: number, currentDate: string): string {
+
+//   const currentDateTime = new Date(currentDate);
+
+//   let daysPassed = 0;
+
+//   // Loop through the days and skip Sundays
+//   while (daysPassed < numberOfDays) {
+//     // Get the day of the week (0 = Sunday, 1 = Monday, etc.)
+//     const dayOfWeek = currentDateTime.getDay();
+
+//     // If it's not Sunday or the last day, increment the days passed and the current date
+//     if (dayOfWeek !== 0 || daysPassed === 0 || daysPassed === numberOfDays - 1) {
+//       daysPassed++;
+//       currentDateTime.setDate(currentDateTime.getDate() + 1);
+//     } else {
+//       // If it's Sunday, skip it by adding an extra day
+//       currentDateTime.setDate(currentDateTime.getDate() + 1);
+//     }
+//   }
+
+//   // Convert the date after days back to an ISO string format
+//   return currentDateTime.toISOString();
+// }
+
+
+
+
+
+// console.log(getDateAfterDays(this.balanceDays,this.customers[0].Date)); // Output: "2023-03-16T18:30:00.000Z"
+// this.dayExact=getDateAfterDays(this.balanceDays,this.customers[0].Date)
+
+// this.predictionInitialize()
+
+
+
+
+// console.log(dayOfMonth)
+// console.log(this.excessCurrent)
+// console.log(this.paperCurrent)
+// console.log(this.customers)
+// console.log(this.tpmDatas)
+},
+error=>{
+  this.showProgress=false
+})
+
+
+
+
+
+  },
+  (error : any)=>{
+    console.log(error)
+  })
+
+
+
+
+
+}
+totalCash : any
+totalPaytm : any
+prices2 : any=[]
+paperTillDate :any
+avaerageIncome : number =0
+incomeCurrent : number =0;
+tonerYesterday: number=0;
+paperPresentYesterday:number =0;
+sheetYesterday : number =0
+paperCurrent : number=0;
+excessCurrent : any
+totalWorkingDay : any;
+balanceWorkingDay :any;
+averagePacketUsed : any;
+currentDoneDate : any;
+packetFuture : any;
+doneDay: any;
+totalExpenseMoney : any;
+messageStr : any
+shortDay : any;
+balanceDays : any;
+dayExact : any;
+totalWorkingDaysMonth: any;
+doneWorkingDay : any
+
+
+
+kdmCopy: any;
+tpmCopy : any;
+predictDate : any;
+predictDateSelected(event : any){
+  console.log(event)
+  const dateObject = new Date(event);
+  const date = new Date(dateObject.getTime() - (dateObject.getTimezoneOffset() * 60000));
+const formattedDate = date.toISOString().split('T')[0];
+
+console.log(formattedDate); 
+  this.customers= JSON.parse(JSON.stringify(this.kdmCopy));
+    this.tpmDatas=JSON.parse(JSON.stringify(this.tpmCopy));
+
+   
+  console.log(this.customers)
+  console.log(this.tpmDatas)
+  let indexToDelete: number | undefined;
+  for (let i = 0; i < this.customers.length; i++) {
+    if (this.customers[i].Date === formattedDate) {
+      indexToDelete = i-1;
+      break;
+    }
+  }
+  
+  if (indexToDelete !== undefined) {
+    this.customers = this.customers.slice(indexToDelete + 1);
+    this.tpmDatas = this.tpmDatas.slice(indexToDelete + 1);
+  }
+  const formattedObjectArray = this.customers.map((object :any) => {
+    const dateObject = new Date(object.Date);
+    return {
+      ...object,
+      Date: dateObject,
+    };
+  });
+  this.customers = formattedObjectArray
+  const formattedObjectArray2 = this.tpmDatas.map((object :any) => {
+    const dateObject = new Date(object.Date);
+    return {
+      ...object,
+      Date: dateObject,
+    };
+  });
+  this.tpmDatas= formattedObjectArray2
+  console.log(this.customers); // [4, 5, 6]
+  console.log(this.tpmDatas)
+  this.predictionOnMonth(1);
+}
+loadPage(){
+  this.paperPredict=false
+  this.predictDate=[]
+  this.ngOnInit()
+}
+predictionOnMonth(index: any){
+
 this.paperCurrent= (this.customers[0].PaperPresentToday * 500) + this.customers[0].PaperSheet +
 
 (this.tpmDatas[0].PaperPresentToday * 500) + this.tpmDatas[0].PaperSheet
@@ -2264,25 +2441,25 @@ let paperArrived =0
 
 
 
-// paperSoldToday= ((((this.customers[dayOfMonth].PaperPresentToday * 500)+this.customers[dayOfMonth].PaperSheet)
-
-// +paperArrived +((this.tpmDatas[dayOfMonth].PaperPresentToday * 500)+this.tpmDatas[dayOfMonth].PaperSheet))-(
-
-//   ((this.customers[0].PaperPresentToday * 500)+this.customers[0].PaperSheet) +
-
-//   ((this.tpmDatas[0].PaperPresentToday * 500)+this.tpmDatas[0].PaperSheet)
-// )
-// )
-
-
-
+let cash = 0
+let paytm =0
+console.log(this.customers)
 for(let i =0 ; i < dayOfMonth ; i ++){
+  // if(this.customers[i].isHoliday || this.customers[i].isSunday || this.tpmDatas[i].isHoliday || this.tpmDatas[i].isSunday){
+
+  // }
+  // else{
+ 
+  // }
+  cash += this.customers[i].CashIncome  + this.tpmDatas[i].CashIncome
+  paytm+= this.customers[i].PaytmIncome  + this.tpmDatas[i].PaytmIncome
 
 totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
 paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
 paperArrived += this.customers[i].PaperQuantityCame 
 }
-
+this.totalCash= cash
+this.totalPaytm= paytm
 
 this.excessCurrent= (totalincome/paperSoldToday).toFixed(2);
 
@@ -2306,10 +2483,6 @@ function getDaysInMonth(date: Date): number {
 const date = this.customers[0].Date
 const totalDaysInMonth = getDaysInMonth(date);
 this.totalWorkingDay=totalDaysInMonth
-// dayOfMonth
-// totalWorkingDay : any;
-// balanceWorkingDay :any;
-// averagePacketUsed : any;
 
 let completedDay = 0
 let holiday =0
@@ -2338,22 +2511,19 @@ this.averageIncome= Math.ceil(this.incomeCurrent/this.doneDay)
 
 
 this.balanceWorkingDay= this.totalWorkingDay - completedDay
+this.doneWorkingDay = completedDay
+this.totalWorkingDaysMonth = this.doneWorkingDay+ this.balanceWorkingDay
 let packet = paperSoldToday/500
 this.averagePacketUsed = (packet/ (dayOfMonth - sunday - holiday)).toFixed(2)
 
 this.packetFuture = (this.balanceWorkingDay * this.averagePacketUsed).toFixed(2)
 
-// if((paperSoldToday/500) <= this.packetFuture){
-
-
-// }
 this.shortDay=(this.paperCurrent/500 - this.packetFuture).toFixed(2)
 
 this.prices2=[]
 
 function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
-  // const sheetsPerPacket = 500;
-  // const totalSheets = remainingPackets * sheetsPerPacket;
+
   const pricePerPacket = remainingPackets * pricePerSheet / 100;
   return pricePerPacket.toFixed(2);
 }
@@ -2370,20 +2540,12 @@ console.log(`There are ${totalDaysInMonth} days in the month of ${date.toLocaleS
 this.balanceDays = ((this.paperCurrent/500)/this.averagePacketUsed).toFixed(2)
 
 
-// function getDateAfterDays(numberOfDays: number, currentDate: string): string {
 
-//   const currentDateTime = new Date(currentDate);
-
-//   const dateAfterDays = new Date(currentDateTime.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
-
-//   return dateAfterDays.toISOString();
-// }
 
 function getDateAfterDays(numberOfDays: number, currentDate: string): string {
-  // Convert the current date string to a Date object
+
   const currentDateTime = new Date(currentDate);
 
-  // Initialize a variable to keep track of the number of days passed
   let daysPassed = 0;
 
   // Loop through the days and skip Sundays
@@ -2412,52 +2574,157 @@ function getDateAfterDays(numberOfDays: number, currentDate: string): string {
 console.log(getDateAfterDays(this.balanceDays,this.customers[0].Date)); // Output: "2023-03-16T18:30:00.000Z"
 this.dayExact=getDateAfterDays(this.balanceDays,this.customers[0].Date)
 
-
 this.predictionInitialize()
+
+
+
 
 console.log(dayOfMonth)
 console.log(this.excessCurrent)
 console.log(this.paperCurrent)
 console.log(this.customers)
 console.log(this.tpmDatas)
-},
-error=>{
-  this.showProgress=false
-})
-
-
-
-
-
-  },
-  (error : any)=>{
-    console.log(error)
-  })
-
-
-
+if(index===0){
+  this.kdmCopy= this.customers.map((obj:any) => {
+    const date = new Date(obj.Date.getTime() - (obj.Date.getTimezoneOffset() * 60000)); // Adjust date to original timezone
+    return {
+      ...obj,
+      Date: date.toISOString().substring(0, 10) // Format date as "YYYY-MM-DD" in original timezone
+    }
+  });
+  // this.kdmCopy= JSON.parse(JSON.stringify(this.customers));
+  this.tpmCopy= JSON.parse(JSON.stringify(this.tpmDatas));
+   console.log("KDM COPY",this.kdmCopy)
+   console.log("TPM COPY",this.tpmCopy)
+}
+else{
+  this.checkPaperRemaining(1)
 
 
 }
-prices2 : any=[]
-paperTillDate :any
-avaerageIncome : number =0
-incomeCurrent : number =0;
-tonerYesterday: number=0;
-paperPresentYesterday:number =0;
-sheetYesterday : number =0
-paperCurrent : number=0;
-excessCurrent : any
-totalWorkingDay : any;
-balanceWorkingDay :any;
-averagePacketUsed : any;
-currentDoneDate : any;
-packetFuture : any;
-doneDay: any;
-messageStr : any
-shortDay : any;
-balanceDays : any;
-dayExact : any;
+}
+
+
+checkPaperRemaining(index : any){
+  this.notExecuted= true
+  this.predictObjId=0
+    this.showProgress=true
+    
+  const demo =  predictPacketPrice(this.paperCurrent, this.excessCurrent *100);
+  this.excessDemo= demo
+  
+  this.excessTotal= predictPacketPrice(this.packetFuture*500, this.excessCurrent *100);
+  this.prices=[]
+  
+  function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
+    // const sheetsPerPacket = 500;
+    // const totalSheets = remainingPackets * sheetsPerPacket;
+    const pricePerPacket = remainingPackets * pricePerSheet / 100;
+    return pricePerPacket.toFixed(2);
+  }
+  
+  for (let price = 125; price <= 175; price += 5) {
+    const packetPrice2 = predictPacketPrice(this.paperCurrent, price);
+    console.log("Remaianing Packets", this.paperCurrent/500)
+    console.log(`At ${price / 100} paisa per sheet, the remaining packets will sell for Rs. ${packetPrice2}`);
+  this.prices.push({sheetPrice : price/100, packetPrice : packetPrice2 })
+  
+  }
+  
+  
+  this.service.getPredict().subscribe((predict : any)=>{
+  
+    if(!predict.length){
+     this.predictObjId=0
+     let dateSelect = this.customers[0].Date
+  
+     this.yearSelected= dateSelect.getFullYear();
+     const month = dateSelect.getMonth() + 1
+     this.monthSelected= this.getMonthName(month)
+  
+     this.predictionObj.MonthString=this.monthSelected
+     this.predictionObj.Year= this.yearSelected
+  
+     
+  let pendingPaidObj = this.getPaidPending()
+  this.totalExpenseMoney=pendingPaidObj.Paid + pendingPaidObj.Pending
+  this.minimumCutoffMoney=Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth)
+  this.profitCameTill= this.averageIncome - this.minimumCutoffMoney
+  this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
+  console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
+  console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
+     
+     this.showProgress=false
+     this.paperPredict=true
+    }
+    else{
+  
+      
+  
+  
+  
+  let dateSelect = this.customers[0].Date
+  
+  this.yearSelected= dateSelect.getFullYear();
+  const month = dateSelect.getMonth() + 1
+  this.monthSelected= this.getMonthName(month)
+  
+  
+  let check =false
+      predict.forEach((data : any)=>{
+  
+  if(data.MonthString ===this.monthSelected && data.Year===this.yearSelected){
+  check =true
+  this.predictionObj=data
+  
+  this.predictObjId=data.id
+     
+  let pendingPaidObj = this.getPaidPending()
+  this.totalExpenseMoney=pendingPaidObj.Paid + pendingPaidObj.Pending
+  this.minimumCutoffMoney=Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth)
+  this.profitCameTill= this.averageIncome - this.minimumCutoffMoney
+  this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
+  console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
+  console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
+  }
+      })
+  
+  
+  
+      if(!check){
+  
+        this.predictObjId=0
+        let pendingPaidObj = this.getPaidPending()
+  this.totalExpenseMoney=pendingPaidObj.Paid + pendingPaidObj.Pending
+  this.minimumCutoffMoney=Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth)
+  this.profitCameTill= this.averageIncome - this.minimumCutoffMoney
+  this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
+  console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
+  console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
+      }
+  
+  
+      this.showProgress=false
+      this.paperPredict=true
+    }
+  },(error: any)=>{
+    console.log(error)
+  
+    this.showProgress=false
+    this.paperPredict=false
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  }
+
+
 confirm(key: string, message: string, header1: string) {
   // this.confirmationService.confirm({
 
