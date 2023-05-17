@@ -2431,6 +2431,153 @@ tablePredict : any=[{name:'Paper Calc' ,value:[]},{name :'Copies Calc',value:[]}
 btnrate(){
   this.predictionOnMonth(1);
 }
+showTwoDate: boolean =false
+dateHide(){
+  this.date1=[]
+  this.date2=[]
+  this.startValue=0
+  this.endValue=0
+  this.showFutureBtn=false
+  this.showData= false
+}
+date1 : any;
+date2 : any;
+startValue : any=0;
+endValue : any=0;
+demoKdm : any=[]
+demoTpm: any=[]
+demoBalanceDate : any=[]
+balanceWorkDay : any=0
+showFutureBtn : boolean =false
+averageFuture : any =0
+totalFuture : any=0
+excessFuture : any=0
+showData : boolean =false
+firstCalendar(event : any){
+
+}
+calcFutureNeed(){
+  // this.demoBalanceDate=filteredDates
+  // this.balanceWorkDay=workingDays.length
+
+  if(this.demoBalanceDate.length &&  this.balanceWorkDay){
+let diff = this.endValue-this.startValue
+if(diff>0){
+  this.averageFuture= Math.ceil(diff/this.balanceWorkDay)
+}
+else{
+  // this.totalFuture= this.startValue +()
+}
+
+if(this.averageIncome > this.averageFuture ){
+this.excessFuture = (this.averageIncome -this.averageFuture)*this.balanceWorkDay
+}
+this.totalFuture=(this.averageIncome*this.balanceWorkDay)+this.startValue
+  }
+  this.showData=true
+}
+secondCalendar(event: any){
+  const startDate = this.date1; // Replace this with your start date
+  const endDate = this.date2; // Replace this with your end date
+//   this.demoBalanceDate=[]
+// this.balanceWorkDay =0
+  if (startDate < endDate) {
+  // const dataArr = [
+  //   { Date: new Date('2023-05-02') },
+  //   { Date: new Date('2023-05-15') },
+  //   { Date: new Date('2023-05-20') },
+  //   { Date: new Date('2023-05-25') },
+  //   { Date: new Date('2023-06-02') } // This object is outside the date range
+  // ];
+  
+  // Filter the array based on the date range
+  const filteredArr = this.customers.filter((obj:any) => {
+    const objDate = new Date(obj.Date);
+    return objDate >= startDate && objDate <= endDate;
+  });
+  
+  // Extract the matching objects and their indices separately
+  this.demoKdm = filteredArr.map((obj:any) => obj);
+  const indices = filteredArr.map((obj:any) => this.customers.indexOf(obj));
+  
+  const filteredArr2 = this.tpmDatas.filter((obj:any) => {
+    let  objDate : any = new Date(obj.Date);
+    // objDate =  objDate.toISOString()
+    // objDate = new Date(objDate);
+    objDate.setHours(0);
+    objDate.setMinutes(0);
+    objDate.setSeconds(0);
+    console.log(objDate)
+    console.log(startDate,endDate)
+    return objDate >= startDate && objDate <= endDate;
+  });
+  
+  // Extract the matching objects and their indices separately
+  this.demoTpm = filteredArr2.map((obj:any) => obj);
+  const indices2 = filteredArr2.map((obj:any) => this.tpmDatas.indexOf(obj));
+  
+  const formattedArr3 = this.demoTpm.map((obj :any)=> {
+    const date = new Date(obj.Date);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    obj.Date = date
+    return obj;
+  });
+  this.demoTpm= formattedArr3
+this.dateProcess(startDate , endDate)
+  console.log('Matching objects:', this.demoKdm);
+  console.log('Matching objects:', this.demoTpm);
+  console.log('Indices:', indices);
+  }
+
+
+}
+
+dateProcess(start :any, end : any){
+  // const dataArr = [
+  //   // Your array of objects
+  //   // ...
+  // ];
+  
+  const startDate = start
+  const endDate =end
+  
+  // Function to check if a date is a Sunday
+  function isSunday(date: Date): boolean {
+    return date.getDay() === 0;
+  }
+  
+  // Function to generate an array of dates between start and end date
+  function generateDateArray(startDate: Date, endDate: Date): Date[] {
+    const dateArray: Date[] = [];
+    const currentDate = new Date(startDate);
+  
+    while (currentDate <= endDate) {
+      dateArray.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return dateArray;
+  }
+  
+  // Generate the array of dates between start and end date
+  const dateArray = generateDateArray(startDate, endDate);
+  
+  // Filter out the dates that are present in the given array
+  const filteredDates = dateArray.filter(date => !this.customers.find((obj:any) => new Date(obj.Date).toDateString() === date.toDateString()));
+  
+  // Count the number of working days (excluding Sundays)
+  const workingDays = filteredDates.filter(date => !isSunday(date));
+  this.demoBalanceDate=filteredDates
+  this.balanceWorkDay=workingDays.length
+  this.showFutureBtn=true
+  console.log(filteredDates);
+  console.log(workingDays.length);
+}
+predictTwoDate(){
+this.showTwoDate = true
+}
 recalculateProfit(){
   if(this.showProfit==true){
     this.blackProfit= (this.predictCopyRate -(this.predictionObj.Salary +this.predictionObj.Paper+this.predictionObj.Toner

@@ -13,6 +13,73 @@
 <div *ngIf="!showProgress" >
   <p-calendar *ngIf="showCal" (onSelect)="dateSelected($event)"  [(ngModel)]="dateCalc" [inline]="true" [showWeek]="false"></p-calendar>
   <!-- header="Predict Packet Price " -->
+  <p-dialog (onHide)="dateHide()" [closable]="true" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="showTwoDate" [style]="{width: '50vw'}">
+
+
+    <ng-template pTemplate="body">
+
+<div style="display : flex ; flex-direction : column; gap:24px;">
+
+
+<div style="display : flex ;gap:24px; " class="calendar-section">
+  <div>Start Date<p-calendar (onSelect)="firstCalendar($event)" [(ngModel)]="date1" [showIcon]="true"></p-calendar> </div>
+  <div>End Date<p-calendar (onSelect)="secondCalendar($event)" [(ngModel)]="date2" [showIcon]="true"></p-calendar></div>
+
+
+
+
+</div>
+<div style="display : flex ; gap:24px; " class="input-section">
+  <div>Balance Present 
+    <p-inputNumber id="one" inputId="integeronly" [(ngModel)]="startValue"></p-inputNumber></div>
+  <div>Future Need
+    <p-inputNumber id="two" inputId="integeronly" [(ngModel)]="endValue"></p-inputNumber></div>
+
+
+
+
+
+
+
+
+</div>
+<p-button *ngIf="showFutureBtn" icon="pi pi-cog" (click)="calcFutureNeed()" styleClass="p-button-rounded"></p-button>
+
+<div *ngIf="showData" style="display : flex ;gap:24px; " class="result-section">
+
+  <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+  border-radius: 20px; text-align : center">
+    <p style="color: yellow;font-weight: bold; border:1px solid wheat">Average Needed Rs.<span style="font-size: x-large; color : #36f4ec;">{{ this.averageFuture}} </span>
+      
+    <br>
+    <span style="font-weight: bold;">Days Pending<span style="font-size: x-large; color : #36f4ec;">{{balanceWorkDay}}Days </span></span>
+    </p>
+
+
+    <p style="font-weight: bold;border:1px solid wheat;">Average this Month Rs.<span style="font-size: x-large; color : #36f4ec;">{{averageIncome}} </span>
+      <br>
+      <span style="font-weight: bold;">Excess Expected Rs.<span style="font-size: x-large; color : #36f4ec;">{{excessFuture}} </span></span>
+    
+    </p>
+   
+     <p  style="color: yellow;font-weight: bold;border:1px solid wheat;">Income Expected for Normal<span style="font-size: x-large; color : #36f4ec;">{{totalFuture}}</span>
+     <!-- <br *ngIf="showProfit">
+     <span *ngIf="showProfit" style="font-weight: bold;">Xerox Profit<span  style="font-size: x-large; color : #36f4ec;">{{blackProfit}} </span></span>
+     <br *ngIf="showProfit">
+      <span *ngIf="showProfit" style="font-weight: bold;">Color/bind Profit<span   style="font-size: x-large; color : #36f4ec;">{{colbindProfit}} </span></span>
+      <br *ngIf="showProfit">
+      <span *ngIf="showProfit" style="font-weight: bold;">Total Profit<span style="font-size: x-large; color : #36f4ec;">{{profitAll}} </span></span>
+      <p-button *ngIf="showProfit" icon="pi pi-cog" (click)="recalculateProfit()" styleClass="p-button-rounded"></p-button> -->
+    </p>
+    
+  </div>
+
+
+</div>
+</div>
+
+    </ng-template>
+  </p-dialog>
   <p-dialog [closable]="false" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="paperPredict" [style]="{width: '50vw'}">
     <ng-template pTemplate="header">
 <p style="font-weight : bold; font-size: medium;">{{this.customers[0].Date|date}}| <b>Total-Days:</b>{{totalWorkingDaysMonth}}</p>
@@ -24,7 +91,11 @@
     <ng-template pTemplate="body">
       <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
       border-radius: 20px;  text-align : center; "  >
-        <p style=" font-weight: bold; color: wheat; border:1px solid wheat" >Number of remaining packets:<span style="font-size: x-large; color : #36f4ec;"> {{paperCurrent/500}}</span> </p>  
+        <p style=" font-weight: bold; color: wheat; border:1px solid wheat" >Number of remaining packets:<span style="font-size: x-large; color : #36f4ec;"> {{paperCurrent/500}}</span> 
+        
+          <p-button icon="pi pi-money-bill" (click)="predictTwoDate()" styleClass="p-button-rounded"></p-button>
+      
+        </p>  
         <p style="font-weight: bold;border:1px solid wheat">Current Month Excess Criteria:<span style="font-size: x-large; color : #36f4ec;"> {{excessCurrent}}</span>paisa</p>
         <p style="font-weight: bold; color: wheat;border:1px solid wheat">Preditcable for<span style="font-size: medium; color : #36f4ec;"> {{excessCurrent}} </span>paisa is :<span style="font-size: medium; color : #36f4ec;"> Rs.{{excessDemo}}</span> for Stock- <span style="font-size: medium; color : #36f4ec;">{{paperCurrent/500}} </span>packets.(<span style="font-size: medium; color : #36f4ec;">{{packetFuture}}</span>packets -<span style="font-size: medium; color : #36f4ec;"> Rs.{{excessTotal}}</span>)</p>
       </div>
@@ -109,7 +180,7 @@
       </p>
          <p style="color: yellow;font-weight: bold;border:1px solid wheat;">Paper Sheet :<span style="font-size: x-large; color : #36f4ec;">{{papersheetPredict}}</span>
         <br>
-        <p-inputNumber [(ngModel)]="b2bRate" inputId="locale-user" [minFractionDigits]="2"></p-inputNumber><p-button icon="pi pi-check" (click)="btnrate()" styleClass="p-button-rounded"></p-button>
+        <p-inputNumber  class="decimalInput" [(ngModel)]="b2bRate" inputId="locale-user" [minFractionDigits]="2"></p-inputNumber><p-button icon="pi pi-check" (click)="btnrate()" styleClass="p-button-rounded"></p-button>
         
         </p>
 

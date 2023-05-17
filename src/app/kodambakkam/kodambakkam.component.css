@@ -18,7 +18,9 @@
     font-weight: 300;
     font-size: medium;
 } */
-
+:host ::ng-deep .decimalInput .p-inputtext{
+  width :4rem;
+}
 .loading-con{
     margin: 0;
     padding: 0;
