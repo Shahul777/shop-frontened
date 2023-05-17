@@ -2472,10 +2472,10 @@ else{
   // this.totalFuture= this.startValue +()
 }
 
-if(this.averageIncome > this.averageFuture ){
-this.excessFuture = (this.averageIncome -this.averageFuture)*this.balanceWorkDay
+if(this.averageIncome2 > this.averageFuture ){
+this.excessFuture = (this.averageIncome2 -this.averageFuture)*this.balanceWorkDay
 }
-this.totalFuture=(this.averageIncome*this.balanceWorkDay)+this.startValue
+this.totalFuture=(this.averageIncome2*this.balanceWorkDay)+this.startValue
   }
   this.showData=true
 }
@@ -2578,8 +2578,11 @@ dateProcess(start :any, end : any){
   console.log(filteredDates);
   console.log(workingDays.length);
 }
+averageIncome2: any=0
 predictTwoDate(){
+  this.averageIncome2= this.averageIncome
 this.showTwoDate = true
+
 }
 recalculateProfit(){
   if(this.showProfit==true){

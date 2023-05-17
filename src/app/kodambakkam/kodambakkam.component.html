@@ -38,7 +38,14 @@
 
 
 
-
+    <div>
+      <button pButton pRipple type="button" (click)="op.toggle($event)" icon="pi pi-percentage" class="p-button-rounded"></button>
+      <p-overlayPanel #op [showCloseIcon]="true">
+        <ng-template pTemplate="body">
+          <app-calcidisplay></app-calcidisplay>
+        </ng-template>
+      </p-overlayPanel>
+    </div>
 
 
 
@@ -49,14 +56,15 @@
 
   <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
   border-radius: 20px; text-align : center">
-    <p style="color: yellow;font-weight: bold; border:1px solid wheat">Average Needed Rs.<span style="font-size: x-large; color : #36f4ec;">{{ this.averageFuture}} </span>
+    <p style="color: yellow;font-weight: bold; border:1px solid wheat">Average Needed Rs.<span style="font-size: x-large; color : #36f4ec;">{{averageFuture}} </span>
       
     <br>
     <span style="font-weight: bold;">Days Pending<span style="font-size: x-large; color : #36f4ec;">{{balanceWorkDay}}Days </span></span>
     </p>
 
 
-    <p style="font-weight: bold;border:1px solid wheat;">Average this Month Rs.<span style="font-size: x-large; color : #36f4ec;">{{averageIncome}} </span>
+    <p style="font-weight: bold;border:1px solid wheat;">Average this Month  <p-inputNumber (onInput)="calcFutureNeed()" [(ngModel)]="averageIncome2" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="500"
+      decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="currency" currency="INR"></p-inputNumber>
       <br>
       <span style="font-weight: bold;">Excess Expected Rs.<span style="font-size: x-large; color : #36f4ec;">{{excessFuture}} </span></span>
     
