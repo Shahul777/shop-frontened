@@ -588,135 +588,140 @@
     <ng-template pTemplate="caption">
       <div class="flex" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;">
         <div>
-          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+          <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+          <p-button  icon="pi pi-at" (click)="openLink()" styleClass="p-button-rounded"></p-button>
 
         </div>
         <div class="title-class"><h3 (click)="nameClicked()" >KODAMBAKKAM</h3>
-          <button *ngIf="showButton"  (click)="salaryOpen=true" pButton pRipple type="button" icon="pi pi-sitemap" class="p-button-rounded"></button>
-         
+ 
           <p-dialog [closable]="true" [draggable]="true" [resizable]="true" [maximizable]="true"  [(visible)]="salaryOpen" [style]="{width: '50vw'}">
           
                   
-        <div style="display: grid; grid-template-rows: 2fr 1fr;">
-      
-      
-          <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr 1fr;">
-      <div class="four-column">
-      
-        <p>TAJ</p>
-      
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
-      
-          <label for="inputtext">Leave</label>
-          <p-inputNumber  [(ngModel)]="tajLeave" inputId="inputtext" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-          </p-inputNumber>
-        </span>
-      
-        <button (click)="calculateSalary('taj')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
-      
-          <label for="integeronly">Salary</label>
-          <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
-          </p-inputNumber>
-        </span>
-      
-      
-      </div>
-      <div class="four-column">
-      
-        <p>NOOR</p>
-      
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
-      
-          <label for="minmaxfraction">Leave</label>
-          <p-inputNumber  [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-          </p-inputNumber>
-        </span>
-      
-        <button (click)="calculateSalary('noor')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
-      
-          <label for="integeronly">Salary</label>
-          <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
-          </p-inputNumber>
-        </span>
-      
-      </div>
-      <div class="four-column">
-        <p>ASSAN</p>
-      
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
-      
-          <label for="minmaxfraction">Leave</label>
-          <p-inputNumber  [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-          </p-inputNumber>
-        </span>
-      
-        <button (click)="calculateSalary('assan')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
-      
-          <label for="integeronly">Salary</label>
-          <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
-          </p-inputNumber>
-        </span>
-      
-      </div>
-      <div class="four-column">
-        <p>RASHEED</p>
-      
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
-      
-          <label for="minmaxfraction">Leave</label>
-          <p-inputNumber  [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-          </p-inputNumber>
-        </span>
-      
-        <button (click)="calculateSalary('rasheed')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
-      
-          <label for="integeronly">Salary</label>
-          <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
-          </p-inputNumber>
-        </span>
-      
-      </div>
-      <div class="four-column">
-        <p>MANI</p>
-      
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
-      
-          <label for="minmaxfraction">Leave</label>
-          <p-inputNumber  [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
-          </p-inputNumber>
-        </span>
-      
-        <button (click)="calculateSalary('mani')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-        <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
-      
-          <label for="integeronly">Salary</label>
-          <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
-          </p-inputNumber>
-        </span>
-      
-      </div>
-      
-          </div>
-      
-          <div>
-            <!-- <button  (click)="saveSalary(overlaypanelSalary)" pButton pRipple type="button" icon="pi pi-file" class="p-button-rounded"></button> -->
-      TOTAL : {{tajCalculate + noorCalculate + assanCalculate + maniCalculate + rasheedCalculate}}
-      
-          </div>
-        </div>
+            <div style="display: grid; grid-template-rows: 2fr 1fr;">
           
-          </p-dialog>
+          
+              <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr 1fr;">
+          <div class="four-column">
+          
+            <p>TAJ</p>
+          
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+          
+              <label for="inputtext">Leave</label>
+              <p-inputNumber  [(ngModel)]="tajLeave" inputId="inputtext" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+              </p-inputNumber>
+            </span>
+          
+            <button (click)="calculateSalary('taj')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+          
+              <label for="integeronly">Salary</label>
+              <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="tajCalculate">
+              </p-inputNumber>
+            </span>
+          
+          
+          </div>
+          <div class="four-column">
+          
+            <p>NOOR</p>
+          
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+          
+              <label for="minmaxfraction">Leave</label>
+              <p-inputNumber  [(ngModel)]="noorLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+              </p-inputNumber>
+            </span>
+          
+            <button (click)="calculateSalary('noor')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+          
+              <label for="integeronly">Salary</label>
+              <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="noorCalculate">
+              </p-inputNumber>
+            </span>
+          
+          </div>
+          <div class="four-column">
+            <p>ASSAN</p>
+          
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+          
+              <label for="minmaxfraction">Leave</label>
+              <p-inputNumber  [(ngModel)]="assanLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+              </p-inputNumber>
+            </span>
+          
+            <button (click)="calculateSalary('assan')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+          
+              <label for="integeronly">Salary</label>
+              <p-inputNumber   [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="assanCalculate">
+              </p-inputNumber>
+            </span>
+          
+          </div>
+          <div class="four-column">
+            <p>RASHEED</p>
+          
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+          
+              <label for="minmaxfraction">Leave</label>
+              <p-inputNumber  [(ngModel)]="rasheedLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+              </p-inputNumber>
+            </span>
+          
+            <button (click)="calculateSalary('rasheed')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+          
+              <label for="integeronly">Salary</label>
+              <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="rasheedCalculate">
+              </p-inputNumber>
+            </span>
+          
+          </div>
+          <div class="four-column">
+            <p>MANI</p>
+          
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;">
+          
+              <label for="minmaxfraction">Leave</label>
+              <p-inputNumber  [(ngModel)]="maniLeave" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2">
+              </p-inputNumber>
+            </span>
+          
+            <button (click)="calculateSalary('mani')"  pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+            <span style="display: grid;grid-template-rows: 0.2fr 0.4fr;" >
+          
+              <label for="integeronly">Salary</label>
+              <p-inputNumber  [disabled]="true" inputId="integeronly"  mode="decimal"  [(ngModel)]="maniCalculate">
+              </p-inputNumber>
+            </span>
+          
+          </div>
+          
+              </div>
+          
+              <div>
+                <!-- <button  (click)="saveSalary(overlaypanelSalary)" pButton pRipple type="button" icon="pi pi-file" class="p-button-rounded"></button> -->
+          TOTAL : {{tajCalculate + noorCalculate + assanCalculate + maniCalculate + rasheedCalculate}}
+          
+              </div>
+            </div>
+              
+              </p-dialog>
+          <div style="display:flex; gap:8px;">
+            <button *ngIf="showButton"  (click)="salaryOpen=true" pButton pRipple type="button" icon="pi pi-sitemap" class="p-button-rounded"></button>
+        
          
          
          
  
-          <button *ngIf="showButton"  pButton pRipple (click)="calClicked()" type="button" icon="pi pi-calendar" class="p-button-rounded"></button>
-          <button *ngIf="showButton"  pButton pRipple type="button" (click)="checkPaperRemaining(0)" icon="pi pi-qrcode" class="p-button-rounded p-button-success"></button>
-
+            <button *ngIf="showButton"  pButton pRipple (click)="calClicked()" type="button" icon="pi pi-calendar" class="p-button-rounded"></button>
+            <button *ngIf="showButton"  pButton pRipple type="button" (click)="checkPaperRemaining(0)" icon="pi pi-qrcode" class="p-button-rounded p-button-success"></button>
+  
+          </div>
+   
         </div>
         <!-- <span class="p-input-icon-left ml-auto">
             <i class="pi pi-search"></i>

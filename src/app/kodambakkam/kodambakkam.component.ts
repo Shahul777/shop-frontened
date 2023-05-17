@@ -2456,6 +2456,9 @@ showData : boolean =false
 firstCalendar(event : any){
 
 }
+openLink(): void {
+  window.location.href = 'https://shopbackened.up.railway.app/admin';
+}
 calcFutureNeed(){
   // this.demoBalanceDate=filteredDates
   // this.balanceWorkDay=workingDays.length
