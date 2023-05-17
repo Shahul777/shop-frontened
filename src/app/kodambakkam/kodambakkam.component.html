@@ -86,6 +86,61 @@
          <p style="color: yellow;font-weight: bold;border:1px solid wheat;">Paytm Money :<span style="font-size: x-large; color : #36f4ec;">{{totalPaytm}}</span> </p>
 
       </div>
+      <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+      border-radius: 20px; text-align : center">
+        <!-- <p style="color: yellow;font-weight: bold; border:1px solid wheat">B/W COPIES<span style="font-size: x-large; color : #36f4ec;">{{predictBlackcopies}} </span> 
+          
+        <br> -->
+        <p style="color: yellow;font-weight: bold; border:1px solid wheat">Color Copies<span style="font-size: x-large; color : #36f4ec;">{{predictColorcopies}} </span> 
+          
+          <br>
+        <!-- <span style="font-weight: bold;">Color Copies<span style="font-size: x-large; color : #36f4ec;">{{predictColorcopies}}</span></span>
+        </p> -->
+        <span style="font-weight: bold;">Color Income<span style="font-size: x-large; color : #36f4ec;">{{predictColorcopies*9}}</span></span>
+        </p>
+
+        <p style="font-weight: bold;border:1px solid wheat;">B/W COPIES<span style="font-size: x-large; color : #36f4ec;">{{predictBlackcopies}} </span>
+          <br>
+          <!-- <span style="font-weight: bold;">b/w&binding income<span style="font-size: x-large; color : #36f4ec;">{{incomeCurrent - (predictColorcopies*9) }} </span></span>
+        
+        </p> -->
+        <span style="font-weight: bold;">C/B-income<span style="font-size: x-large; color : #36f4ec;">{{incomeCurrent - (predictColorcopies*9) }} </span></span>
+        
+      </p>
+         <p style="color: yellow;font-weight: bold;border:1px solid wheat;">Paper Sheet :<span style="font-size: x-large; color : #36f4ec;">{{papersheetPredict}}</span>
+        <br>
+        <p-inputNumber [(ngModel)]="b2bRate" inputId="locale-user" [minFractionDigits]="2"></p-inputNumber><p-button icon="pi pi-check" (click)="btnrate()" styleClass="p-button-rounded"></p-button>
+        
+        </p>
+
+      </div>
+
+      <div style="display: grid; grid-template-columns : 1fr 1fr 1fr;     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%) !important;
+      border-radius: 20px; text-align : center">
+        <p style="color: yellow;font-weight: bold; border:1px solid wheat">Paper copy ratio:<span style="font-size: x-large; color : #36f4ec;">{{copyratio.toFixed(2)}} </span>
+          
+        <br>
+        <span style="font-weight: bold;">Paper Rate ratio:<span style="font-size: x-large; color : #36f4ec;">{{rateratio.toFixed(2)}} </span></span>
+        </p>
+
+
+        <p style="font-weight: bold;border:1px solid wheat;">Xerox Income<span style="font-size: x-large; color : #36f4ec;">{{predictCopyRate}} </span>
+          <br>
+          <span style="font-weight: bold;">Binding Income<span style="font-size: x-large; color : #36f4ec;">{{(incomeCurrent - (predictColorcopies*9))-predictCopyRate}} </span></span>
+        
+        </p>
+       
+         <p  style="color: yellow;font-weight: bold;border:1px solid wheat;">Total Income<span style="font-size: x-large; color : #36f4ec;">{{incomeCurrent}}</span>
+         <br *ngIf="showProfit">
+         <span *ngIf="showProfit" style="font-weight: bold;">Xerox Profit<span  style="font-size: x-large; color : #36f4ec;">{{blackProfit}} </span></span>
+         <br *ngIf="showProfit">
+          <span *ngIf="showProfit" style="font-weight: bold;">Color/bind Profit<span   style="font-size: x-large; color : #36f4ec;">{{colbindProfit}} </span></span>
+          <br *ngIf="showProfit">
+          <span *ngIf="showProfit" style="font-weight: bold;">Total Profit<span style="font-size: x-large; color : #36f4ec;">{{profitAll}} </span></span>
+          <p-button *ngIf="showProfit" icon="pi pi-cog" (click)="recalculateProfit()" styleClass="p-button-rounded"></p-button>
+        </p>
+        
+      </div>
 <div style="display: grid; grid-template-columns: 1fr 1fr ; gap: 16px;">
   <div class="prediction">
 

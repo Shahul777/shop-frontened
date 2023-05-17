@@ -2424,6 +2424,24 @@ loadPage(){
   this.predictDate=[]
   this.ngOnInit()
 }
+predictBlackcopies: any=0
+predictColorcopies : any=0
+predictBinding : any=0
+tablePredict : any=[{name:'Paper Calc' ,value:[]},{name :'Copies Calc',value:[]},{name :'F/B Calc',value:[]}]
+btnrate(){
+  this.predictionOnMonth(1);
+}
+recalculateProfit(){
+  if(this.showProfit==true){
+    this.blackProfit= (this.predictCopyRate -(this.predictionObj.Salary +this.predictionObj.Paper+this.predictionObj.Toner
+      +this.predictionObj.David+this.predictionObj.RentTpm+this.predictionObj.RentAshref+this.predictionObj.RentNoushad
+      +this.predictionObj.Rent2  + this.predictionObj.Current)    )
+    this.colbindProfit=((this.incomeCurrent -this.predictCopyRate) -this.predictionObj.Kl -this.predictionObj.Vadapalani 
+    -this.predictionObj.Others  ) 
+    this.profitAll = this.blackProfit + this.colbindProfit
+  }
+}
+showProfit: boolean= false
 predictionOnMonth(index: any){
 
 this.paperCurrent= (this.customers[0].PaperPresentToday * 500) + this.customers[0].PaperSheet +
@@ -2432,6 +2450,22 @@ this.paperCurrent= (this.customers[0].PaperPresentToday * 500) + this.customers[
 
 
 const dayOfMonth = this.customers[0].Date.getDate();
+const selectedDate = this.customers[0].Date; // Replace this with your selected date
+
+const year = selectedDate.getFullYear();
+const month = selectedDate.getMonth();
+
+// Get the last date of the selected month
+const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+
+// Check if the selected date is the last date of the month
+if (selectedDate.getDate() === lastDateOfMonth) {
+  console.log('Selected date is the last date of the month.');
+  this.showProfit=true
+} else {
+  console.log('Selected date is not the last date of the month.');
+  this.showProfit=false
+}
 this.currentDoneDate=dayOfMonth
 let totalincome =0
 let paperSoldToday = 0
@@ -2443,8 +2477,14 @@ let paperArrived =0
 
 let cash = 0
 let paytm =0
+let black =0
+let color =0
 console.log(this.customers)
+console.log(this.tpmDatas)
+console.log(dayOfMonth)
 for(let i =0 ; i < dayOfMonth ; i ++){
+  // console.log(this.tpmDatas[i])
+  // console.log(this.customers[i])
   // if(this.customers[i].isHoliday || this.customers[i].isSunday || this.tpmDatas[i].isHoliday || this.tpmDatas[i].isSunday){
 
   // }
@@ -2453,15 +2493,24 @@ for(let i =0 ; i < dayOfMonth ; i ++){
   // }
   cash += this.customers[i].CashIncome  + this.tpmDatas[i].CashIncome
   paytm+= this.customers[i].PaytmIncome  + this.tpmDatas[i].PaytmIncome
-
+black +=this.customers[i].BlackCopies  + this.tpmDatas[i].BlackCopies
+color +=this.customers[i].ColourCopies  + this.tpmDatas[i].ColourCopies
 totalincome+= this.customers[i].TotalIncome + this.tpmDatas[i].TotalIncome
 paperSoldToday += this.customers[i].PaperSoldToday + this.tpmDatas[i].PaperSoldToday
 paperArrived += this.customers[i].PaperQuantityCame 
 }
 this.totalCash= cash
 this.totalPaytm= paytm
-
+this.predictBlackcopies=black
+this.predictColorcopies= color
+this.papersheetPredict=paperSoldToday
+console.log(this.predictBlackcopies)
+console.log(this.predictColorcopies)
 this.excessCurrent= (totalincome/paperSoldToday).toFixed(2);
+this.copyratio=this.predictBlackcopies/this.papersheetPredict
+
+this.rateratio = this.copyratio * this.b2bRate
+this.predictCopyRate = Math.ceil(this.papersheetPredict * this.rateratio)
 
 function getDaysInMonth(date: Date): number {
   const year = date.getFullYear();
@@ -2521,6 +2570,7 @@ this.packetFuture = (this.balanceWorkingDay * this.averagePacketUsed).toFixed(2)
 this.shortDay=(this.paperCurrent/500 - this.packetFuture).toFixed(2)
 
 this.prices2=[]
+
 
 function predictPacketPrice(remainingPackets: number, pricePerSheet: number) {
 
@@ -2603,8 +2653,13 @@ else{
 
 }
 }
-
-
+papersheetPredict: any =0;
+copyratio : any =0;
+rateratio: any =0;
+predictCopyRate: any =0;
+blackProfit: any=0
+colbindProfit : any=0
+profitAll : any=0
 checkPaperRemaining(index : any){
   this.notExecuted= true
   this.predictObjId=0
@@ -2653,7 +2708,14 @@ checkPaperRemaining(index : any){
   this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
   console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
   console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
-     
+  if(this.showProfit==true){
+    this.blackProfit= (this.predictCopyRate -(this.predictionObj.Salary +this.predictionObj.Paper+this.predictionObj.Toner
+      +this.predictionObj.David+this.predictionObj.RentTpm+this.predictionObj.RentAshref+this.predictionObj.RentNoushad
+      +this.predictionObj.Rent2  + this.predictionObj.Current)    )
+    this.colbindProfit=((this.incomeCurrent -this.predictCopyRate) -this.predictionObj.Kl -this.predictionObj.Vadapalani 
+    -this.predictionObj.Others  ) 
+    this.profitAll = this.blackProfit + this.colbindProfit
+  }
      this.showProgress=false
      this.paperPredict=true
     }
@@ -2686,6 +2748,14 @@ checkPaperRemaining(index : any){
   this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
   console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
   console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
+  if(this.showProfit==true){
+    this.blackProfit= (this.predictCopyRate -(this.predictionObj.Salary +this.predictionObj.Paper+this.predictionObj.Toner
+      +this.predictionObj.David+this.predictionObj.RentTpm+this.predictionObj.RentAshref+this.predictionObj.RentNoushad
+      +this.predictionObj.Rent2  + this.predictionObj.Current)    )
+    this.colbindProfit=((this.incomeCurrent -this.predictCopyRate) -this.predictionObj.Kl -this.predictionObj.Vadapalani 
+    -this.predictionObj.Others  ) 
+    this.profitAll = this.blackProfit + this.colbindProfit
+  }
   }
       })
   
@@ -2701,6 +2771,14 @@ checkPaperRemaining(index : any){
   this.profitEstimateTotal = Math.ceil(this.profitCameTill * this.totalWorkingDaysMonth)
   console.log(this.totalExpenseMoney , this.totalWorkingDaysMonth)
   console.log(Math.ceil(this.totalExpenseMoney/this.totalWorkingDaysMonth))
+  if(this.showProfit==true){
+    this.blackProfit= (this.predictCopyRate -(this.predictionObj.Salary +this.predictionObj.Paper+this.predictionObj.Toner
+      +this.predictionObj.David+this.predictionObj.RentTpm+this.predictionObj.RentAshref+this.predictionObj.RentNoushad
+      +this.predictionObj.Rent2  + this.predictionObj.Current)    )
+    this.colbindProfit=((this.incomeCurrent -this.predictCopyRate) -this.predictionObj.Kl -this.predictionObj.Vadapalani 
+    -this.predictionObj.Others  ) 
+    this.profitAll = this.blackProfit + this.colbindProfit
+  }
       }
   
   
