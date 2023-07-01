@@ -3357,6 +3357,18 @@ entryPaperCheck(){
 askTpmPaperReport: boolean =false;
 tpmPaperSent: boolean =false;
 nextClicked(){
+  if (this.blackCopies==0){
+    this.machineblack1( {value : this.blackMachineReading1})
+      this.machineblack2( {value:this.blackMachineReading2})
+    }
+    if (this.colourCopies==0){
+      this.machinecolour1( {value : this.colourMachineReading1})
+        this.machinecolour2( {value:this.colourMachineReading2})
+      }
+    
+
+  
+ 
 this.askTpmPaperReport=true
 }
 

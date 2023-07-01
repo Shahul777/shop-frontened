@@ -1238,6 +1238,37 @@ this.spendPage()
       }
     }
     ,
+{
+  label: 'Kodambakkam',
+  tooltipOptions: {
+      tooltipLabel: "Kodambakkam",
+      tooltipPosition: 'top',
+      positionTop: -15,
+      positionLeft: 15
+  },
+  icon: "assets/showcase/kodambakkam.png",
+  command: () => {
+    this.kodambakkamAdmin()
+      // this.displayTerminal = true;
+      // this.editClicked("Black-Printout")
+  }
+},{
+  label: 'Trustpuram',
+  tooltipOptions: {
+      tooltipLabel: "Trustpuram",
+      tooltipPosition: 'top',
+      positionLeft: 15,
+      positionTop: -15
+  },
+  icon: "assets/showcase/trustpuram.png",
+  command: () => {
+
+    this.trustpuramAdmin()
+    // this.editClicked("Colour-Xerox")
+      // this.messageService.add({severity: 'error', summary: 'An unexpected error occurred while signing in.', detail: 'UNTRUSTED_CERT_TITLE'});
+  }
+},
+
 ];
 
 
