@@ -2234,7 +2234,10 @@ nextClicked(){
       this.machinecolour1( {value : this.colourMachineReading1})
         this.machinecolour2( {value:this.colourMachineReading2})
       }
-    
+  if(this.totalIncome==0){
+        this.totalIncome= this.cashIncome +  this.paytmIncome
+      
+      }
   if(this.paperRepeatAsk){
     this.askTpmPaperReport=false
     this.finalNextButton()

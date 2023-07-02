@@ -3366,7 +3366,10 @@ nextClicked(){
         this.machinecolour2( {value:this.colourMachineReading2})
       }
     
+if(this.totalIncome==0){
+  this.totalIncome= this.cashIncome +  this.paytmIncome
 
+}
   
  
 this.askTpmPaperReport=true
