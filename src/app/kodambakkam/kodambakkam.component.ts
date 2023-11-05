@@ -3076,10 +3076,21 @@ this.isNoorHalfDay=0
     this.kdmAccountDetail.isHoliday = 0
     this.kdmAccountDetail.PaperSheet = 0
 
+if(this.adminAccess){
 
+  console.log(this.customers)
+  console.log(this.date)
+this.date = new Date(this.customers[0].Date)
+  this.date.setDate(this.date.getDate() + 1)
+  console.log(this.date)
+}
 
 
 this.isAddAccounts=true
+
+if(this.adminAccess){
+  this.showEntryInput=true
+}
 }
 nextBtnDisable(){
 
@@ -3605,7 +3616,7 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   // this.kdmAccountDetail.Expenses+= this.noorExpense
   console.log(this.kdmAccountDetail)
   console.log(this.kdmLabourDetail)
-  
+  console.log(this.adminAccess)
   this.service.addKdmAcccounts(this.kdmAccountDetail).subscribe((event)=>{
    
   this.service.addKdmLabours(this.kdmLabourDetail).subscribe((event: any)=>{
@@ -3613,9 +3624,17 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   
     this.isAddAccounts=false
   console.log("edfgerg")
-    
+  this.showProgress=false
         this.saveClicked.emit()
-        this.ngOnInit();
+       
+        // if(this.adminAccess){
+        
+        //   this.addAccounts()
+        //   this.showProgress=false
+        // }
+        // else{
+        //   this.ngOnInit();
+        // }
   
   }, error=>{
     this.showProgress=false
@@ -3840,10 +3859,18 @@ this.service.addKdmLabours(this.kdmLabourDetail).subscribe((event: any)=>{
 
 
   this.isAddAccounts=false
-
+  this.showProgress=false
   
       this.saveClicked.emit()
-      this.ngOnInit();
+   
+      // if(this.adminAccess){
+      //   this.addAccounts()
+      //   this.showProgress=false
+      // }
+      // else{
+      //   this.ngOnInit();
+      // }
+ 
 
 }, error=>{
   this.showProgress=false
@@ -3908,9 +3935,16 @@ this.service.addKdmAcccounts(this.kdmAccountDetail).subscribe((event)=>{
   
   
     this.isAddAccounts=false
+    this.showProgress=false
         this.saveClicked.emit()
      
-  this.ngOnInit();
+        // if(this.adminAccess){
+        //   this.addAccounts()
+        //   this.showProgress=false
+        // }
+        // else{
+        //   this.ngOnInit();
+        // }
   
   
   }, error=>{
@@ -3946,10 +3980,18 @@ else{
 
     this.service.addKdmLabours(this.kdmLabourDetail).subscribe((event: any)=>{
   
-  
-      this.saveClicked.emit()
       this.isAddAccounts=false
-  this.ngOnInit();
+      this.showProgress=false
+      this.saveClicked.emit()
+   
+      // this.isAddAccounts=false
+      // if(this.adminAccess){
+      //   this.addAccounts()
+      //   this.showProgress=false
+      // }
+      // else{
+      //   this.ngOnInit();
+      // }
   
 
   

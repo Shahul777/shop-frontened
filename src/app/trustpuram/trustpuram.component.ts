@@ -1289,8 +1289,21 @@ this.isRasheedHalfDay=0
 
 
 
+    if(this.adminAccess){
 
-this.isAddAccounts=true
+      console.log(this.customers)
+      console.log(this.date)
+    this.date = new Date(this.customers[0].Date)
+      this.date.setDate(this.date.getDate() + 1)
+      console.log(this.date)
+    }
+    
+    
+    this.isAddAccounts=true
+    
+    if(this.adminAccess){
+      this.showEntryInput=true
+    }
 }
 storeDateFormat : any;
 
@@ -2516,7 +2529,7 @@ this.kdmAccountDetail.OldStayingCopies=this.kdmAccountHolidayDetail.OldStayingCo
   console.log("edfgerg")
     
         this.saveClicked.emit()
-        this.ngOnInit();
+        // this.ngOnInit();
   
   }, error=>{
   
@@ -2781,7 +2794,7 @@ this.service.addTpmLabours(this.kdmLabourDetail).subscribe((event: any)=>{
 
   
       this.saveClicked.emit()
-      this.ngOnInit();
+      // this.ngOnInit();
 
 }, error=>{
 
@@ -2852,7 +2865,7 @@ this.service.addTpmAcccounts(this.kdmAccountDetail).subscribe((event)=>{
     this.isAddAccounts=false
         this.saveClicked.emit()
      
-  this.ngOnInit();
+  // this.ngOnInit();
   
   
   }, error=>{
@@ -2890,7 +2903,7 @@ else{
   
       this.saveClicked.emit()
       this.isAddAccounts=false
-  this.ngOnInit();
+  // this.ngOnInit();
   
 
   

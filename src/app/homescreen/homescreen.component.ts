@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShopserviceService } from '../shopservice.service';
 import { rentSheet } from '../kodambakkam/kdmDataModel';
 import { houseAccount,rateSheet } from '../housespends/houseDataModel';
 import { HttpClient } from '@angular/common/http';
+import { KodambakkamComponent } from '../kodambakkam/kodambakkam.component';
+import { TrustpuramComponent } from '../trustpuram/trustpuram.component';
 
 @Component({
   selector: 'app-homescreen',
@@ -60,7 +62,7 @@ value2 : string ="off"
 houseValue : string ="cash"
 stateOptions: any
 rentSheet: rentSheet = <rentSheet>{};
-
+showCards:any=true
 bata1 : any;
 bata2 : any;
 food: any;
@@ -77,20 +79,72 @@ tpmRent: any;
 kdmRent: any;
 currentBillKdm: any;
 currentBillTpm : any;
+@ViewChild(KodambakkamComponent) kdmComponent! : KodambakkamComponent;
+@ViewChild(TrustpuramComponent) tpmComponent! : TrustpuramComponent;
   // subscription: Subscription;
   // private galleriaService: PhotoService, private nodeService: NodeService, private messageService: MessageService, private terminalService: TerminalService
   constructor(private router: Router , private service : ShopserviceService ,private http : HttpClient) { }
 
   items: any;
+ 
   trustpuramSaved() {
-    this.adminTrustpuram = false;
-    this.showTrustpuram = false;
-    this.ngOnInit();
+    if(!this.adminTrustpuram){
+      this.adminTrustpuram = false;
+      this.showTrustpuram = false;
+      this.ngOnInit();
+    }
+   
+    else{
+ 
+       setTimeout(()=>{
+        this.adminTrustpuram = false;
+        this.showTrustpuram = false;
+         this.ngOnInit();
+  
+       
+      },1000)
+      setTimeout(()=>{
+        this.trustpuramAdmin();
+        // this.tpmComponent.addAccounts()
+       
+      },2000)
+      // setTimeout(()=>{
+     
+      //   this.tpmComponent.addAccounts()
+      //   this.showCards=false
+      //   console.log("DONEEEEEE")
+      // },300)
+  
+   
+     }
+
   }
   kodambakkamSaved() {
-    this.showkodambakkam = false;
-    this.adminKodambakkam = false
-    this.ngOnInit();
+
+    if(!this.adminKodambakkam){
+      this.showkodambakkam = false;
+      this.adminKodambakkam = false
+      
+      this.ngOnInit();
+    }
+   else{
+
+    setTimeout(()=>{
+      this.showkodambakkam = false;
+      this.adminKodambakkam = false
+       this.ngOnInit();
+
+     
+    },1000)
+    setTimeout(()=>{
+      this.kodambakkamAdmin();
+       
+      // this.kdmComponent.addAccounts()
+     
+    },2000)
+
+
+   }
   }
   dockItems: any;
   dockItemsSpents: any;
@@ -974,6 +1028,7 @@ this.houseAccountDetail.TotalProfit =0
     
   }
   ngOnInit() {
+    this.showCards=true
     this.imageUrls = [ 'giphy.gif','wall.jpg','wall3.jpg','tea.gif',];
     setInterval(() => {
       this.changeBackgroundImage();
