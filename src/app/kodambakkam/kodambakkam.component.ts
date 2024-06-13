@@ -2457,7 +2457,9 @@ firstCalendar(event : any){
 
 }
 openLink(): void {
-  window.location.href = 'https://shopbackened.up.railway.app/admin';
+  // window.location.href = 'https://shopbackened.up.railway.app/admin';
+  window.location.href = 'https://xerox-backened.onrender.com/admin';
+  
 }
 calcFutureNeed(){
   // this.demoBalanceDate=filteredDates
