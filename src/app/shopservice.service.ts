@@ -8,13 +8,14 @@ import { kdmAccounts } from './kodambakkam/kdmDataModel';
 export class ShopserviceService {
    //readonly APIUrl ="http://127.0.0.1:8000";
   //readonly adminUrl ="http://127.0.0.1:8000/admin/"
+//  readonly APIUrl ="https://shopbackened.up.railway.app";
+//    readonly adminUrl = "https://shopbackened.up.railway.app/admin/"
 
+	// https://xerox-backened.onrender.com/
+ readonly APIUrl ="https://xerox-backened.onrender.com";
+   readonly adminUrl = "https://xerox-backened.onrender.com/admin/"
 
-
-
-
-   readonly APIUrl ="https://shopbackened.up.railway.app";
-   readonly adminUrl = "https://shopbackened.up.railway.app/admin/"
+  
 
   readonly imageText ="http://127.0.0.1:8000/extract_text/"
  
