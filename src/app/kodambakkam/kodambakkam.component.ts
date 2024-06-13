@@ -2462,8 +2462,7 @@ openLink(): void {
   
 }
 calcFutureNeed(){
-  // this.demoBalanceDate=filteredDates
-  // this.balanceWorkDay=workingDays.length
+
 
   if(this.demoBalanceDate.length &&  this.balanceWorkDay){
 let diff = this.endValue-this.startValue
